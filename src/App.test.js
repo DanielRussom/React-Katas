@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import e from 'express';
-import React from 'react';
+import * as React from 'react';
 import App from './App';
 
 it('contains an input box', () => {
