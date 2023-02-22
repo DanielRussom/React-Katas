@@ -6,6 +6,7 @@ function App() {
     <div className="App">
       <label htmlFor="treeSize-input">Tree Size:</label>
       <input id="treeSize-input"/>
+      <button>Generate Tree</button>
     </div>
   );
 }
