@@ -18,7 +18,15 @@ it('contains a generate tree button', () => {
   expect(button).toBeInTheDocument();
 });
 
-it('displays a single line tree', () => {
+it('does not display tree stump before clicking button', () => {
+  render(<App />);
+
+  const treeDisplay = screen.queryByText("|");
+
+  expect(treeDisplay).toBeNull();
+});
+
+it('displays a tree stump after clicking button', () => {
   render(<App />);
 
   fireEvent.click(screen.getByText("Generate Tree"));
