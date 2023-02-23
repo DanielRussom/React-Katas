@@ -7,6 +7,7 @@ function App() {
       <label htmlFor="treeSize-input">Tree Size:</label>
       <input id="treeSize-input"/>
       <button>Generate Tree</button>
+      <p>|</p>
     </div>
   );
 }
