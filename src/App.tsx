@@ -7,12 +7,13 @@ function App() {
   const [tree, setTree] = useState("");
   
   function generateTree(): void {
+    
     setTree("|");
   }
 
   return (
     <div className="App">
-      <p id="treeDisplay">{tree}</p>
+      <p role="paragraph" id="treeDisplay">{tree}</p>
       <label htmlFor="treeSize-input">Tree Size:</label>
       <input id="treeSize-input"/>
       <button onClick={() => generateTree()} >Generate Tree</button>
