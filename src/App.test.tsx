@@ -66,3 +66,14 @@ it('displays a tree with two lines of Xs', () => {
   const treeDisplay = screen.getByRole("paragraph");
   expect(treeDisplay.textContent).toEqual("X\nXXX\n|")
 });
+
+it('displays a tree with three lines of Xs', () => {
+  render(<App />);
+
+  const inputBox = screen.getByLabelText("Tree Size:");
+  userEvent.type(inputBox, '3');
+  fireEvent.click(screen.getByText("Generate Tree"));
+  
+  const treeDisplay = screen.getByRole("paragraph");
+  expect(treeDisplay.textContent).toEqual("X\nXXX\nXXXXX\n|")
+});

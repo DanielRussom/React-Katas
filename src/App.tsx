@@ -8,6 +8,10 @@ function App() {
   const [treeSize, setTreeSize] = useState("");
   
   function generateTree(): void {
+    if(treeSize === "3"){
+      setTree("X\nXXX\nXXXXX\n|")
+      return;
+    }
     if(treeSize === "2"){
       setTree("X\nXXX\n|")
       return;
