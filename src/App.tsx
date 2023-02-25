@@ -8,21 +8,16 @@ function App() {
   const [treeSize, setTreeSize] = useState("");
   
   function generateTree(): void {
-    if(treeSize === "3"){
-      setTree("X\nXXX\nXXXXX\n|")
-      return;
-    }
-    if(treeSize === "2"){
-      setTree("X\nXXX\n|")
-      return;
+    const treeInt = Number(treeSize);
+
+    let treeOutput = "";
+    for(let i = 1; i <= treeInt; i++){
+      treeOutput += "X".repeat((i * 2) - 1);
+      treeOutput += "\n";
     }
 
-    if(treeSize) {
-      setTree("X\n|")
-      return;
-    }
-
-    setTree("|");
+    treeOutput += "|"
+    setTree(treeOutput);
   }
 
   return (
