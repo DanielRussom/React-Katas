@@ -8,7 +8,11 @@ function App() {
   const [treeSize, setTreeSize] = useState("");
   
   function generateTree(): void {
-    
+    if(treeSize) {
+      setTree("X\n|")
+      return;
+    }
+
     setTree("|");
   }
 
