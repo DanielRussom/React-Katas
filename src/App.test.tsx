@@ -49,3 +49,16 @@ it('displays a tree with one X', () => {
   
   expect(treeDisplay.textContent).toEqual("X\n|")
 });
+
+it('splits tree display into multiple lines', () => {
+  render(<App />);
+
+  const inputBox = screen.getByLabelText("Tree Size:");
+
+  userEvent.type(inputBox, '1');
+
+  fireEvent.click(screen.getByText("Generate Tree"));
+  const treeDisplay = screen.getByRole("paragraph");
+  
+  expect(treeDisplay).toHaveStyle("white-space: pre-line");
+});

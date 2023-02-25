@@ -18,7 +18,9 @@ function App() {
 
   return (
     <div className="App">
-      <p role="paragraph" id="treeDisplay">{tree}</p>
+      <p role="paragraph" id="treeDisplay" 
+      style= {{ whiteSpace: "pre-line"}}
+      >{tree}</p>
       <label htmlFor="treeSize-input">Tree Size:</label>
       <input id="treeSize-input" value={treeSize} onChange={e => setTreeSize(e.target.value)}/>
       <button onClick={() => generateTree()} >Generate Tree</button>
