@@ -2,8 +2,8 @@
 
 ## Todo List
 [X] Create Todo List
-[ ] Investigate why role=paragraph isn't implicit for <p>
 [X] Complete Christmas Tree Kata
+[ ] Pick next Kata
 
 
 
