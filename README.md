@@ -1,14 +1,18 @@
 # React Katas
 
 ## Todo List
-[ ] Populate todo list
+[X] Create Todo List
+[ ] Investigate why role=paragraph isn't implicit for <p>
+[X] Complete Christmas Tree Kata
 
 
 
 
-
-
-
+1 1
+2 3
+3 5
+4 7
+5 9
 
 --------
 # Getting Started with Create React App

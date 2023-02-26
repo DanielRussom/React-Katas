@@ -36,15 +36,20 @@ it('displays a tree stump after clicking button', () => {
   expect(treeDisplay.textContent).toEqual("|")
 });
 
-it('displays a tree with one X', () => {
+it.each([
+  ["1", "X\n|"],
+  ["2", "X\nXXX\n|"],
+  ["3", "X\nXXX\nXXXXX\n|"],
+])
+('displays a tree with one X', (input, expected) => {
   render(<App />);
 
   const inputBox = screen.getByLabelText("Tree Size:");
-  userEvent.type(inputBox, '1');
+  userEvent.type(inputBox, input);
   fireEvent.click(screen.getByText("Generate Tree"));
   
   const treeDisplay = screen.getByRole("paragraph");
-  expect(treeDisplay.textContent).toEqual("X\n|")
+  expect(treeDisplay.textContent).toEqual(expected)
 });
 
 it('splits tree display into multiple lines', () => {
@@ -54,26 +59,4 @@ it('splits tree display into multiple lines', () => {
   const treeDisplay = screen.getByRole("paragraph");
   
   expect(treeDisplay).toHaveStyle("white-space: pre-line");
-});
-
-it('displays a tree with two lines of Xs', () => {
-  render(<App />);
-
-  const inputBox = screen.getByLabelText("Tree Size:");
-  userEvent.type(inputBox, '2');
-  fireEvent.click(screen.getByText("Generate Tree"));
-  
-  const treeDisplay = screen.getByRole("paragraph");
-  expect(treeDisplay.textContent).toEqual("X\nXXX\n|")
-});
-
-it('displays a tree with three lines of Xs', () => {
-  render(<App />);
-
-  const inputBox = screen.getByLabelText("Tree Size:");
-  userEvent.type(inputBox, '3');
-  fireEvent.click(screen.getByText("Generate Tree"));
-  
-  const treeDisplay = screen.getByRole("paragraph");
-  expect(treeDisplay.textContent).toEqual("X\nXXX\nXXXXX\n|")
 });
