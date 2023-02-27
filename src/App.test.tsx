@@ -14,7 +14,7 @@ it('contains a tree size input box', () => {
 it('contains a generate tree button', () => {
   render(<App />);
 
-  const button = screen.getByText("Generate Tree");
+  const button = getGenerateTreeButton();
 
   expect(button).toBeInTheDocument();
 });
@@ -38,7 +38,7 @@ it.each([
 
   const inputBox = screen.getByLabelText("Tree Size:");
   userEvent.type(inputBox, input);
-  fireEvent.click(screen.getByText("Generate Tree"));
+  fireEvent.click(getGenerateTreeButton());
   
   const treeDisplay = getTreeDisplay();
   expect(treeDisplay.textContent).toEqual(expected)
@@ -47,11 +47,15 @@ it.each([
 it('splits tree display into multiple lines', () => {
   render(<App />);
 
-  fireEvent.click(screen.getByText("Generate Tree"));
+  fireEvent.click(getGenerateTreeButton());
   
   const treeDisplay = getTreeDisplay();
   expect(treeDisplay).toHaveStyle("white-space: pre-line");
 });
+
+function getGenerateTreeButton(): Element | Node | Document | Window {
+  return screen.getByRole('button', { name: 'Generate Tree' });
+}
 
 function getTreeDisplay() {
   return screen.getByRole("paragraph");
