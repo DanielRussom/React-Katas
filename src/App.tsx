@@ -1,30 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
 import './App.css';
+import TreeGenerator from './tree-generator/TreeGenerator';
 
 function App() {
 
-  const [tree, setTree] = useState("");
-  const [treeSize, setTreeSize] = useState("");
-  
-  function generateTree(): void {
-    const treeInt = Number(treeSize);
-
-    let treeOutput = "";
-    for(let i = 1; i <= treeInt; i++){
-      treeOutput += "X".repeat((i * 2) - 1);
-      treeOutput += "\n";
-    }
-
-    treeOutput += "|"
-    setTree(treeOutput);
-  }
+  const [showTreeGenerator, setshowTreeGenerator] = useState(false);
 
   return (
     <div className="App">
-      <button>Christmas Tree Generator</button>
+      <button onClick={() => setshowTreeGenerator(true)}>Christmas Tree Generator</button>
 
-      <div data-testid="component-container"></div>
+      <div data-testid="component-container">
+        {(showTreeGenerator) ? <TreeGenerator data-testid="tree-generator"/> : null}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import App from './App';
+
+it('does not display content in the component container', () => {
+  render(<App/>);
+
+  const componentContainer = screen.queryByTestId("component-container");
+
+  expect(componentContainer).toBeEmptyDOMElement()
+});
 
 it('contains a christmas tree generator button', () => {
   render(<App/>);
@@ -10,10 +19,15 @@ it('contains a christmas tree generator button', () => {
   expect(treeGeneratorButton).toBeInTheDocument();
 });
 
-it('does not display treeGenerator by default', () => {
+it('displays the treeGenerator', () => {
   render(<App/>);
 
-  const componentContainer = screen.queryByTestId("component-container");
+  const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+  userEvent.click(treeGeneratorNavigationButton);
 
-  expect(componentContainer).toBeEmptyDOMElement()
+  const generateTreeButton = screen.getByRole('button', { name: 'Generate Tree' });
+
+  expect(generateTreeButton).toBeInTheDocument();
 });
+
+
