@@ -22,6 +22,8 @@ function App() {
 
   return (
     <div className="App">
+      <button>Christmas Tree Generator</button>
+
       <label htmlFor="treeSize-input">Tree Size:</label>
       <input id="treeSize-input" value={treeSize} onChange={e => setTreeSize(e.target.value)}/>
       <button onClick={() => generateTree()} >Generate Tree</button>
