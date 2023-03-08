@@ -30,6 +30,18 @@ it('displays the treeGenerator', () => {
   expect(generateTreeButton).toBeInTheDocument();
 });
 
+it('hides the treeGenerator', () => {
+  render(<App/>);
+
+  const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+  userEvent.click(treeGeneratorNavigationButton); 
+  userEvent.click(treeGeneratorNavigationButton);
+
+  const componentContainer = screen.queryByTestId("component-container");
+
+  expect(componentContainer).toBeEmptyDOMElement()
+});
+
 it('contains a stack exercise button', () => {
   render(<App/>);
 

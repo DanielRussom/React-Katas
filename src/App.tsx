@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => setShowTreeGenerator(true)}>Christmas Tree Generator</button>
+      <button onClick={() => setShowTreeGenerator(!showTreeGenerator)}>Christmas Tree Generator</button>
       <button onClick={() => setShowStackExercise(true)}>Stack Exercise</button>
 
       <div data-testid="component-container">
