@@ -30,4 +30,13 @@ it('displays the treeGenerator', () => {
   expect(generateTreeButton).toBeInTheDocument();
 });
 
+it('contains a stack exercise button', () => {
+  render(<App/>);
+
+  const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+
+  expect(stackExerciseButton).toBeInTheDocument();
+
+});
+
 
