@@ -36,7 +36,17 @@ it('contains a stack exercise button', () => {
   const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
 
   expect(stackExerciseButton).toBeInTheDocument();
+});
 
+it('displays the stack exercise', () => {
+  render(<App/>);
+
+  const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+  userEvent.click(stackExerciseButton);
+
+  const stackTitle = screen.getByText("Stack:");
+
+  expect(stackTitle).toBeInTheDocument();
 });
 
 

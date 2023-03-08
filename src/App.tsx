@@ -5,15 +5,17 @@ import TreeGenerator from './tree-generator/TreeGenerator';
 
 function App() {
 
-  const [showTreeGenerator, setshowTreeGenerator] = useState(false);
+  const [showTreeGenerator, setShowTreeGenerator] = useState(false);
+  const [showStackExercise, setShowStackExercise] = useState(false);
 
   return (
     <div className="App">
-      <button onClick={() => setshowTreeGenerator(true)}>Christmas Tree Generator</button>
-      <button>Stack Exercise</button>
+      <button onClick={() => setShowTreeGenerator(true)}>Christmas Tree Generator</button>
+      <button onClick={() => setShowStackExercise(true)}>Stack Exercise</button>
 
       <div data-testid="component-container">
         {(showTreeGenerator) ? <TreeGenerator data-testid="tree-generator"/> : null}
+        {(showStackExercise) ? <p>Stack:</p> : null}
       </div>
     </div>
   );
