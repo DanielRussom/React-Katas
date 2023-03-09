@@ -3,20 +3,20 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import App from './App';
 
-
 describe("App", () => {
+  const renderApp = () => render(<App />);
+
+  const componentContainer = () => screen.queryByTestId("component-container");
 
   it('does not display content in the component container', () => {
-    render(<App />);
+    renderApp();
 
-    const componentContainer = screen.queryByTestId("component-container");
-
-    expect(componentContainer).toBeEmptyDOMElement()
+    expect(componentContainer()).toBeEmptyDOMElement()
   });
 
   describe("tree generator", () => {
     it('contains a display button', () => {
-      render(<App />);
+      renderApp();
 
       const treeGeneratorButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
 
@@ -24,7 +24,7 @@ describe("App", () => {
     });
 
     it('is displayed', () => {
-      render(<App />);
+      renderApp();
 
       const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
       userEvent.click(treeGeneratorNavigationButton);
@@ -35,21 +35,19 @@ describe("App", () => {
     });
 
     it('is hidden', () => {
-      render(<App />);
+      renderApp();
 
       const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
       userEvent.click(treeGeneratorNavigationButton);
       userEvent.click(treeGeneratorNavigationButton);
 
-      const componentContainer = screen.queryByTestId("component-container");
-
-      expect(componentContainer).toBeEmptyDOMElement()
+      expect(componentContainer()).toBeEmptyDOMElement()
     });
   })
 
   describe("stack exercise", () => {
     it('contains a display button', () => {
-      render(<App />);
+      renderApp();
 
       const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
 
@@ -57,7 +55,7 @@ describe("App", () => {
     });
 
     it('is displayed', () => {
-      render(<App />);
+      renderApp();
 
       const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
       userEvent.click(stackExerciseButton);
@@ -66,6 +64,17 @@ describe("App", () => {
 
       expect(stackTitle).toBeInTheDocument();
     });
+
+    it('is hidden', () => {
+      renderApp();
+
+      const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+      userEvent.click(stackExerciseButton);
+      userEvent.click(stackExerciseButton);
+
+      expect(componentContainer()).toBeEmptyDOMElement()
+    });
   });
 });
+
 
