@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import './App.css';
+import StackExercise from './tree-generator/StackExercise';
 import TreeGenerator from './tree-generator/TreeGenerator';
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
 
       <div data-testid="component-container">
         {(showTreeGenerator) ? <TreeGenerator data-testid="tree-generator"/> : null}
-        {(showStackExercise) ? <p>Stack:</p> : null}
+        {(showStackExercise) ? <StackExercise/> : null}
       </div>
     </div>
   );
