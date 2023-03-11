@@ -18,4 +18,12 @@ describe("stack exercise", () => {
     
       expect(pushButton).toBeInTheDocument();
     });
+
+    it('contains a push input box', () => {
+      render(<StackExercise />);
+    
+      var inputBox = screen.getByPlaceholderText("New value");
+    
+      expect(inputBox).toBeInTheDocument();
+    });
 });
