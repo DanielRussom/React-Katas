@@ -10,4 +10,12 @@ describe("stack exercise", () => {
     
       expect(title).toBeInTheDocument();
     });
+
+    it('contains a push button', () => {
+      render(<StackExercise />);
+    
+      var pushButton = screen.getByRole('button', { name: 'Push' });
+    
+      expect(pushButton).toBeInTheDocument();
+    });
 });

@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 function StackExercise() {
-    return (<p>Stack:</p>);
+    return (
+    <React.Fragment>
+        <p>Stack:</p>
+        <button>Push</button>
+    </React.Fragment>
+);
 }
 
 export default StackExercise;
