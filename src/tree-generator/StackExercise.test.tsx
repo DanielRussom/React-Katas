@@ -14,13 +14,14 @@ describe("Acceptance test", () => {
 
     // Push two values
     let newValueInputBox = screen.getByPlaceholderText("New value");
-    
-    userEvent.type(newValueInputBox, "First value");
+    const firstValue = "First value"
+    userEvent.type(newValueInputBox, firstValue);
 
     let pushButton = screen.getByRole('button', { name: 'Push' });
     userEvent.click(pushButton);
     
-    userEvent.type(newValueInputBox, "Second value");
+    const secondValue = "Second value"
+    userEvent.type(newValueInputBox, secondValue);
     userEvent.click(pushButton);
 
     // Do we need to re-set this value? Probably... 
@@ -35,7 +36,7 @@ describe("Acceptance test", () => {
     let peekButton = screen.getByRole('button', { name: 'Peek' });
     userEvent.click(peekButton);
 
-    let peekValueResult = screen.getByText("The top of the stack is: Second value");
+    let peekValueResult = screen.getByText(`The top of the stack is: ${secondValue}`);
     expect(peekValueResult).toBeInTheDocument();
 
     // Pop a value
@@ -49,7 +50,7 @@ describe("Acceptance test", () => {
     // Peek new top of stack
     userEvent.click(peekButton);
     
-    peekValueResult = screen.getByText("The top of the stack is: First value");
+    peekValueResult = screen.getByText(`The top of the stack is: ${firstValue}`);
     expect(peekValueResult).toBeInTheDocument();
 
   });
@@ -78,5 +79,13 @@ describe("stack exercise", () => {
       var inputBox = screen.getByPlaceholderText("New value");
     
       expect(inputBox).toBeInTheDocument();
+    });
+
+    it('displays that the stack is empty', () => {
+      render(<StackExercise />);
+    
+      var emptyStack = screen.getByText("The stack is empty");
+    
+      expect(emptyStack).toBeInTheDocument();
     });
 });

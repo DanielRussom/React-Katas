@@ -6,6 +6,7 @@ function StackExercise() {
         <p>Stack:</p>
         <input placeholder='New value'/>
         <button>Push</button>
+        <p>The stack is empty</p>
     </React.Fragment>
 );
 }
