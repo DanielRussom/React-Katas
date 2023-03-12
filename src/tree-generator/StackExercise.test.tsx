@@ -8,29 +8,49 @@ describe("Acceptance test", () => {
   it('has working push, pop, empty check, size, and peek functions', () => {
     render(<StackExercise />);
 
-    let emptyCheckResult = screen.queryByText("The stack is empty");
-    expect(emptyCheckResult).toBeNull();
-
-    const emptyCheckButton = screen.getByRole('button', { name: 'Empty Check' });
-    userEvent.click(emptyCheckButton);
-    emptyCheckResult = screen.getByText("The stack is empty");
+    // Empty check
+    let emptyCheckResult = screen.getByText("The stack is empty");
     expect(emptyCheckResult).toBeInTheDocument();
 
-    // Run size == 0
+    // Push two values
+    let newValueInputBox = screen.getByPlaceholderText("New value");
     
+    userEvent.type(newValueInputBox, "First value");
+
+    let pushButton = screen.getByRole('button', { name: 'Push' });
+    userEvent.click(pushButton);
+    
+    userEvent.type(newValueInputBox, "Second value");
+    userEvent.click(pushButton);
+
+    // Do we need to re-set this value? Probably... 
+    // emptyCheckResult = screen.getByText("The stack is empty");
+    expect(emptyCheckResult).not.toBeInTheDocument();
+
+    // Size is 2 check
+    let sizeResult = screen.getByText("Size: 2");
+    expect(sizeResult).toBeInTheDocument();
+
     // Peek value
+    let peekButton = screen.getByRole('button', { name: 'Peek' });
+    userEvent.click(peekButton);
 
-    //Push two values
-
-    // Run empty check test
-
-    // Expect size == 2
-
-    // Peek value
+    let peekValueResult = screen.getByText("The top of the stack is: Second value");
+    expect(peekValueResult).toBeInTheDocument();
 
     // Pop a value
+    let popButton = screen.getByRole('button', { name: 'Pop' });
+    userEvent.click(popButton);
 
-    // Peek new value
+    // Size is 1
+    sizeResult = screen.getByText("Size: 1");
+    expect(sizeResult).toBeInTheDocument();
+
+    // Peek new top of stack
+    userEvent.click(peekButton);
+    
+    peekValueResult = screen.getByText("The top of the stack is: First value");
+    expect(peekValueResult).toBeInTheDocument();
 
   });
 });
