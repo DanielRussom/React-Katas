@@ -88,4 +88,17 @@ describe("stack exercise", () => {
     
       expect(emptyStack).toBeInTheDocument();
     });
+
+    it('does not display that the stack is empty', () => {
+      render(<StackExercise />);
+
+      var inputBox = screen.getByPlaceholderText("New value");
+      userEvent.type(inputBox, "value");
+      let pushButton = screen.getByRole('button', { name: 'Push' });
+      userEvent.click(pushButton);
+    
+      var emptyStack = screen.queryByText("The stack is empty");
+      expect(emptyStack).not.toBeInTheDocument();
+    });
+
 });
