@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import './App.css';
-import StackExercise from './tree-generator/StackExercise';
+import StackExercise from './stack-exercise/StackExercise';
 import TreeGenerator from './tree-generator/TreeGenerator';
 
 function App() {

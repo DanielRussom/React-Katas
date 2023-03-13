@@ -5,7 +5,7 @@ function StackExercise() {
     const [sizeMessage, setSizeMessage] = useState("The stack is empty");
 
     function pushValue() : void {
-        setSizeMessage("");
+        setSizeMessage("Size: 1");
     }
 
     return (

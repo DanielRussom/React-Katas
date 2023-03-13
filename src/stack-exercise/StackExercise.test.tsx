@@ -3,13 +3,11 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import StackExercise from "./StackExercise";
 
-describe("Acceptance test", () => {
+describe("Stack Exercise Feature", () => {
 
   it('has working push, pop, empty check, size, and peek functions', () => {
     render(<StackExercise />);
-
-    // Empty check
-    let emptyCheckResult = screen.getByText("The stack is empty");
+    let emptyCheckResult : HTMLElement | null = screen.getByText("The stack is empty");
     expect(emptyCheckResult).toBeInTheDocument();
 
     // Push two values
@@ -25,7 +23,7 @@ describe("Acceptance test", () => {
     userEvent.click(pushButton);
 
     // Do we need to re-set this value? Probably... 
-    // emptyCheckResult = screen.getByText("The stack is empty");
+    emptyCheckResult = screen.queryByText("The stack is empty");
     expect(emptyCheckResult).not.toBeInTheDocument();
 
     // Size is 2 check
@@ -100,5 +98,18 @@ describe("stack exercise", () => {
       var emptyStack = screen.queryByText("The stack is empty");
       expect(emptyStack).not.toBeInTheDocument();
     });
+
+    it('displays that the size is 1', () => {
+      render(<StackExercise />);
+
+      var inputBox = screen.getByPlaceholderText("New value");
+      userEvent.type(inputBox, "value");
+      let pushButton = screen.getByRole('button', { name: 'Push' });
+      userEvent.click(pushButton);
+
+
+      var sizeDisplay = screen.queryByText("Size: 1");
+      expect(sizeDisplay).toBeInTheDocument();
+    })
 
 });
