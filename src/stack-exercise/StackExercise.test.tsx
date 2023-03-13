@@ -108,7 +108,21 @@ describe("stack exercise", () => {
       userEvent.click(pushButton);
 
 
-      var sizeDisplay = screen.queryByText("Size: 1");
+      var sizeDisplay = screen.getByText("Size: 1");
+      expect(sizeDisplay).toBeInTheDocument();
+    })
+
+    it('displays that the size is 2', () => {
+      render(<StackExercise />);
+
+      var inputBox = screen.getByPlaceholderText("New value");
+      userEvent.type(inputBox, "value");
+      let pushButton = screen.getByRole('button', { name: 'Push' });
+      userEvent.click(pushButton);
+      userEvent.click(pushButton);
+
+
+      var sizeDisplay = screen.getByText("Size: 2");
       expect(sizeDisplay).toBeInTheDocument();
     })
 
