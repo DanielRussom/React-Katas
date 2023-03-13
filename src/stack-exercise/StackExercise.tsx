@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 
 function StackExercise() {
-    const [sizeMessage, setSizeMessage] = useState("The stack is empty");
+    const [sizeMessage, setSizeMessage] = useState("");
     const [timesPushed, setTimesPushed] = useState(0);
 
     function pushValue() : void {

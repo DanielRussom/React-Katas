@@ -7,7 +7,7 @@ describe("Stack Exercise Feature", () => {
 
   it('has working push, pop, empty check, size, and peek functions', () => {
     render(<StackExercise />);
-    let emptyCheckResult : HTMLElement | null = screen.getByText("The stack is empty");
+    let emptyCheckResult: HTMLElement | null = screen.getByText("The stack is empty");
     expect(emptyCheckResult).toBeInTheDocument();
 
     // Push two values
@@ -17,7 +17,7 @@ describe("Stack Exercise Feature", () => {
 
     let pushButton = screen.getByRole('button', { name: 'Push' });
     userEvent.click(pushButton);
-    
+
     const secondValue = "Second value"
     userEvent.type(newValueInputBox, secondValue);
     userEvent.click(pushButton);
@@ -47,7 +47,7 @@ describe("Stack Exercise Feature", () => {
 
     // Peek new top of stack
     userEvent.click(peekButton);
-    
+
     peekValueResult = screen.getByText(`The top of the stack is: ${firstValue}`);
     expect(peekValueResult).toBeInTheDocument();
 
@@ -55,75 +55,72 @@ describe("Stack Exercise Feature", () => {
 });
 
 describe("stack exercise", () => {
-    it('contains a stack exercise title', () => {
-      render(<StackExercise />);
-    
-      const title = screen.getByText("Stack:");
-    
-      expect(title).toBeInTheDocument();
-    });
+  function pushValue() {
+    var inputBox = screen.getByPlaceholderText("New value");
+    userEvent.type(inputBox, "value");
+    let pushButton = screen.getByRole('button', { name: 'Push' });
+    userEvent.click(pushButton);
+  }
 
-    it('contains a push button', () => {
-      render(<StackExercise />);
-    
-      var pushButton = screen.getByRole('button', { name: 'Push' });
-    
-      expect(pushButton).toBeInTheDocument();
-    });
+  it('contains a stack exercise title', () => {
+    render(<StackExercise />);
 
-    it('contains a push input box', () => {
-      render(<StackExercise />);
-    
-      var inputBox = screen.getByPlaceholderText("New value");
-    
-      expect(inputBox).toBeInTheDocument();
-    });
+    const title = screen.getByText("Stack:");
 
-    it('displays that the stack is empty', () => {
-      render(<StackExercise />);
-    
-      var emptyStack = screen.getByText("The stack is empty");
-    
-      expect(emptyStack).toBeInTheDocument();
-    });
+    expect(title).toBeInTheDocument();
+  });
 
-    it('does not display that the stack is empty', () => {
-      render(<StackExercise />);
+  it('contains a push button', () => {
+    render(<StackExercise />);
 
-      var inputBox = screen.getByPlaceholderText("New value");
-      userEvent.type(inputBox, "value");
-      let pushButton = screen.getByRole('button', { name: 'Push' });
-      userEvent.click(pushButton);
-    
-      var emptyStack = screen.queryByText("The stack is empty");
-      expect(emptyStack).not.toBeInTheDocument();
-    });
+    var pushButton = screen.getByRole('button', { name: 'Push' });
 
-    it('displays that the size is 1', () => {
-      render(<StackExercise />);
+    expect(pushButton).toBeInTheDocument();
+  });
 
-      var inputBox = screen.getByPlaceholderText("New value");
-      userEvent.type(inputBox, "value");
-      let pushButton = screen.getByRole('button', { name: 'Push' });
-      userEvent.click(pushButton);
+  it('contains a push input box', () => {
+    render(<StackExercise />);
 
+    var inputBox = screen.getByPlaceholderText("New value");
 
-      var sizeDisplay = screen.getByText("Size: 1");
-      expect(sizeDisplay).toBeInTheDocument();
-    })
+    expect(inputBox).toBeInTheDocument();
+  });
 
-    it('displays that the size is 2', () => {
-      render(<StackExercise />);
+  it('displays that the stack is empty', () => {
+    render(<StackExercise />);
 
-      var inputBox = screen.getByPlaceholderText("New value");
-      userEvent.type(inputBox, "value");
-      let pushButton = screen.getByRole('button', { name: 'Push' });
-      userEvent.click(pushButton);
-      userEvent.click(pushButton);
+    var emptyStack = screen.getByText("The stack is empty");
 
+    expect(emptyStack).toBeInTheDocument();
+  });
 
-      var sizeDisplay = screen.getByText("Size: 2");
-      expect(sizeDisplay).toBeInTheDocument();
-    })
+  it('does not display that the stack is empty', () => {
+    render(<StackExercise />);
+
+    pushValue();
+
+    var emptyStack = screen.queryByText("The stack is empty");
+    expect(emptyStack).not.toBeInTheDocument();
+  });
+
+  it('displays that the size is 1', () => {
+    render(<StackExercise />);
+
+    pushValue();
+
+    var sizeDisplay = screen.getByText("Size: 1");
+    expect(sizeDisplay).toBeInTheDocument();
+  })
+
+  it('displays that the size is 2', () => {
+    render(<StackExercise />);
+
+    pushValue();
+    pushValue();
+
+    var sizeDisplay = screen.getByText("Size: 2");
+    expect(sizeDisplay).toBeInTheDocument();
+  })
 
 });
+
