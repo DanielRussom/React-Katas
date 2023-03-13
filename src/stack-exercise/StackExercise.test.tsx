@@ -103,22 +103,18 @@ describe("stack exercise", () => {
     expect(emptyStack).not.toBeInTheDocument();
   });
 
-  it('displays that the size is 1', () => {
+  it.each([
+    [1]
+    [2]
+    [3]
+  ])('displays that the size is 1', (expectedSize) => {
     render(<StackExercise />);
 
-    pushValue();
+    for(let i = 0; i < expectedSize; i++){
+      pushValue();
+    }
 
-    var sizeDisplay = screen.getByText("Size: 1");
-    expect(sizeDisplay).toBeInTheDocument();
-  })
-
-  it('displays that the size is 2', () => {
-    render(<StackExercise />);
-
-    pushValue();
-    pushValue();
-
-    var sizeDisplay = screen.getByText("Size: 2");
+    var sizeDisplay = screen.getByText(`Size: ${expectedSize}`);
     expect(sizeDisplay).toBeInTheDocument();
   })
 
