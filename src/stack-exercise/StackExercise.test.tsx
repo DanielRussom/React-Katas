@@ -55,9 +55,9 @@ describe("Stack Exercise Feature", () => {
 });
 
 describe("stack exercise", () => {
-  function pushValue() {
+  function pushValue(value = "value") {
     var inputBox = screen.getByPlaceholderText("New value");
-    userEvent.type(inputBox, "value");
+    userEvent.type(inputBox, value);
     let pushButton = screen.getByRole('button', { name: 'Push' });
     userEvent.click(pushButton);
   }
@@ -70,53 +70,78 @@ describe("stack exercise", () => {
     expect(title).toBeInTheDocument();
   });
 
-  it('contains a push button', () => {
-    render(<StackExercise />);
+  describe("push functionality", () => {
+    it('has a button', () => {
+      render(<StackExercise />);
 
-    var pushButton = screen.getByRole('button', { name: 'Push' });
+      var pushButton = screen.getByRole('button', { name: 'Push' });
 
-    expect(pushButton).toBeInTheDocument();
+      expect(pushButton).toBeInTheDocument();
+    });
+
+    it('has an input box', () => {
+      render(<StackExercise />);
+
+      var inputBox = screen.getByPlaceholderText("New value");
+
+      expect(inputBox).toBeInTheDocument();
+    });
   });
 
-  it('contains a push input box', () => {
-    render(<StackExercise />);
+  describe("size display", () => {
+    it('displays that the stack is empty', () => {
+      render(<StackExercise />);
 
-    var inputBox = screen.getByPlaceholderText("New value");
+      var emptyStack = screen.getByText("The stack is empty");
 
-    expect(inputBox).toBeInTheDocument();
-  });
+      expect(emptyStack).toBeInTheDocument();
+    });
 
-  it('displays that the stack is empty', () => {
-    render(<StackExercise />);
+    it('does not display that the stack is empty', () => {
+      render(<StackExercise />);
 
-    var emptyStack = screen.getByText("The stack is empty");
-
-    expect(emptyStack).toBeInTheDocument();
-  });
-
-  it('does not display that the stack is empty', () => {
-    render(<StackExercise />);
-
-    pushValue();
-
-    var emptyStack = screen.queryByText("The stack is empty");
-    expect(emptyStack).not.toBeInTheDocument();
-  });
-
-  it.each([
-    [1],
-    [2],
-    [3]
-  ])('displays that the size is 1', (expectedSize) => {
-    render(<StackExercise />);
-
-    for(let i = 0; i < expectedSize; i++){
       pushValue();
-    }
 
-    var sizeDisplay = screen.getByText(`Size: ${expectedSize}`);
-    expect(sizeDisplay).toBeInTheDocument();
-  })
+      var emptyStack = screen.queryByText("The stack is empty");
+      expect(emptyStack).not.toBeInTheDocument();
+    });
 
+    it.each([
+      [1],
+      [2],
+      [3]
+    ])('displays that the size is 1', (expectedSize) => {
+      render(<StackExercise />);
+
+      for (let i = 0; i < expectedSize; i++) {
+        pushValue();
+      }
+
+      var sizeDisplay = screen.getByText(`Size: ${expectedSize}`);
+      expect(sizeDisplay).toBeInTheDocument();
+    })
+  });
+
+  describe("peek functionality", () => {
+    it("has a button", () => {
+      render(<StackExercise />);
+
+      var peekButton = screen.getByRole('button', { name: 'Peek' });
+
+      expect(peekButton).toBeInTheDocument();
+    });
+
+    it("displays testValue", () => {
+      render(<StackExercise />);
+      
+      pushValue("testValue");
+
+      var peekButton = screen.getByRole('button', { name: 'Peek' });
+      userEvent.click(peekButton);
+
+      var peekedValue = screen.getByText(`The top of the stack is testValue`);
+      expect(peekedValue).toBeInTheDocument();
+    });
+  });
 });
 

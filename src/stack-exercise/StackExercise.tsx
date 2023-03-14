@@ -6,7 +6,7 @@ function StackExercise() {
     const [timesPushed, setTimesPushed] = useState(0);
 
     function pushValue() : void {
-        setTimesPushed(timesPushed + 1);
+        setTimesPushed(timesPushed + 1); // 0 => 1
     }
 
     useEffect(() => {
@@ -22,7 +22,9 @@ function StackExercise() {
         <p>Stack:</p>
         <input placeholder='New value'/>
         <button onClick={pushValue}>Push</button>
+        <button>Peek</button>
         <p>{sizeMessage}</p>
+        <p>The top of the stack is testValue</p>
     </React.Fragment>
 );
 }
