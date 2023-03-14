@@ -31,9 +31,6 @@ describe("Stack Exercise Feature", () => {
     expect(sizeResult).toBeInTheDocument();
 
     // Peek value
-    let peekButton = screen.getByRole('button', { name: 'Peek' });
-    userEvent.click(peekButton);
-
     let peekValueResult = screen.getByText(`The top of the stack is: ${secondValue}`);
     expect(peekValueResult).toBeInTheDocument();
 
@@ -46,8 +43,6 @@ describe("Stack Exercise Feature", () => {
     expect(sizeResult).toBeInTheDocument();
 
     // Peek new top of stack
-    userEvent.click(peekButton);
-
     peekValueResult = screen.getByText(`The top of the stack is: ${firstValue}`);
     expect(peekValueResult).toBeInTheDocument();
 
@@ -140,12 +135,21 @@ describe("stack exercise", () => {
 
         pushValue(expectedValue);
 
-        var peekButton = screen.getByRole('button', { name: 'Peek' });
-        userEvent.click(peekButton);
-
-        var peekedValue = screen.getByText(`The top of the stack is ${expectedValue}`);
+        var peekedValue = screen.getByText(`The top of the stack is: ${expectedValue}`);
         expect(peekedValue).toBeInTheDocument();
       });
+
+      it("displays top value after two pushes", () => {
+          render(<StackExercise />);
+  
+          pushValue("firstValue");
+          pushValue("secondValue");
+
+          var peekedValue = screen.getByText(`The top of the stack is: secondValue`);
+          expect(peekedValue).toBeInTheDocument();
+        });
+
+        it("doesn't display the top of the stack when empty")
   });
 });
 

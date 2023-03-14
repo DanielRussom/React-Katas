@@ -28,7 +28,7 @@ function StackExercise() {
         <button onClick={pushValue}>Push</button>
         <button>Peek</button>
         <p>{sizeMessage}</p>
-        <p>The top of the stack is {pushedValue}</p>
+        <p>The top of the stack is: {pushedValue}</p>
     </React.Fragment>
 );
 }
