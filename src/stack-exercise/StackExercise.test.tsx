@@ -104,8 +104,8 @@ describe("stack exercise", () => {
   });
 
   it.each([
-    [1]
-    [2]
+    [1],
+    [2],
     [3]
   ])('displays that the size is 1', (expectedSize) => {
     render(<StackExercise />);
