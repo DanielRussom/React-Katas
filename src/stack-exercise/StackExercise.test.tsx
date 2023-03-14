@@ -149,7 +149,12 @@ describe("stack exercise", () => {
           expect(peekedValue).toBeInTheDocument();
         });
 
-        it("doesn't display the top of the stack when empty")
+        it("doesn't display the top of the stack when empty", () => {
+          var peekedValue = screen.queryByText(`The top of the stack is: `);
+
+          
+          expect(peekedValue).toBeInTheDocument();
+        })
   });
 });
 
