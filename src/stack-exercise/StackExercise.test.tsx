@@ -131,17 +131,21 @@ describe("stack exercise", () => {
       expect(peekButton).toBeInTheDocument();
     });
 
-    it("displays testValue", () => {
-      render(<StackExercise />);
-      
-      pushValue("testValue");
+    it.each([
+      ["testValue"],
+      ["anotherValue"]
+    ])
+      ("displays top value", (expectedValue) => {
+        render(<StackExercise />);
 
-      var peekButton = screen.getByRole('button', { name: 'Peek' });
-      userEvent.click(peekButton);
+        pushValue(expectedValue);
 
-      var peekedValue = screen.getByText(`The top of the stack is testValue`);
-      expect(peekedValue).toBeInTheDocument();
-    });
+        var peekButton = screen.getByRole('button', { name: 'Peek' });
+        userEvent.click(peekButton);
+
+        var peekedValue = screen.getByText(`The top of the stack is ${expectedValue}`);
+        expect(peekedValue).toBeInTheDocument();
+      });
   });
 });
 
