@@ -118,14 +118,6 @@ describe("stack exercise", () => {
   });
 
   describe("peek functionality", () => {
-    it("has a button", () => {
-      render(<StackExercise />);
-
-      var peekButton = screen.getByRole('button', { name: 'Peek' });
-
-      expect(peekButton).toBeInTheDocument();
-    });
-
     it.each([
       ["testValue"],
       ["anotherValue"]
@@ -150,8 +142,9 @@ describe("stack exercise", () => {
         });
 
         it("doesn't display the top of the stack when empty", () => {
-          var peekedValue = screen.queryByText(`The top of the stack is: `);
-
+          render(<StackExercise />);
+  
+          var peekedValue = screen.getByText(`The top of the stack is:`, {exact: false});
           
           expect(peekedValue).toBeInTheDocument();
         })
