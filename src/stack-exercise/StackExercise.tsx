@@ -25,6 +25,7 @@ function StackExercise() {
     <React.Fragment>
         <p>Stack:</p>
         <input placeholder='New value' value={newValue} onChange={e => setNewValue(e.target.value)}/>
+        <button>Pop</button>
         <button onClick={pushValue}>Push</button>
         <p>{sizeMessage}</p>
         {(pushedValue) ? <p>The top of the stack is: {pushedValue}</p> : null }

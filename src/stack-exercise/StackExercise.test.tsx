@@ -150,5 +150,15 @@ describe("stack exercise", () => {
         })
   });
 
+  describe("pop functionality", () => {
+    it('has a button', () => {
+      render(<StackExercise />);
+
+      var popButton = screen.getByRole('button', { name: 'Pop' });
+
+      expect(popButton).toBeInTheDocument();
+    });
+  });
+
   });
 
