@@ -3,12 +3,10 @@ import { useEffect, useState } from 'react';
 
 function StackExercise() {
     const [sizeMessage, setSizeMessage] = useState("");
-    const [timesPushed, setTimesPushed] = useState(0);
     const [newValue, setNewValue] = useState("");
     const [storedValues, setStoredValues] = useState<string[]>([])
 
     function pushValue() : void {
-        setTimesPushed(timesPushed + 1); // 0 => 1
         setStoredValues((previousValues) => [ newValue, ...previousValues]);
         setNewValue("");
     }
@@ -18,12 +16,12 @@ function StackExercise() {
     }
 
     useEffect(() => {
-        if(timesPushed === 0){
+        if(storedValues.length === 0){
             setSizeMessage(`The stack is empty`);
             return;
         }
-        setSizeMessage(`Size: ${timesPushed}`);
-    }, [timesPushed])
+        setSizeMessage(`Size: ${storedValues.length}`);
+    }, [storedValues])
 
     return (
     <React.Fragment>

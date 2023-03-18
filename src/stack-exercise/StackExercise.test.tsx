@@ -176,6 +176,19 @@ describe("stack exercise", () => {
       var peekedValue = screen.getByText(`The top of the stack is: firstValue`);
       expect(peekedValue).toBeInTheDocument();
     })
+
+    it('updates the size correctly after popping', () => {
+      render(<StackExercise />);
+
+      pushValue("firstValue");
+      pushValue("secondValue");
+
+      var popButton = screen.getByRole('button', { name: 'Pop' });
+      userEvent.click(popButton);
+      
+      var sizeDisplay = screen.getByText(`Size: 1`);
+      expect(sizeDisplay).toBeInTheDocument();
+    })
   });
 
 });
