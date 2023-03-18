@@ -7,6 +7,9 @@ function StackExercise() {
     const [storedValues, setStoredValues] = useState<string[]>([])
 
     function pushValue() : void {
+        if(newValue === ""){
+            return;
+        }
         setStoredValues((previousValues) => [ newValue, ...previousValues]);
         setNewValue("");
     }
