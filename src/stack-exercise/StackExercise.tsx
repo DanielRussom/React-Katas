@@ -5,12 +5,16 @@ function StackExercise() {
     const [sizeMessage, setSizeMessage] = useState("");
     const [timesPushed, setTimesPushed] = useState(0);
     const [newValue, setNewValue] = useState("");
-    const [pushedValue, setPushedValue] = useState("");
+    const [storedValues, setStoredValues] = useState<string[]>([])
 
     function pushValue() : void {
-        setPushedValue(newValue);
-        setNewValue("");
         setTimesPushed(timesPushed + 1); // 0 => 1
+        setStoredValues((previousValues) => [ newValue, ...previousValues]);
+        setNewValue("");
+    }
+
+    function popValue() : void {
+       setStoredValues(storedValues.slice(1));
     }
 
     useEffect(() => {
@@ -25,10 +29,10 @@ function StackExercise() {
     <React.Fragment>
         <p>Stack:</p>
         <input placeholder='New value' value={newValue} onChange={e => setNewValue(e.target.value)}/>
-        <button>Pop</button>
         <button onClick={pushValue}>Push</button>
+        <button onClick={popValue}>Pop</button>
         <p>{sizeMessage}</p>
-        {(pushedValue) ? <p>The top of the stack is: {pushedValue}</p> : null }
+        {(storedValues[0]) ? <p>The top of the stack is: {storedValues[0]}</p> : null }
     </React.Fragment>
 );
 }
