@@ -3,6 +3,10 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import App from './App';
 
+jest.mock("./stack-exercise/StackExercise", () => () =>{
+  return <div data-testId="stackExercise"/>
+});
+
 describe("App", () => {
   const renderApp = () => render(<App />);
 
@@ -50,9 +54,8 @@ describe("App", () => {
       const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
       userEvent.click(stackExerciseButton);
 
-      const stackTitle = screen.getByText("Stack:");
-
-      expect(stackTitle).toBeInTheDocument();
+      const stackComponent = screen.getByTestId("stackExercise");
+      expect(stackComponent).toBeInTheDocument();
     });
 
     it("displays instead of tree generator", () => {
@@ -67,8 +70,8 @@ describe("App", () => {
       const generateTreeButton = screen.queryByRole('button', { name: 'Generate Tree' });
       expect(generateTreeButton).toBeNull();
 
-      const stackTitle = screen.getByText("Stack:");
-      expect(stackTitle).toBeInTheDocument();
+      const stackComponent = screen.getByTestId("stackExercise");
+      expect(stackComponent).toBeInTheDocument();
     })
   });
 });
