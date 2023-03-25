@@ -3,9 +3,15 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import App from './App';
 
-jest.mock("./stack-exercise/StackExercise", () => () =>{
+jest.mock("./stack-exercise/StackExercise", () => () => {
   return <div data-testId="stackExercise"/>
 });
+
+
+jest.mock("./tree-generator/TreeGenerator", () => () => {
+  return <div data-testid="tree-generator"/>
+});
+
 
 describe("App", () => {
   const renderApp = () => render(<App />);
@@ -33,9 +39,8 @@ describe("App", () => {
       const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
       userEvent.click(treeGeneratorNavigationButton);
 
-      const generateTreeButton = screen.getByRole('button', { name: 'Generate Tree' });
-
-      expect(generateTreeButton).toBeInTheDocument();
+      const treeComponent = screen.getByTestId("tree-generator");
+      expect(treeComponent).toBeInTheDocument();
     });
   })
 
