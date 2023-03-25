@@ -14,9 +14,14 @@ jest.mock("./tree-generator/TreeGenerator", () => () => {
 
 
 describe("App", () => {
+
   const renderApp = () => render(<App />);
 
   const componentContainer = () => screen.queryByTestId("component-container");
+
+  function getButton(buttonName : string) {
+    return screen.getByRole('button', { name: buttonName });
+  };
 
   it('does not display content in the component container', () => {
     renderApp();
@@ -28,7 +33,7 @@ describe("App", () => {
     it('contains a display button', () => {
       renderApp();
 
-      const treeGeneratorButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+      const treeGeneratorButton = getButton('Christmas Tree Generator');
 
       expect(treeGeneratorButton).toBeInTheDocument();
     });
@@ -36,7 +41,7 @@ describe("App", () => {
     it('is displayed', () => {
       renderApp();
 
-      const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+      const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
       userEvent.click(treeGeneratorNavigationButton);
 
       const treeComponent = screen.getByTestId("tree-generator");
@@ -48,7 +53,7 @@ describe("App", () => {
     it('contains a display button', () => {
       renderApp();
 
-      const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+      const stackExerciseButton = getButton('Stack Exercise');
 
       expect(stackExerciseButton).toBeInTheDocument();
     });
@@ -56,7 +61,7 @@ describe("App", () => {
     it('is displayed', () => {
       renderApp();
 
-      const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+      const stackExerciseButton = getButton('Stack Exercise');
       userEvent.click(stackExerciseButton);
 
       const stackComponent = screen.getByTestId("stackExercise");
@@ -66,14 +71,14 @@ describe("App", () => {
     it("displays instead of tree generator", () => {
       renderApp();
       
-      const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+      const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
       userEvent.click(treeGeneratorNavigationButton);
 
-      const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
+      const stackExerciseButton = getButton('Stack Exercise');
       userEvent.click(stackExerciseButton);
       
-      const generateTreeButton = screen.queryByRole('button', { name: 'Generate Tree' });
-      expect(generateTreeButton).toBeNull();
+      const treeComponent = screen.queryByTestId("tree-generator");
+      expect(treeComponent).toBeNull();
 
       const stackComponent = screen.getByTestId("stackExercise");
       expect(stackComponent).toBeInTheDocument();
