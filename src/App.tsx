@@ -6,17 +6,15 @@ import TreeGenerator from './tree-generator/TreeGenerator';
 
 function App() {
 
-  const [showTreeGenerator, setShowTreeGenerator] = useState(false);
-  const [showStackExercise, setShowStackExercise] = useState(false);
+  const [displayedComponent, setDisplayedComponent] = useState<JSX.Element>();
 
   return (
     <div className="App">
-      <button onClick={() => setShowTreeGenerator(!showTreeGenerator)}>Christmas Tree Generator</button>
-      <button onClick={() => setShowStackExercise(!showStackExercise)}>Stack Exercise</button>
+      <button onClick={() => setDisplayedComponent(<TreeGenerator data-testid="tree-generator"/>)}>Christmas Tree Generator</button>
+      <button onClick={() => setDisplayedComponent(<StackExercise/>)}>Stack Exercise</button>
 
       <div data-testid="component-container">
-        {(showTreeGenerator) ? <TreeGenerator data-testid="tree-generator"/> : null}
-        {(showStackExercise) ? <StackExercise/> : null}
+        {displayedComponent}
       </div>
     </div>
   );

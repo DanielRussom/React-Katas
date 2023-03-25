@@ -33,16 +33,6 @@ describe("App", () => {
 
       expect(generateTreeButton).toBeInTheDocument();
     });
-
-    it('is hidden', () => {
-      renderApp();
-
-      const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
-      userEvent.click(treeGeneratorNavigationButton);
-      userEvent.click(treeGeneratorNavigationButton);
-
-      expect(componentContainer()).toBeEmptyDOMElement()
-    });
   })
 
   describe("stack exercise", () => {
@@ -65,15 +55,21 @@ describe("App", () => {
       expect(stackTitle).toBeInTheDocument();
     });
 
-    it('is hidden', () => {
+    it("displays instead of tree generator", () => {
       renderApp();
+      
+      const treeGeneratorNavigationButton = screen.getByRole('button', { name: 'Christmas Tree Generator' });
+      userEvent.click(treeGeneratorNavigationButton);
 
       const stackExerciseButton = screen.getByRole('button', { name: 'Stack Exercise' });
       userEvent.click(stackExerciseButton);
-      userEvent.click(stackExerciseButton);
+      
+      const generateTreeButton = screen.queryByRole('button', { name: 'Generate Tree' });
+      expect(generateTreeButton).toBeNull();
 
-      expect(componentContainer()).toBeEmptyDOMElement()
-    });
+      const stackTitle = screen.getByText("Stack:");
+      expect(stackTitle).toBeInTheDocument();
+    })
   });
 });
 
