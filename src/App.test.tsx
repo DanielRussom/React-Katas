@@ -3,10 +3,13 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import App from './App';
 
+jest.mock("./snake/Snake", () => () => {
+  return <div data-testId="snake"/>
+});
+
 jest.mock("./stack-exercise/StackExercise", () => () => {
   return <div data-testId="stackExercise"/>
 });
-
 
 jest.mock("./tree-generator/TreeGenerator", () => () => {
   return <div data-testid="tree-generator"/>
@@ -84,6 +87,26 @@ describe("App", () => {
       expect(stackComponent).toBeInTheDocument();
     })
   });
+
+  describe("snake", () => {
+    it('contains a display button', () => {
+      renderApp();
+
+      const snakeButton = getButton('Snake');
+
+      expect(snakeButton).toBeInTheDocument();
+    });
+
+    it('is displayed', () => {
+      renderApp();
+
+      const snakeButton = getButton('Snake');
+      userEvent.click(snakeButton);
+
+      const snakeComponent = screen.getByTestId("snake");
+      expect(snakeComponent).toBeInTheDocument();
+    });
+  })
 });
 
 
