@@ -2,11 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import StackExercise from "./StackExercise";
-
-
-function getButton() {
-  return screen.getByRole('button', { name: 'Push' });
-}
+import { getButton } from "../../testExtensions/screenTestExtensions";
 
 describe("Stack Exercise Feature", () => {
 
@@ -20,7 +16,7 @@ describe("Stack Exercise Feature", () => {
     const firstValue = "First value"
     userEvent.type(newValueInputBox, firstValue);
 
-    let pushButton = getButton();
+    let pushButton = getButton("Push");
     userEvent.click(pushButton);
 
     const secondValue = "Second value"
@@ -40,7 +36,7 @@ describe("Stack Exercise Feature", () => {
     expect(peekValueResult).toBeInTheDocument();
 
     // Pop a value
-    let popButton = screen.getByRole('button', { name: 'Pop' });
+    let popButton = getButton('Pop');
     userEvent.click(popButton);
 
     // Size is 1
@@ -55,10 +51,11 @@ describe("Stack Exercise Feature", () => {
 });
 
 describe("stack exercise", () => {
+
   function pushValue(value = "value") {
     var inputBox = screen.getByPlaceholderText("New value");
     userEvent.type(inputBox, value);
-    let pushButton = screen.getByRole('button', { name: 'Push' });
+    let pushButton = getButton("Push");
     userEvent.click(pushButton);
   }
 
@@ -74,7 +71,7 @@ describe("stack exercise", () => {
     it('has a button', () => {
       render(<StackExercise />);
 
-      var pushButton = screen.getByRole('button', { name: 'Push' });
+      let pushButton = getButton("Push");
 
       expect(pushButton).toBeInTheDocument();
     });
@@ -90,7 +87,7 @@ describe("stack exercise", () => {
     it('not accept an empty string', () => {
       render(<StackExercise />);
 
-      userEvent.click(screen.getByRole('button', { name: 'Push' }));
+      userEvent.click(getButton("Push"));
 
       var emptyStack = screen.queryByText("The stack is empty");
       expect(emptyStack).toBeInTheDocument();
@@ -169,7 +166,7 @@ describe("stack exercise", () => {
     it('has a button', () => {
       render(<StackExercise />);
 
-      var popButton = screen.getByRole('button', { name: 'Pop' });
+      let popButton = getButton('Pop');
 
       expect(popButton).toBeInTheDocument();
     });
@@ -180,7 +177,7 @@ describe("stack exercise", () => {
       pushValue("firstValue");
       pushValue("secondValue");
 
-      var popButton = screen.getByRole('button', { name: 'Pop' });
+      let popButton = getButton('Pop');
       userEvent.click(popButton);
       
       var peekedValue = screen.getByText(`The top of the stack is: firstValue`);
@@ -193,7 +190,7 @@ describe("stack exercise", () => {
       pushValue("firstValue");
       pushValue("secondValue");
 
-      var popButton = screen.getByRole('button', { name: 'Pop' });
+      let popButton = getButton('Pop');
       userEvent.click(popButton);
       
       var sizeDisplay = screen.getByText(`Size: 1`);
