@@ -4,15 +4,15 @@ import * as React from 'react';
 import App from './App';
 
 jest.mock("./snake/Snake", () => () => {
-  return <div data-testId="snake"/>
+  return <div data-testId="snake" />
 });
 
 jest.mock("./stack-exercise/StackExercise", () => () => {
-  return <div data-testId="stackExercise"/>
+  return <div data-testId="stackExercise" />
 });
 
 jest.mock("./tree-generator/TreeGenerator", () => () => {
-  return <div data-testid="tree-generator"/>
+  return <div data-testid="tree-generator" />
 });
 
 
@@ -22,7 +22,7 @@ describe("App", () => {
 
   const componentContainer = () => screen.queryByTestId("component-container");
 
-  function getButton(buttonName : string) {
+  function getButton(buttonName: string) {
     return screen.getByRole('button', { name: buttonName });
   };
 
@@ -32,81 +32,51 @@ describe("App", () => {
     expect(componentContainer()).toBeEmptyDOMElement()
   });
 
-  describe("tree generator", () => {
-    it('contains a display button', () => {
-      renderApp();
+  it('tree generator is displayed', () => {
+    renderApp();
 
-      const treeGeneratorButton = getButton('Christmas Tree Generator');
+    const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
+    userEvent.click(treeGeneratorNavigationButton);
 
-      expect(treeGeneratorButton).toBeInTheDocument();
-    });
-
-    it('is displayed', () => {
-      renderApp();
-
-      const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
-      userEvent.click(treeGeneratorNavigationButton);
-
-      const treeComponent = screen.getByTestId("tree-generator");
-      expect(treeComponent).toBeInTheDocument();
-    });
-  })
-
-  describe("stack exercise", () => {
-    it('contains a display button', () => {
-      renderApp();
-
-      const stackExerciseButton = getButton('Stack Exercise');
-
-      expect(stackExerciseButton).toBeInTheDocument();
-    });
-
-    it('is displayed', () => {
-      renderApp();
-
-      const stackExerciseButton = getButton('Stack Exercise');
-      userEvent.click(stackExerciseButton);
-
-      const stackComponent = screen.getByTestId("stackExercise");
-      expect(stackComponent).toBeInTheDocument();
-    });
-
-    it("displays instead of tree generator", () => {
-      renderApp();
-      
-      const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
-      userEvent.click(treeGeneratorNavigationButton);
-
-      const stackExerciseButton = getButton('Stack Exercise');
-      userEvent.click(stackExerciseButton);
-      
-      const treeComponent = screen.queryByTestId("tree-generator");
-      expect(treeComponent).toBeNull();
-
-      const stackComponent = screen.getByTestId("stackExercise");
-      expect(stackComponent).toBeInTheDocument();
-    })
+    const treeComponent = screen.getByTestId("tree-generator");
+    expect(treeComponent).toBeInTheDocument();
   });
 
-  describe("snake", () => {
-    it('contains a display button', () => {
-      renderApp();
+  it('stack exercise is displayed', () => {
+    renderApp();
 
-      const snakeButton = getButton('Snake');
+    const stackExerciseButton = getButton('Stack Exercise');
+    userEvent.click(stackExerciseButton);
 
-      expect(snakeButton).toBeInTheDocument();
-    });
+    const stackComponent = screen.getByTestId("stackExercise");
+    expect(stackComponent).toBeInTheDocument();
+  });
 
-    it('is displayed', () => {
-      renderApp();
+  it("displays stack exercise after tree generator", () => {
+    renderApp();
 
-      const snakeButton = getButton('Snake');
-      userEvent.click(snakeButton);
+    const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
+    userEvent.click(treeGeneratorNavigationButton);
 
-      const snakeComponent = screen.getByTestId("snake");
-      expect(snakeComponent).toBeInTheDocument();
-    });
+    const stackExerciseButton = getButton('Stack Exercise');
+    userEvent.click(stackExerciseButton);
+
+    const treeComponent = screen.queryByTestId("tree-generator");
+    expect(treeComponent).toBeNull();
+
+    const stackComponent = screen.getByTestId("stackExercise");
+    expect(stackComponent).toBeInTheDocument();
   })
+
+  it('snake is displayed', () => {
+    renderApp();
+
+    const snakeButton = getButton('Snake');
+    userEvent.click(snakeButton);
+
+    const snakeComponent = screen.getByTestId("snake");
+    expect(snakeComponent).toBeInTheDocument();
+  });
 });
 
 
