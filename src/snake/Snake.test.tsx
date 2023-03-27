@@ -9,6 +9,14 @@ describe("snake game", () => {
         const leftButton = screen.getByRole('button', { name: "<" });
 
         expect(leftButton).toBeInTheDocument();
+    });
+
+    it("has a right button", () =>{
+        render(<Snake/>);
+
+        const rightButton = screen.getByRole('button', { name: ">" });
+
+        expect(rightButton).toBeInTheDocument();
 
     });
 });
