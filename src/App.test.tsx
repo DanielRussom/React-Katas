@@ -52,6 +52,16 @@ describe("App", () => {
     expect(stackComponent).toBeInTheDocument();
   });
 
+  it('snake is displayed', () => {
+    renderApp();
+
+    const snakeButton = getButton('Snake');
+    userEvent.click(snakeButton);
+
+    const snakeComponent = screen.getByTestId("snake");
+    expect(snakeComponent).toBeInTheDocument();
+  });
+
   it("displays stack exercise after tree generator", () => {
     renderApp();
 
@@ -67,16 +77,6 @@ describe("App", () => {
     const stackComponent = screen.getByTestId("stackExercise");
     expect(stackComponent).toBeInTheDocument();
   })
-
-  it('snake is displayed', () => {
-    renderApp();
-
-    const snakeButton = getButton('Snake');
-    userEvent.click(snakeButton);
-
-    const snakeComponent = screen.getByTestId("snake");
-    expect(snakeComponent).toBeInTheDocument();
-  });
 });
 
 
