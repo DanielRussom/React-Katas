@@ -1,21 +1,18 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import * as React from "react";
+import { getButton } from "../../testExtensions/screenTestExtensions";
 import Snake from "./Snake";
 
 describe("snake game", () => {
     it("has a left button", () =>{
         render(<Snake/>);
 
-        const leftButton = screen.getByRole('button', { name: "<" });
-
-        expect(leftButton).toBeInTheDocument();
+        expect(getButton('<')).toBeInTheDocument();
     });
 
     it("has a right button", () =>{
         render(<Snake/>);
 
-        const rightButton = screen.getByRole('button', { name: ">" });
-
-        expect(rightButton).toBeInTheDocument();
+        expect(getButton('>')).toBeInTheDocument();
     });
 });
