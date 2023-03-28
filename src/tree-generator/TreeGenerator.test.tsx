@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from "react";
+import { getButton } from '../../testExtensions/screenTestExtensions';
 import TreeGenerator from "./TreeGenerator";
 
 describe("christmas tree", () => {
@@ -55,7 +56,7 @@ describe("christmas tree", () => {
     });
     
     function getGenerateTreeButton(): Element | Node | Document | Window {
-      return screen.getByRole('button', { name: 'Generate Tree' });
+      return getButton("Generate Tree");
     }
     
     function getTreeDisplay() {

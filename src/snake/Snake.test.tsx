@@ -17,6 +17,5 @@ describe("snake game", () => {
         const rightButton = screen.getByRole('button', { name: ">" });
 
         expect(rightButton).toBeInTheDocument();
-
     });
 });
