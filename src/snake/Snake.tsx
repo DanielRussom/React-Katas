@@ -4,6 +4,7 @@ export default function Snake() {
     return (
     <>
         <button>&lt;</button>
+        <button>Move</button>
         <button>&gt;</button>
     </>
 )}

@@ -15,4 +15,10 @@ describe("snake game", () => {
 
         expect(getButton('>')).toBeInTheDocument();
     });
+
+    it("has a move button", () =>{
+        render(<Snake/>);
+
+        expect(getButton('Move')).toBeInTheDocument();
+    });
 });
