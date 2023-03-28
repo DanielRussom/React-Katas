@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import StackExercise from "./StackExercise";
-import { getButton } from "../../testExtensions/screenTestExtensions";
+import { clickButton, getButton } from "../../testExtensions/screenTestExtensions";
 
 describe("Stack Exercise Feature", () => {
 
@@ -12,16 +12,14 @@ describe("Stack Exercise Feature", () => {
     expect(emptyCheckResult).toBeInTheDocument();
 
     // Push two values
-    let newValueInputBox = screen.getByPlaceholderText("New value");
+    const newValueInputBox = screen.getByPlaceholderText("New value");
     const firstValue = "First value"
     userEvent.type(newValueInputBox, firstValue);
-
-    let pushButton = getButton("Push");
-    userEvent.click(pushButton);
+    clickButton('Push');
 
     const secondValue = "Second value"
     userEvent.type(newValueInputBox, secondValue);
-    userEvent.click(pushButton);
+    clickButton('Push');
 
     // Do we need to re-set this value? Probably... 
     emptyCheckResult = screen.queryByText("The stack is empty");
@@ -36,8 +34,7 @@ describe("Stack Exercise Feature", () => {
     expect(peekValueResult).toBeInTheDocument();
 
     // Pop a value
-    let popButton = getButton('Pop');
-    userEvent.click(popButton);
+    clickButton('Pop');
 
     // Size is 1
     sizeResult = screen.getByText("Size: 1");
@@ -55,8 +52,11 @@ describe("stack exercise", () => {
   function pushValue(value = "value") {
     var inputBox = screen.getByPlaceholderText("New value");
     userEvent.type(inputBox, value);
-    let pushButton = getButton("Push");
-    userEvent.click(pushButton);
+    clickPush();
+  }
+
+  function clickPush(){
+    clickButton('Push');
   }
 
   it('contains a stack exercise title', () => {
@@ -68,15 +68,7 @@ describe("stack exercise", () => {
   });
 
   describe("push functionality", () => {
-    it('has a button', () => {
-      render(<StackExercise />);
-
-      let pushButton = getButton("Push");
-
-      expect(pushButton).toBeInTheDocument();
-    });
-
-    it('has an input box', () => {
+    it('has an input box with new value as placeholder text', () => {
       render(<StackExercise />);
 
       var inputBox = screen.getByPlaceholderText("New value");
@@ -87,7 +79,7 @@ describe("stack exercise", () => {
     it('not accept an empty string', () => {
       render(<StackExercise />);
 
-      userEvent.click(getButton("Push"));
+      clickPush();
 
       var emptyStack = screen.queryByText("The stack is empty");
       expect(emptyStack).toBeInTheDocument();
@@ -163,22 +155,13 @@ describe("stack exercise", () => {
   });
 
   describe("pop functionality", () => {
-    it('has a button', () => {
-      render(<StackExercise />);
-
-      let popButton = getButton('Pop');
-
-      expect(popButton).toBeInTheDocument();
-    });
-
     it('removes the top of the stack', () => {
       render(<StackExercise />);
 
       pushValue("firstValue");
       pushValue("secondValue");
 
-      let popButton = getButton('Pop');
-      userEvent.click(popButton);
+      clickButton('Pop');
       
       var peekedValue = screen.getByText(`The top of the stack is: firstValue`);
       expect(peekedValue).toBeInTheDocument();
@@ -190,8 +173,7 @@ describe("stack exercise", () => {
       pushValue("firstValue");
       pushValue("secondValue");
 
-      let popButton = getButton('Pop');
-      userEvent.click(popButton);
+      clickButton('Pop');
       
       var sizeDisplay = screen.getByText(`Size: 1`);
       expect(sizeDisplay).toBeInTheDocument();
