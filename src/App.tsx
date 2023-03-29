@@ -18,11 +18,6 @@ function App() {
       <div data-testid="component-container">
         {displayedComponent}
       </div>
-
-      <div className="testDiv">
-        <p style={{gridColumn: 11, gridRow: 11}}>Test</p>
-
-      </div>
     </div>
   );
 }

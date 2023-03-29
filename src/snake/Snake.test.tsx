@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import { getButton } from "../../testExtensions/screenTestExtensions";
 import Snake from "./Snake";
@@ -20,5 +20,14 @@ describe("snake game", () => {
         render(<Snake/>);
 
         expect(getButton('Move')).toBeInTheDocument();
+    });
+
+    it("has a game board", () =>{
+        render(<Snake/>);
+
+        const board = screen.getByTitle("GameBoard");
+
+        expect(board).toHaveClass("gameBoard");
+        expect(board).toHaveStyle("display: grid");
     });
 });
