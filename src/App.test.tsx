@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
+import { getButton } from '../testExtensions/screenTestExtensions';
 import App from './App';
 
 jest.mock("./snake/Snake", () => () => {
@@ -19,11 +20,7 @@ jest.mock("./tree-generator/TreeGenerator", () => () => {
 describe("App", () => {
 
   const renderApp = () => render(<App />);
-
-  function getButton(buttonName: string) {
-    return screen.getByRole('button', { name: buttonName });
-  };
-
+  
   it('does not display content in the component container', () => {
     renderApp();
 
