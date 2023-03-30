@@ -5,7 +5,6 @@ import StackExercise from "./StackExercise";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 
 describe("Stack Exercise Feature", () => {
-
   it('has working push, pop, empty check, size, and peek functions', () => {
     render(<StackExercise />);
     let emptyCheckResult: HTMLElement | null = screen.getByText("The stack is empty");

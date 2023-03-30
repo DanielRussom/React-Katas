@@ -4,11 +4,11 @@ import * as React from 'react';
 import App from './App';
 
 jest.mock("./snake/Snake", () => () => {
-  return <div data-testId="snake" />
+  return <div data-testid="snake" />
 });
 
 jest.mock("./stack-exercise/StackExercise", () => () => {
-  return <div data-testId="stackExercise" />
+  return <div data-testid="stackExercise" />
 });
 
 jest.mock("./tree-generator/TreeGenerator", () => () => {
@@ -20,8 +20,6 @@ describe("App", () => {
 
   const renderApp = () => render(<App />);
 
-  const componentContainer = () => screen.queryByTestId("component-container");
-
   function getButton(buttonName: string) {
     return screen.getByRole('button', { name: buttonName });
   };
@@ -29,7 +27,7 @@ describe("App", () => {
   it('does not display content in the component container', () => {
     renderApp();
 
-    expect(componentContainer()).toBeEmptyDOMElement()
+    expect(screen.queryByTestId("component-container")).toBeEmptyDOMElement()
   });
 
   it('tree generator is displayed', () => {
