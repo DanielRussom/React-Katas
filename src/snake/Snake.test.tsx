@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import * as React from "react";
 import { getButton } from "../../testExtensions/screenTestExtensions";
 import Snake from "./Snake";
@@ -28,6 +28,15 @@ describe("snake game", () => {
         const board = screen.getByTitle("GameBoard");
 
         expect(board).toHaveClass("gameBoard");
-        expect(board).toHaveStyle("display: grid");
+    });
+
+    it("has a single snake square", () =>{
+        render(<Snake/>);
+
+        const board = screen.getByTitle("GameBoard");
+        const snake = within(board).getByTestId("snake");
+
+        expect(snake).toHaveStyle("gridColumn: 11");
+        expect(snake).toHaveStyle("gridRow: 11");
     });
 });

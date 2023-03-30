@@ -11,6 +11,6 @@ export default function Snake() {
         <button>Move</button>
         <button>&gt;</button>
 
-        <div title="GameBoard" className="gameBoard" style={{ display: "grid"}}></div>
+        <div title="GameBoard" className="gameBoard"></div>
     </>
 )}
