@@ -38,6 +38,14 @@ describe("snake game", () => {
         expect(rows.length).toEqual(1);
     });
 
+    it("has a game board with 3 rows", () =>{
+        render(<Snake height={3}/>);
+
+        const rows = screen.getByTitle("GameBoard").childNodes;
+
+        expect(rows.length).toEqual(3);
+    });
+
     it("has a game board with 5 rows", () =>{
         render(<Snake/>);
 

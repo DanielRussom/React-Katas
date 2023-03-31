@@ -4,16 +4,10 @@ export const Snake = ({
     height = 5
 }) => {
 
-    let rows : JSX.Element[] = [
-            <div></div>,
-            <div></div>,
-            <div></div>,
-            <div></div>,
-            <div></div>,
-        ]
+    let rows : JSX.Element[] = []
     
-    if (height < 5) {
-        rows = [<div />]
+    for(let i = 0; i < height; i++){
+        rows.push(<div/>);
     }
 
     return (
