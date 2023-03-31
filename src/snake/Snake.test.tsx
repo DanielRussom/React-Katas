@@ -30,13 +30,11 @@ describe("snake game", () => {
         expect(board).toHaveStyle("display: grid");
     });
 
-    it.skip("has a single snake square", () =>{
+    it("has a game board with 5 rows", () =>{
         render(<Snake/>);
 
-        const board = screen.getByTitle("GameBoard");
-        const snake = within(board).getByTestId("snake");
+        const rows = screen.getByTitle("GameBoard").childNodes;
 
-        expect(snake).toHaveStyle("gridColumn: 11");
-        expect(snake).toHaveStyle("gridRow: 11");
+        expect(rows.length).toEqual(5);
     });
 });
