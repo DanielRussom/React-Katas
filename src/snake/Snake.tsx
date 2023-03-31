@@ -1,5 +1,4 @@
 import * as React from "react";
-import './Snake.css';
 
 export default function Snake() {
     return (
@@ -11,6 +10,6 @@ export default function Snake() {
         <button>Move</button>
         <button>&gt;</button>
 
-        <div title="GameBoard" className="gameBoard"></div>
+        <div title="GameBoard" style={{display: "grid"}}></div>
     </>
 )}
