@@ -30,28 +30,17 @@ describe("snake game", () => {
         expect(board).toHaveStyle("display: grid");
     });
 
-    it("has a game board with 1 row", () =>{
-        render(<Snake height={1}/>);
+    it.each([[
+        1,
+        3,
+        5
+    ]])
+    ("has a game board with expected row count", (expectedRows) =>{
+        render(<Snake height={expectedRows}/>);
 
         const rows = screen.getByTitle("GameBoard").childNodes;
 
-        expect(rows.length).toEqual(1);
-    });
-
-    it("has a game board with 3 rows", () =>{
-        render(<Snake height={3}/>);
-
-        const rows = screen.getByTitle("GameBoard").childNodes;
-
-        expect(rows.length).toEqual(3);
-    });
-
-    it("has a game board with 5 rows", () =>{
-        render(<Snake/>);
-
-        const rows = screen.getByTitle("GameBoard").childNodes;
-
-        expect(rows.length).toEqual(5);
+        expect(rows.length).toEqual(expectedRows);
     });
 
 });
