@@ -7,7 +7,7 @@ export const Snake = ({
     let rows : JSX.Element[] = []
     
     for(let i = 0; i < height; i++){
-        rows.push(<div/>);
+        rows.push(<div key={i}><span>{i}</span></div>);
     }
 
     return (

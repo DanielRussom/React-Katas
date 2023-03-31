@@ -42,5 +42,16 @@ describe("snake game", () => {
 
         expect(rows.length).toEqual(expectedRows);
     });
+    
+
+    it("has a game board with one column", () =>{
+        render(<Snake />);
+
+        const rows = screen.getByTitle("GameBoard").childNodes;
+
+        const columns = rows[0].childNodes;
+
+        expect(columns.length).toEqual(1);
+    });
 
 });
