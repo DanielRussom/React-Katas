@@ -1,21 +1,35 @@
 import * as React from "react";
 
-export default function Snake() {
-    return (
-    <>
-        <style>{}
-            
-        </style>
-        <button>&lt;</button>
-        <button>Move</button>
-        <button>&gt;</button>
+export const Snake = ({
+    height = 5
+}) => {
 
-        <div title="GameBoard" style={{display: "grid"}}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </>
-)}
+    let rows : JSX.Element[] = [
+            <div></div>,
+            <div></div>,
+            <div></div>,
+            <div></div>,
+            <div></div>,
+        ]
+    
+    if (height < 5) {
+        rows = [<div />]
+    }
+
+    return (
+        <>
+            <style>{ }
+
+            </style>
+            <button>&lt;</button>
+            <button>Move</button>
+            <button>&gt;</button>
+
+            <div title="GameBoard" style={{ display: "grid" }}>
+                {rows}
+            </div>
+        </>
+    )
+}
+
+export default Snake;

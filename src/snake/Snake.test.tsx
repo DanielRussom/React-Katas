@@ -30,6 +30,14 @@ describe("snake game", () => {
         expect(board).toHaveStyle("display: grid");
     });
 
+    it("has a game board with 1 row", () =>{
+        render(<Snake height={1}/>);
+
+        const rows = screen.getByTitle("GameBoard").childNodes;
+
+        expect(rows.length).toEqual(1);
+    });
+
     it("has a game board with 5 rows", () =>{
         render(<Snake/>);
 
@@ -37,4 +45,5 @@ describe("snake game", () => {
 
         expect(rows.length).toEqual(5);
     });
+
 });
