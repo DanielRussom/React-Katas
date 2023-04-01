@@ -10,8 +10,11 @@ export const Snake = ({
     for(let i = 0; i < height; i++){
         var columns = [<span>{i}</span>]
 
-        if(width === 2){
+        if(width > 1){
             columns.push(<span>{i+1}</span>)
+        }
+        if(width > 2){
+            columns.push(<span>{i+2}</span>)
         }
 
         rows.push(<div key={i}>

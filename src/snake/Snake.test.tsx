@@ -64,5 +64,16 @@ describe("snake game", () => {
 
         expect(columns.length).toEqual(2);
     });
+    
+
+    it("has a game board with three columns", () =>{
+        render(<Snake width={3}/>);
+
+        const rows = screen.getByTitle("GameBoard").childNodes;
+
+        const columns = rows[0].childNodes;
+
+        expect(columns.length).toEqual(3);
+    });
 
 });
