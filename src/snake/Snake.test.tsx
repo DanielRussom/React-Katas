@@ -35,7 +35,7 @@ describe("snake game", () => {
         3,
         5
     ]])
-    ("has a game board with expected row count", (expectedRows) =>{
+    ("has a game board with the expected row count", (expectedRows) =>{
         render(<Snake height={expectedRows}/>);
 
         const rows = screen.getByTitle("GameBoard").childNodes;
@@ -44,36 +44,18 @@ describe("snake game", () => {
     });
     
 
-    it("has a game board with one column", () =>{
-        render(<Snake />);
+    it.each([[
+        1,
+        2,
+        3
+    ]])("has a game board with the expected column count", (expectedColumns) =>{
+        render(<Snake width={expectedColumns} />);
 
-        const rows = screen.getByTitle("GameBoard").childNodes;
+        const firstRow = screen.getByTitle("GameBoard").childNodes[0];
 
-        const columns = rows[0].childNodes;
+        const columns = firstRow.childNodes;
 
-        expect(columns.length).toEqual(1);
+        expect(columns.length).toEqual(expectedColumns);
     });
     
-
-    it("has a game board with two columns", () =>{
-        render(<Snake width={2}/>);
-
-        const rows = screen.getByTitle("GameBoard").childNodes;
-
-        const columns = rows[0].childNodes;
-
-        expect(columns.length).toEqual(2);
-    });
-    
-
-    it("has a game board with three columns", () =>{
-        render(<Snake width={3}/>);
-
-        const rows = screen.getByTitle("GameBoard").childNodes;
-
-        const columns = rows[0].childNodes;
-
-        expect(columns.length).toEqual(3);
-    });
-
 });

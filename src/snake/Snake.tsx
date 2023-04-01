@@ -2,7 +2,7 @@ import * as React from "react";
 
 export const Snake = ({
     height = 5,
-    width = 1,
+    width = 5,
 }) => {
 
     let rows : JSX.Element[] = []
