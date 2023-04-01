@@ -1,13 +1,22 @@
 import * as React from "react";
 
 export const Snake = ({
-    height = 5
+    height = 5,
+    width = 1,
 }) => {
 
     let rows : JSX.Element[] = []
     
     for(let i = 0; i < height; i++){
-        rows.push(<div key={i}><span>{i}</span></div>);
+        var columns = [<span>{i}</span>]
+
+        if(width === 2){
+            columns.push(<span>{i+1}</span>)
+        }
+
+        rows.push(<div key={i}>
+            {columns}
+        </div>);
     }
 
     return (
