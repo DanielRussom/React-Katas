@@ -8,18 +8,13 @@ export const Snake = ({
     let rows : JSX.Element[] = []
     
     for(let i = 0; i < height; i++){
-        var columns = [<span>{i}</span>]
-
-        if(width > 1){
-            columns.push(<span>{i+1}</span>)
-        }
-        if(width > 2){
-            columns.push(<span>{i+2}</span>)
+        let columns : JSX.Element[] = []
+        
+        for(let j = 0; j < width; j++){
+            columns.push(<span>{j}</span>)
         }
 
-        rows.push(<div key={i}>
-            {columns}
-        </div>);
+        rows.push(<div key={i}>{columns}</div>);
     }
 
     return (
