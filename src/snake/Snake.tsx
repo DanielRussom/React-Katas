@@ -15,11 +15,7 @@ export const Snake = ({
                 columns.push(<span key={j}>Snake</span>)
                 continue;
             }
-<<<<<<< HEAD
             columns.push(<span key={j}>{j}</span>)
-=======
-            columns.push(<span key={j}>j</span>)
->>>>>>> 678e01b0328ad4581fdd0a257f327be29f88b2fe
         }
 
         rows.push(<div key={i}>{columns}</div>);
