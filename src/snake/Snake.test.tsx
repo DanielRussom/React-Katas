@@ -4,25 +4,25 @@ import { getButton } from "../../testExtensions/screenTestExtensions";
 import Snake from "./Snake";
 
 describe("snake game", () => {
-    it("has a left button", () =>{
+    it("has a left button", () => {
         render(<Snake/>);
 
         expect(getButton('<')).toBeInTheDocument();
     });
 
-    it("has a right button", () =>{
+    it("has a right button", () => {
         render(<Snake/>);
 
         expect(getButton('>')).toBeInTheDocument();
     });
 
-    it("has a move button", () =>{
+    it("has a move button", () => {
         render(<Snake/>);
 
         expect(getButton('Move')).toBeInTheDocument();
     });
 
-    it("has a game board", () =>{
+    it("has a game board", () => {
         render(<Snake/>);
 
         const board = screen.getByTitle("GameBoard");
@@ -35,7 +35,7 @@ describe("snake game", () => {
         3,
         5
     ]])
-    ("has a game board with the expected row count", (expectedRows) =>{
+    ("has a game board with the expected row count", (expectedRows) => {
         render(<Snake height={expectedRows}/>);
 
         const rows = screen.getByTitle("GameBoard").childNodes;
@@ -48,7 +48,7 @@ describe("snake game", () => {
         1,
         2,
         3
-    ]])("has a game board with the expected column count", (expectedColumns) =>{
+    ]])("has a game board with the expected column count", (expectedColumns) => {
         render(<Snake width={expectedColumns} />);
 
         const firstRow = screen.getByTitle("GameBoard").childNodes[0];
@@ -57,5 +57,16 @@ describe("snake game", () => {
 
         expect(columns.length).toEqual(expectedColumns);
     });
-    
+
+    it("has a snake", () => {
+        render(<Snake/>);
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
+        const middleColumn = middleRow.childNodes[2];
+
+        const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
 });

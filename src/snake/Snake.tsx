@@ -11,7 +11,11 @@ export const Snake = ({
         let columns : JSX.Element[] = []
         
         for(let j = 0; j < width; j++){
-            columns.push(<span>{j}</span>)
+            if(i === 2 && j === 2){
+                columns.push(<span key={j}>Snake</span>)
+                continue;
+            }
+            columns.push(<span key={j}>{j}</span>)
         }
 
         rows.push(<div key={i}>{columns}</div>);
