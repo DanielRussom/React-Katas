@@ -13,15 +13,12 @@ export const Snake = ({
     let middleRow = Math.round(height/2) - 1;
 
     grid[middleRow][middleColumn] = "Snake"
-    
-    for(let i = 0; i < grid.length; i++) {
-        let columns : JSX.Element[] = []
 
-        for(let j = 0; j < grid[i].length; j++){
-            columns.push(<span key={j}>{grid[i][j]}</span>)
-        }
+    for(let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
 
-        rows.push(<div key={i}>{columns}</div>);
+        let columns = grid[rowIndex].map((columnValue, index) => <span key={index}>{columnValue}</span>);
+
+        rows.push(<div key={rowIndex}>{columns}</div>);
     }
 
     return (
