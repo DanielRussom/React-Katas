@@ -6,18 +6,19 @@ export const Snake = ({
 }) => {
 
     let rows : JSX.Element[] = []
-    
-    for(let i = 0; i < height; i++){
-        let columns : JSX.Element[] = []
-        let middleColumn = Math.round(width/2) - 1;
-        let middleRow = Math.round(height/2) - 1;
 
-        for(let j = 0; j < width; j++){
-            if(i === middleRow && j === middleColumn){
-                columns.push(<span key={j}>Snake</span>)
-                continue;
-            }
-            columns.push(<span key={j}>{j}</span>)
+    let grid: string[][] = buildGrid(height, width);
+    
+    let middleColumn = Math.round(width/2) - 1;
+    let middleRow = Math.round(height/2) - 1;
+
+    grid[middleRow][middleColumn] = "Snake"
+    
+    for(let i = 0; i < grid.length; i++) {
+        let columns : JSX.Element[] = []
+
+        for(let j = 0; j < grid[i].length; j++){
+            columns.push(<span key={j}>{grid[i][j]}</span>)
         }
 
         rows.push(<div key={i}>{columns}</div>);
@@ -37,6 +38,20 @@ export const Snake = ({
             </div>
         </>
     )
+}
+
+function buildGrid(height: number, width: number) {
+    let grid: string[][] = [];
+
+    for (let i = 0; i < height; i++) {
+        let newRow: string[] = [];
+
+        for (let j = 0; j < width; j++) {
+            newRow.push("  x  ");
+        }
+        grid.push(newRow);
+    }
+    return grid;
 }
 
 export default Snake;
