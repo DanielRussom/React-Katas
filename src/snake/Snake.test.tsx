@@ -81,4 +81,16 @@ describe("snake game", () => {
         expect(snake).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
+
+    it("has a snake in the middle of a 6x6 grid", () => {
+        render(<Snake height={6} width={6}/>);
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
+        const middleColumn = middleRow.childNodes[2];
+
+        const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
 });
