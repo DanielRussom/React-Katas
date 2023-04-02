@@ -58,35 +58,16 @@ describe("snake game", () => {
         expect(columns.length).toEqual(expectedColumns);
     });
 
-    it("has a snake in the middle of a 5x5 grid", () => {
-        render(<Snake/>);
+    it.each([
+        [5, 2],
+        [6, 2],
+        [7, 3]
+    ])
+    ("has a snake in the middle of a grid", (gridSize, snakeLocation) => {
+        render(<Snake height={gridSize} width={gridSize}/>);
 
-        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
-        const middleColumn = middleRow.childNodes[2];
-
-        const snake = middleColumn;
-
-        expect(snake).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
-    });
-
-    it("has a snake in the middle of a 7x7 grid", () => {
-        render(<Snake height={7} width={7}/>);
-
-        const middleRow = screen.getByTitle("GameBoard").childNodes[3];
-        const middleColumn = middleRow.childNodes[3];
-
-        const snake = middleColumn;
-
-        expect(snake).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
-    });
-
-    it("has a snake in the middle of a 6x6 grid", () => {
-        render(<Snake height={6} width={6}/>);
-
-        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
-        const middleColumn = middleRow.childNodes[2];
+        const middleRow = screen.getByTitle("GameBoard").childNodes[snakeLocation];
+        const middleColumn = middleRow.childNodes[snakeLocation];
 
         const snake = middleColumn;
 
