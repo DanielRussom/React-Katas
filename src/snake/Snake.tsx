@@ -9,9 +9,11 @@ export const Snake = ({
     
     for(let i = 0; i < height; i++){
         let columns : JSX.Element[] = []
-        
+        let middleColumn = Math.round(width/2) - 1;
+        let middleRow = Math.round(height/2) - 1;
+
         for(let j = 0; j < width; j++){
-            if(i === 2 && j === 2){
+            if(i === middleRow && j === middleColumn){
                 columns.push(<span key={j}>Snake</span>)
                 continue;
             }
