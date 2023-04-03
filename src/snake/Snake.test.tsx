@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
-import { getButton } from "../../testExtensions/screenTestExtensions";
+import { clickButton, getButton } from "../../testExtensions/screenTestExtensions";
 import Snake from "./Snake";
 
 describe("snake game", () => {
@@ -75,5 +75,20 @@ describe("snake game", () => {
 
         expect(snake).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
+
+    it("moves the snake 1 tile", () => {
+        render(<Snake height={5} width={5}/>);
+
+        clickButton('Move');
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[1];
+        const middleColumn = middleRow.childNodes[2];
+
+        const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+
     });
 });
