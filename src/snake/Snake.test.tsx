@@ -22,40 +22,42 @@ describe("snake game", () => {
         expect(getButton('Move')).toBeInTheDocument();
     });
 
-    it("has a game board", () => {
-        render(<Snake/>);
+    describe("game board", () => {
+        it("is a grid", () => {
+            render(<Snake/>);
 
-        const board = screen.getByTitle("GameBoard");
+            const board = screen.getByTitle("GameBoard");
 
-        expect(board).toHaveStyle("display: grid");
-    });
+            expect(board).toHaveStyle("display: grid");
+        });
 
-    it.each([[
-        1,
-        3,
-        5
-    ]])
-    ("has a game board with the expected row count", (expectedRows) => {
-        render(<Snake height={expectedRows}/>);
+        it.each([[
+            1,
+            3,
+            5
+        ]])
+        ("has the expected row count", (expectedRows) => {
+            render(<Snake height={expectedRows}/>);
 
-        const rows = screen.getByTitle("GameBoard").childNodes;
+            const rows = screen.getByTitle("GameBoard").childNodes;
 
-        expect(rows.length).toEqual(expectedRows);
-    });
-    
+            expect(rows.length).toEqual(expectedRows);
+        });
 
-    it.each([[
-        1,
-        2,
-        3
-    ]])("has a game board with the expected column count", (expectedColumns) => {
-        render(<Snake width={expectedColumns} />);
 
-        const firstRow = screen.getByTitle("GameBoard").childNodes[0];
+        it.each([[
+            1,
+            2,
+            3
+        ]])("has the expected column count", (expectedColumns) => {
+            render(<Snake width={expectedColumns} />);
 
-        const columns = firstRow.childNodes;
+            const firstRow = screen.getByTitle("GameBoard").childNodes[0];
 
-        expect(columns.length).toEqual(expectedColumns);
+            const columns = firstRow.childNodes;
+
+            expect(columns.length).toEqual(expectedColumns);
+        });
     });
 
     it.each([
