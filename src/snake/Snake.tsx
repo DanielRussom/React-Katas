@@ -1,26 +1,19 @@
 import * as React from "react";
+import Grid from "./Grid";
 
+let grid: string[][];
 export const Snake = ({
     height = 5,
     width = 5,
 }) => {
-
-    let rows : JSX.Element[] = []
-
-    let grid: string[][] = buildGrid(height, width);
+    grid = buildGrid(height, width);
     
     let middleColumn = Math.round(width/2) - 1;
     let middleRow = Math.round(height/2) - 1;
 
     grid[middleRow][middleColumn] = "Snake"
 
-    for(let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-
-        let columns = grid[rowIndex].map((columnValue, index) => <span key={index}>{columnValue}</span>);
-
-        rows.push(<div key={rowIndex}>{columns}</div>);
-    }
-
+   
     return (
         <>
             <style>{ }
@@ -30,9 +23,7 @@ export const Snake = ({
             <button>Move</button>
             <button>&gt;</button>
 
-            <div title="GameBoard" style={{ display: "grid" }}>
-                {rows}
-            </div>
+            <Grid grid={grid}/>
         </>
     )
 }
