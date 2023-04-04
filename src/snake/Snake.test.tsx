@@ -77,7 +77,7 @@ describe("snake game", () => {
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
-    it("moves the snake 1 tile from a 5x5 grid", () => {
+    it("makes the snake's first move in a 5x5 grid", () => {
         render(<Snake height={5} width={5}/>);
 
         clickButton('Move');
@@ -91,7 +91,7 @@ describe("snake game", () => {
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
-    it("moves the snake 1 tile from a 7x7 grid", () => {
+    it("makes the snake's first move in a 7x7 grid", () => {
         render(<Snake height={7} width={7}/>);
 
         clickButton('Move');
@@ -103,6 +103,20 @@ describe("snake game", () => {
 
         expect(snake).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
 
+    it("moves the snake twice", () => {
+        render(<Snake height={5} width={5}/>);
+
+        clickButton('Move');
+        clickButton('Move');
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[0];
+        const middleColumn = middleRow.childNodes[2];
+
+        const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 });
