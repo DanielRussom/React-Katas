@@ -77,13 +77,27 @@ describe("snake game", () => {
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
-    it("moves the snake 1 tile", () => {
+    it("moves the snake 1 tile from a 5x5 grid", () => {
         render(<Snake height={5} width={5}/>);
 
         clickButton('Move');
 
         const middleRow = screen.getByTitle("GameBoard").childNodes[1];
         const middleColumn = middleRow.childNodes[2];
+
+        const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
+
+    it("moves the snake 1 tile from a 7x7 grid", () => {
+        render(<Snake height={7} width={7}/>);
+
+        clickButton('Move');
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
+        const middleColumn = middleRow.childNodes[3];
 
         const snake = middleColumn;
 

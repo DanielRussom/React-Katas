@@ -5,17 +5,16 @@ export const Snake = ({
     height = 5,
     width = 5,
 }) => {
+    const [middleRow] = React.useState(Math.round(height/2) - 1);
+    const [middleColumn] = React.useState(Math.round(width/2) - 1);
     const [grid, setGrid] = React.useState<string[][]>(buildGrid(height, width));
     
-
-
-   
     function moveSnake(): void {
         let newGrid = [...grid];
 
-        newGrid[2][2] = "x";
-        newGrid[1][2] = "Snake";
-        console.log(newGrid);
+        newGrid[middleRow][middleColumn] = "x";
+        newGrid[middleRow - 1][middleColumn] = "Snake";
+
         setGrid(newGrid);
     }
 
@@ -31,23 +30,22 @@ export const Snake = ({
             <Grid grid={grid}/>
         </>
     )
-}
 
-function buildGrid(height: number, width: number) {
-    let grid: string[][] = [];
-
-    for (let i = 0; i < height; i++) {
-        let newRow: string[] = [];
-
-        for (let j = 0; j < width; j++) {
-            newRow.push("  x  ");
+    function buildGrid(height: number, width: number) {
+        let grid: string[][] = [];
+    
+        for (let i = 0; i < height; i++) {
+            let newRow: string[] = [];
+    
+            for (let j = 0; j < width; j++) {
+                newRow.push("  x  ");
+            }
+            grid.push(newRow);
         }
-        grid.push(newRow);
+
+        grid[middleRow][middleColumn] = "Snake"
+        return grid;
     }
-    let middleColumn = Math.round(width/2) - 1;
-    let middleRow = Math.round(height/2) - 1;
-    grid[middleRow][middleColumn] = "Snake"
-    return grid;
 }
 
 export default Snake;
