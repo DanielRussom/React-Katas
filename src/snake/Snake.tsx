@@ -1,26 +1,31 @@
 import * as React from "react";
 import Grid from "./Grid";
 
-let grid: string[][];
 export const Snake = ({
     height = 5,
     width = 5,
 }) => {
-    grid = buildGrid(height, width);
+    const [grid, setGrid] = React.useState<string[][]>(buildGrid(height, width));
     
-    let middleColumn = Math.round(width/2) - 1;
-    let middleRow = Math.round(height/2) - 1;
 
-    grid[middleRow][middleColumn] = "Snake"
 
    
+    function moveSnake(): void {
+        let newGrid = [...grid];
+
+        newGrid[2][2] = "x";
+        newGrid[1][2] = "Snake";
+        console.log(newGrid);
+        setGrid(newGrid);
+    }
+
     return (
         <>
             <style>{ }
 
             </style>
             <button>&lt;</button>
-            <button>Move</button>
+            <button onClick={moveSnake}>Move</button>
             <button>&gt;</button>
 
             <Grid grid={grid}/>
@@ -39,6 +44,9 @@ function buildGrid(height: number, width: number) {
         }
         grid.push(newRow);
     }
+    let middleColumn = Math.round(width/2) - 1;
+    let middleRow = Math.round(height/2) - 1;
+    grid[middleRow][middleColumn] = "Snake"
     return grid;
 }
 
