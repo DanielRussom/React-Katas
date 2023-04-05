@@ -96,8 +96,8 @@ describe("snake game", () => {
 
         clickButton('Move');
 
-        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
-        const middleColumn = middleRow.childNodes[3];
+        const snakeRow = screen.getByTitle("GameBoard").childNodes[2];
+        const middleColumn = snakeRow.childNodes[3];
 
         const snake = middleColumn;
 
@@ -111,10 +111,24 @@ describe("snake game", () => {
         clickButton('Move');
         clickButton('Move');
 
-        const middleRow = screen.getByTitle("GameBoard").childNodes[0];
-        const middleColumn = middleRow.childNodes[2];
+        const snakeRow = screen.getByTitle("GameBoard").childNodes[0];
+        const middleColumn = snakeRow.childNodes[2];
 
         const snake = middleColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
+
+    it("moves the snake right", () => {
+        render(<Snake height={5} width={5}/>);
+
+        clickButton('>');
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
+        const snakeColumn = middleRow.childNodes[3];
+
+        const snake = snakeColumn;
 
         expect(snake).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);

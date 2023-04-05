@@ -41,6 +41,13 @@ export const Snake = ({
         setGrid(newGrid);
     }
 
+    function moveSnakeRight(): void {
+        let newGrid = [...grid];
+        newGrid[2][2] = "x";
+        newGrid[2][3] = "Snake";
+        setGrid(newGrid);
+    }
+
     return (
         <>
             <style>{ }
@@ -48,7 +55,7 @@ export const Snake = ({
             </style>
             <button>&lt;</button>
             <button onClick={moveSnake}>Move</button>
-            <button>&gt;</button>
+            <button onClick={moveSnakeRight}>&gt;</button>
 
             <Grid grid={grid}/>
         </>
