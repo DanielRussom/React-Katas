@@ -147,7 +147,21 @@ describe("snake game", () => {
 
         expect(snake).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
 
+    it("moves the snake right then forward twice", () => {
+        render(<Snake height={7} width={7}/>);
 
+        clickButton('>');
+        clickButton('Move');
+        clickButton('Move');
+
+        const middleRow = screen.getByTitle("GameBoard").childNodes[3];
+        const snakeColumn = middleRow.childNodes[6];
+
+        const snake = snakeColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 });

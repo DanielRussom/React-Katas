@@ -7,7 +7,7 @@ export const Snake = ({
     width = 5,
 }) => {
     const [snakeRow, setSnakeRow] = React.useState(Math.round(height/2) - 1);
-    const [middleColumn] = React.useState(Math.round(width/2) - 1);
+    const [snakeColumn, setSnakeColumn] = React.useState(Math.round(width/2) - 1);
     const [grid, setGrid] = React.useState<string[][]>(buildGrid(height, width));
     
     const [hasTurnedRight, setHasTurnedRight] = useState(false);
@@ -19,7 +19,7 @@ export const Snake = ({
             grid.push(buildRow(width));
         }
 
-        grid[snakeRow][middleColumn] = "Snake"
+        grid[snakeRow][snakeColumn] = "Snake"
         return grid;
     }
     
@@ -37,13 +37,15 @@ export const Snake = ({
         let newGrid = [...grid];
 
         if(hasTurnedRight){
-            newGrid[snakeRow][middleColumn + 1] = " x ";
-            newGrid[snakeRow][4] = "Snake";
+            const newSnakeColumn = snakeColumn + 1;
+            newGrid[snakeRow][snakeColumn] = " x ";
+            newGrid[snakeRow][newSnakeColumn] = "Snake";
+            setSnakeColumn(newSnakeColumn);
         }
         else {
             const newSnakeRow = snakeRow - 1;
-            newGrid[snakeRow][middleColumn] = " x ";
-            newGrid[newSnakeRow][middleColumn] = "Snake";
+            newGrid[snakeRow][snakeColumn] = " x ";
+            newGrid[newSnakeRow][snakeColumn] = "Snake";
             setSnakeRow(newSnakeRow);
         }
 
@@ -52,8 +54,10 @@ export const Snake = ({
 
     function moveSnakeRight(): void {
         let newGrid = [...grid];
-        newGrid[snakeRow][middleColumn] = "x";
-        newGrid[snakeRow][middleColumn + 1] = "Snake";
+        const newSnakeColumn = snakeColumn + 1;
+        newGrid[snakeRow][snakeColumn] = "x";
+        newGrid[snakeRow][newSnakeColumn] = "Snake";
+        setSnakeColumn(newSnakeColumn);
         setGrid(newGrid);
         setHasTurnedRight(true);
     }
