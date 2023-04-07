@@ -5,6 +5,15 @@ import { clickButton } from '../../testExtensions/screenTestExtensions';
 import TreeGenerator from "./TreeGenerator";
 
 describe("christmas tree", () => {
+
+  function clickGenerateTreeButton() {
+    clickButton("Generate Tree");
+  }
+  
+  function getTreeDisplay() {
+    return screen.getByRole("paragraph");
+  }
+  
   it('contains a tree size input box', () => {
     render(<TreeGenerator />);
 
@@ -45,12 +54,4 @@ describe("christmas tree", () => {
     const treeDisplay = getTreeDisplay();
     expect(treeDisplay).toHaveStyle("white-space: pre-line");
   });
-
-  function clickGenerateTreeButton() {
-    clickButton("Generate Tree");
-  }
-
-  function getTreeDisplay() {
-    return screen.getByRole("paragraph");
-  }
 })

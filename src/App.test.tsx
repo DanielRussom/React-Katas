@@ -4,7 +4,7 @@ import * as React from 'react';
 import { getButton } from '../testExtensions/screenTestExtensions';
 import App from './App';
 
-jest.mock("./snake/Snake", () => () => {
+jest.mock("./snake/SnakeGame", () => () => {
   return <div data-testid="snake" />
 });
 

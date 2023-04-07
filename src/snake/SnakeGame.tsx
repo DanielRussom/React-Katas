@@ -1,13 +1,14 @@
 import * as React from "react";
-import Grid from "./Grid";
 import { useState } from "react";
+import Grid from "./Grid";
+import Position from "./Position";
 
-export const Snake = ({
+export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
     const [position, setPosition] = useState(getInitialSnakePosition());
-    const [grid, setGrid] = React.useState<string[][]>(buildGrid(height, width));
+    const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
     const [hasTurnedRight, setHasTurnedRight] = useState(false);
 
 
@@ -40,14 +41,12 @@ export const Snake = ({
     }
 
     function moveSnake(): void {
-        let newPosition : Position;
+        let newPosition = new Position(position.xPosition,  position.yPosition - 1);
         
         if (hasTurnedRight) {
             newPosition = new Position(position.xPosition + 1,  position.yPosition);
-        } else {
-            newPosition = new Position(position.xPosition,  position.yPosition - 1);
         }
-
+        
         updateSnakePosition(newPosition);
     }
 
@@ -80,15 +79,6 @@ export const Snake = ({
     )
 }
 
-export default Snake;
+export default SnakeGame;
 
-export class Position {
-    readonly xPosition: number;
-    readonly yPosition: number;
-
-    constructor(xPosition: number, yPosition: number){
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-    }
-}
 

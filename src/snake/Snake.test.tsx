@@ -1,30 +1,30 @@
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import { clickButton, getButton } from "../../testExtensions/screenTestExtensions";
-import Snake from "./Snake";
+import SnakeGame from "./SnakeGame";
 
 describe("snake game", () => {
     it("has a left button", () => {
-        render(<Snake/>);
+        render(<SnakeGame/>);
 
         expect(getButton('<')).toBeInTheDocument();
     });
 
     it("has a right button", () => {
-        render(<Snake/>);
+        render(<SnakeGame/>);
 
         expect(getButton('>')).toBeInTheDocument();
     });
 
     it("has a move button", () => {
-        render(<Snake/>);
+        render(<SnakeGame/>);
 
         expect(getButton('Move')).toBeInTheDocument();
     });
 
     describe("game board", () => {
         it("is a grid", () => {
-            render(<Snake/>);
+            render(<SnakeGame/>);
 
             const board = screen.getByTitle("GameBoard");
 
@@ -37,7 +37,7 @@ describe("snake game", () => {
             5
         ]])
         ("has the expected row count", (expectedRows) => {
-            render(<Snake height={expectedRows}/>);
+            render(<SnakeGame height={expectedRows}/>);
 
             const rows = screen.getByTitle("GameBoard").childNodes;
 
@@ -50,7 +50,7 @@ describe("snake game", () => {
             2,
             3
         ]])("has the expected column count", (expectedColumns) => {
-            render(<Snake width={expectedColumns} />);
+            render(<SnakeGame width={expectedColumns} />);
 
             const firstRow = screen.getByTitle("GameBoard").childNodes[0];
 
@@ -66,7 +66,7 @@ describe("snake game", () => {
         [7, 3]
     ])
     ("has a snake in the middle of a grid", (gridSize, snakeLocation) => {
-        render(<Snake height={gridSize} width={gridSize}/>);
+        render(<SnakeGame height={gridSize} width={gridSize}/>);
 
         const middleRow = screen.getByTitle("GameBoard").childNodes[snakeLocation];
         const middleColumn = middleRow.childNodes[snakeLocation];
@@ -78,7 +78,7 @@ describe("snake game", () => {
     });
 
     it("makes the snake's first move in a 5x5 grid", () => {
-        render(<Snake height={5} width={5}/>);
+        render(<SnakeGame height={5} width={5}/>);
 
         clickButton('Move');
 
@@ -92,7 +92,7 @@ describe("snake game", () => {
     });
 
     it("makes the snake's first move in a 7x7 grid", () => {
-        render(<Snake height={7} width={7}/>);
+        render(<SnakeGame height={7} width={7}/>);
 
         clickButton('Move');
 
@@ -106,7 +106,7 @@ describe("snake game", () => {
     });
 
     it("moves the snake twice", () => {
-        render(<Snake height={5} width={5}/>);
+        render(<SnakeGame height={5} width={5}/>);
 
         clickButton('Move');
         clickButton('Move');
@@ -121,7 +121,7 @@ describe("snake game", () => {
     });
 
     it("moves the snake right", () => {
-        render(<Snake height={5} width={5}/>);
+        render(<SnakeGame height={5} width={5}/>);
 
         clickButton('>');
 
@@ -135,7 +135,7 @@ describe("snake game", () => {
     });
 
     it("moves the snake right and forward", () => {
-        render(<Snake height={5} width={5}/>);
+        render(<SnakeGame height={5} width={5}/>);
 
         clickButton('>');
         clickButton('Move');
@@ -150,7 +150,7 @@ describe("snake game", () => {
     });
 
     it("moves the snake right then forward twice", () => {
-        render(<Snake height={7} width={7}/>);
+        render(<SnakeGame height={7} width={7}/>);
 
         clickButton('>');
         clickButton('Move');
