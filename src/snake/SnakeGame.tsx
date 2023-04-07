@@ -9,7 +9,6 @@ export const SnakeGame = ({
 }) => {
     const [position, setPosition] = useState(getInitialSnakePosition());
     const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
-    const [hasTurnedRightTwice, setHasTurnedRightTwice] = useState(false);
 
     const [direction, setDirection] = useState("N");
 
