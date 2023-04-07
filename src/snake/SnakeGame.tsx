@@ -10,6 +10,7 @@ export const SnakeGame = ({
     const [position, setPosition] = useState(getInitialSnakePosition());
     const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
     const [hasTurnedRight, setHasTurnedRight] = useState(false);
+    const [hasTurnedRightTwice, setHasTurnedRightTwice] = useState(false);
 
 
     function getInitialSnakePosition(): Position {
@@ -46,17 +47,33 @@ export const SnakeGame = ({
         if (hasTurnedRight) {
             newPosition = new Position(position.xPosition + 1,  position.yPosition);
         }
+
         
         updateSnakePosition(newPosition);
     }
 
     function turnSnakeRight(): void {
-        moveSnakeRight();
+        if(hasTurnedRight){
+            setHasTurnedRightTwice(true);
+            moveSnakeDown();
+            return;
+        }
+        
         setHasTurnedRight(true);
+
+        moveSnakeRight();
     }
 
+
+    
     function moveSnakeRight() {
-        const newPosition = new Position(position.xPosition + 1,  position.yPosition);
+        let newPosition = new Position(position.xPosition + 1,  position.yPosition);
+
+        updateSnakePosition(newPosition);
+    }
+    function moveSnakeDown() {
+        let newPosition = new Position(position.xPosition,  position.yPosition + 1);
+
         updateSnakePosition(newPosition);
     }
 
