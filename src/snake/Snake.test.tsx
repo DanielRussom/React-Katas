@@ -180,4 +180,20 @@ describe("snake game", () => {
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
+    it("moves the snake right three times", () => {
+        render(<SnakeGame height={5} width={5} />);
+
+        clickButton('>');
+        clickButton('>');
+        clickButton('>');
+
+        const snakeRow = screen.getByTitle("GameBoard").childNodes[3];
+        const snakeColumn = snakeRow.childNodes[2];
+
+        const snake = snakeColumn;
+
+        expect(snake).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
+
 });
