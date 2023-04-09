@@ -41,32 +41,17 @@ export const SnakeGame = ({
         return newRow;
     }
 
-    function moveSnake(): void {
-        let newPosition = new Position(position.xPosition,  position.yPosition - 1);
-        
-        if (directions[directionIndex] === "E") {
-            newPosition = new Position(position.xPosition + 1,  position.yPosition);
-        }
-
-        if (directions[directionIndex] === "S") {
-            moveSnakeDown();
-            return;
-        }
-
-        if (directions[directionIndex] === "W") {
-            moveSnakeLeft();
-            return;
-        }
-
-        
-        updateSnakePosition(newPosition);
-    }
-
     function turnSnakeRight(): void {
         const newDirectionIndex = (directionIndex + 1) % 4;
         setDirectionIndex(newDirectionIndex);
 
         moveSnakeInDirection(directions[newDirectionIndex]);
+    }
+
+    function moveSnake(): void {        
+        const currentDirection = directions[directionIndex];
+
+        moveSnakeInDirection(currentDirection);
     }
 
     function moveSnakeInDirection(direction): void {
