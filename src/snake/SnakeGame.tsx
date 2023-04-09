@@ -53,6 +53,11 @@ export const SnakeGame = ({
             return;
         }
 
+        if (directions[directionIndex] === "W") {
+            moveSnakeLeft();
+            return;
+        }
+
         
         updateSnakePosition(newPosition);
     }
