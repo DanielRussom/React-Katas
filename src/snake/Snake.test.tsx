@@ -124,7 +124,8 @@ describe("snake game", () => {
     it.each([
         [1, new Position(3,2)],
         [2, new Position(3,3)],
-        [3, new Position(2,3)]
+        [3, new Position(2,3)],
+        [4, new Position(2,2)]
     ])
     ("moves the snake right", (times, expectedPosition) => {
         render(<SnakeGame height={5} width={5} />);

@@ -57,9 +57,16 @@ export const SnakeGame = ({
             moveSnakeDown();
             return;
         }
+
         if(direction === "S"){
             setDirection("W");
             moveSnakeLeft();
+            return;
+        }
+
+        if(direction === "W"){
+            setDirection("N");
+            moveSnakeUp();
             return;
         }
         
@@ -78,6 +85,13 @@ export const SnakeGame = ({
 
         updateSnakePosition(newPosition);
     }
+    
+    function moveSnakeUp() {
+        let newPosition = new Position(position.xPosition,  position.yPosition - 1);
+
+        updateSnakePosition(newPosition);
+    }
+
     function moveSnakeDown() {
         let newPosition = new Position(position.xPosition,  position.yPosition + 1);
 
