@@ -9,8 +9,9 @@ export const SnakeGame = ({
 }) => {
     const [position, setPosition] = useState(getInitialSnakePosition());
     const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
+    const [directionIndex, setDirectionIndex] = useState(0);
 
-    const [direction, setDirection] = useState("N");
+    const directions = ["N", "E", "S", "W"]
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -43,7 +44,7 @@ export const SnakeGame = ({
     function moveSnake(): void {
         let newPosition = new Position(position.xPosition,  position.yPosition - 1);
         
-        if (direction === "E") {
+        if (directions[directionIndex] === "E") {
             newPosition = new Position(position.xPosition + 1,  position.yPosition);
         }
 
@@ -52,25 +53,28 @@ export const SnakeGame = ({
     }
 
     function turnSnakeRight(): void {
-        if(direction === "E"){
-            setDirection("S");
+        const newDirectionIndex = (directionIndex + 1) % 4;
+        setDirectionIndex(newDirectionIndex);
+
+        moveSnakeInDirection(directions[newDirectionIndex]);
+    }
+
+    function moveSnakeInDirection(direction): void {
+        if(direction === "S"){
             moveSnakeDown();
             return;
         }
 
-        if(direction === "S"){
-            setDirection("W");
+        if(direction === "W"){
             moveSnakeLeft();
             return;
         }
 
-        if(direction === "W"){
-            setDirection("N");
+        if(direction === "N"){
             moveSnakeUp();
             return;
         }
-        
-        setDirection("E");
+
         moveSnakeRight();
     }
     
