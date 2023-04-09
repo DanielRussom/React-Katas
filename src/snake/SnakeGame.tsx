@@ -48,6 +48,11 @@ export const SnakeGame = ({
             newPosition = new Position(position.xPosition + 1,  position.yPosition);
         }
 
+        if (directions[directionIndex] === "S") {
+            moveSnakeDown();
+            return;
+        }
+
         
         updateSnakePosition(newPosition);
     }
