@@ -134,60 +134,30 @@ describe("snake game", () => {
             clickButton('>');
         }
 
-        const middleRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
-        const snakeColumn = middleRow.childNodes[expectedPosition.xPosition];
+        const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
+        const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
 
-        const snake = snakeColumn;
-
-        expect(snake).toHaveTextContent("Snake");
+        expect(snakeLocation).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
     
-    it("moves the snake right and forward", () => {
+    it.each([
+        [1, new Position(4,2)],
+        [2, new Position(3,4)],
+        [3, new Position(1,3)],
+    ])
+    ("moves the snake right and forward", (times, expectedPosition) => {
         render(<SnakeGame height={5} width={5} />);
 
-        clickButton('>');
+        for(let i = 0; i < times; i++){
+            clickButton('>');
+        }
         clickButton('Move');
 
-        const middleRow = screen.getByTitle("GameBoard").childNodes[2];
-        const snakeColumn = middleRow.childNodes[4];
+        const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
+        const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
 
-        const snake = snakeColumn;
-
-        expect(snake).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
-    });
-    
-    it("moves the snake right twice and forward", () => {
-        render(<SnakeGame height={5} width={5} />);
-
-        clickButton('>');
-        clickButton('>');
-        clickButton('Move');
-
-        const middleRow = screen.getByTitle("GameBoard").childNodes[4];
-        const snakeColumn = middleRow.childNodes[3];
-
-        const snake = snakeColumn;
-
-        expect(snake).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
-    });
-    
-    it("moves the snake right three times and forward", () => {
-        render(<SnakeGame height={5} width={5} />);
-
-        clickButton('>');
-        clickButton('>');
-        clickButton('>');
-        clickButton('Move');
-
-        const middleRow = screen.getByTitle("GameBoard").childNodes[3];
-        const snakeColumn = middleRow.childNodes[1];
-
-        const snake = snakeColumn;
-
-        expect(snake).toHaveTextContent("Snake");
+        expect(snakeLocation).toHaveTextContent("Snake");
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
