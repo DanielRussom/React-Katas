@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
+import { Snake } from "./Snake";
 
 export const SnakeGame = ({
     height = 5,
@@ -9,9 +10,7 @@ export const SnakeGame = ({
 }) => {
     const [position, setPosition] = useState(getInitialSnakePosition());
     const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
-    const [directionIndex, setDirectionIndex] = useState(0);
-
-    const directions = ["N", "E", "S", "W"]
+    const [snake] = useState(new Snake(getInitialSnakePosition()));
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -42,59 +41,13 @@ export const SnakeGame = ({
     }
 
     function turnSnakeRight(): void {
-        const newDirectionIndex = (directionIndex + 1) % 4;
-        setDirectionIndex(newDirectionIndex);
-
-        moveSnakeInDirection(directions[newDirectionIndex]);
+        var snakePosition = snake.turnSnakeRight();
+        updateSnakePosition(snakePosition);
     }
 
     function moveSnake(): void {        
-        const currentDirection = directions[directionIndex];
-
-        moveSnakeInDirection(currentDirection);
-    }
-
-    function moveSnakeInDirection(direction): void {
-        if(direction === "S"){
-            moveSnakeDown();
-            return;
-        }
-
-        if(direction === "W"){
-            moveSnakeLeft();
-            return;
-        }
-
-        if(direction === "N"){
-            moveSnakeUp();
-            return;
-        }
-
-        moveSnakeRight();
-    }
-    
-    function moveSnakeLeft() {
-        let newPosition = new Position(position.xPosition - 1,  position.yPosition);
-
-        updateSnakePosition(newPosition);
-    }
-    
-    function moveSnakeRight() {
-        let newPosition = new Position(position.xPosition + 1,  position.yPosition);
-
-        updateSnakePosition(newPosition);
-    }
-    
-    function moveSnakeUp() {
-        let newPosition = new Position(position.xPosition,  position.yPosition - 1);
-
-        updateSnakePosition(newPosition);
-    }
-
-    function moveSnakeDown() {
-        let newPosition = new Position(position.xPosition,  position.yPosition + 1);
-
-        updateSnakePosition(newPosition);
+        var snakePosition = snake.moveSnake();
+        updateSnakePosition(snakePosition);
     }
 
     function updateSnakePosition(newPosition: Position) {
