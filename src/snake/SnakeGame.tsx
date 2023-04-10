@@ -9,7 +9,7 @@ export const SnakeGame = ({
     width = 5,
 }) => {
     const [snake] = useState(new Snake(getInitialSnakePosition()));
-    const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
+    const [grid, setGrid] = useState<string[][]>(buildGrid());
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -18,7 +18,7 @@ export const SnakeGame = ({
         return new Position(xPosition, yPosition);        
     }
 
-    function buildGrid(height: number, width: number) {
+    function buildGrid() {
         let grid: string[][] = [];
 
         for (let rowId = 0; rowId < height; rowId++) {
@@ -33,7 +33,7 @@ export const SnakeGame = ({
         let newRow: string[] = [];
 
         for (let columnId = 0; columnId < width; columnId++) {
-            newRow.push("  x  ");
+            newRow.push("x");
         }
 
         return newRow;

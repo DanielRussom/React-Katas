@@ -1,9 +1,13 @@
 import Position from "./Position";
 
-export class Snake {
+enum Direction {
+    Up = 0,
+    Right = 1,
+    Down = 2,
+    Left = 3,
+  }
 
-    readonly directions = ["N", "E", "S", "W"]
-    
+export class Snake {
     directionIndex = 0;
 
     position : Position
@@ -13,21 +17,19 @@ export class Snake {
     }
 
     moveSnake(): Position {        
-        const currentDirection = this.directions[this.directionIndex];
-
-        if(currentDirection === "S"){
+        if(this.directionIndex === Direction.Down){
             this.moveSnakeDown();
         }
 
-        if(currentDirection === "W"){
+        if(this.directionIndex === Direction.Left){
             this.moveSnakeLeft();
         }
 
-        if(currentDirection === "N"){
+        if(this.directionIndex === Direction.Up){
             this.moveSnakeUp();
         }
 
-        if(currentDirection === "E"){
+        if(this.directionIndex === Direction.Right){
             this.moveSnakeRight();
 
         }
