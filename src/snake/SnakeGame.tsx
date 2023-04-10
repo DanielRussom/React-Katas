@@ -8,9 +8,8 @@ export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
-    const [position, setPosition] = useState(getInitialSnakePosition());
-    const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
     const [snake] = useState(new Snake(getInitialSnakePosition()));
+    const [grid, setGrid] = useState<string[][]>(buildGrid(height, width));
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -26,7 +25,7 @@ export const SnakeGame = ({
             grid.push(buildRow(width));
         }
 
-        grid[position.yPosition][position.xPosition] = "Snake"
+        grid[snake.position.yPosition][snake.position.xPosition] = "Snake"
         return grid;
     }
 
@@ -41,19 +40,20 @@ export const SnakeGame = ({
     }
 
     function turnSnakeRight(): void {
-        updateSnakePosition(snake.turnSnakeRight());
+        const oldSnakePosition = snake.position;
+        updateSnakeDisplay(oldSnakePosition, snake.turnSnakeRight());
     }
 
     function moveSnake(): void {
-        updateSnakePosition(snake.moveSnake());
+        const oldSnakePosition = snake.position;
+        updateSnakeDisplay(oldSnakePosition, snake.moveSnake());
     }
 
-    function updateSnakePosition(newPosition: Position) {
+    function updateSnakeDisplay(oldPosition: Position, newPosition: Position) {
         let newGrid = [...grid];
-        newGrid[position.yPosition][position.xPosition] = " x ";
+        newGrid[oldPosition.yPosition][oldPosition.xPosition] = " x ";
         newGrid[newPosition.yPosition][newPosition.xPosition] = "Snake";
         setGrid(newGrid);
-        setPosition(newPosition);
     }
 
     return (
