@@ -15,34 +15,30 @@ export class Snake {
     moveSnake(): Position {        
         const currentDirection = this.directions[this.directionIndex];
 
-        this.moveSnakeInDirection(currentDirection);
+        if(currentDirection === "S"){
+            this.moveSnakeDown();
+        }
+
+        if(currentDirection === "W"){
+            this.moveSnakeLeft();
+        }
+
+        if(currentDirection === "N"){
+            this.moveSnakeUp();
+        }
+
+        if(currentDirection === "E"){
+            this.moveSnakeRight();
+
+        }
+
         return this.position;
     }
 
     turnSnakeRight(): Position {
         this.directionIndex = (this.directionIndex + 1) % 4;
 
-        this.moveSnakeInDirection(this.directions[this.directionIndex]);
-        return this.position;
-    }
-
-    moveSnakeInDirection(direction): void {
-        if(direction === "S"){
-            this.moveSnakeDown();
-            return;
-        }
-
-        if(direction === "W"){
-            this.moveSnakeLeft();
-            return;
-        }
-
-        if(direction === "N"){
-            this.moveSnakeUp();
-            return;
-        }
-
-        this.moveSnakeRight();
+        return this.moveSnake();
     }
     
     moveSnakeUp() {
