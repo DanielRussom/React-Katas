@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import * as React from "react";
 import { clickButton, getButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
@@ -168,5 +168,16 @@ describe("snake game", () => {
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
+    });
+
+    describe("Food", () => {
+        it("exists in the grid", () => {
+            render(<SnakeGame height={7} width={7} />);
+
+            const gameBoard = screen.getByTitle("GameBoard");
+            const food = within(gameBoard).getByText("Food");
+
+            expect(food).toBeInTheDocument();
+        });
     });
 });

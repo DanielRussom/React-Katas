@@ -26,6 +26,8 @@ export const SnakeGame = ({
         }
 
         grid[snake.position.yPosition][snake.position.xPosition] = "Snake"
+        
+        grid[0][0] = "Food"
         return grid;
     }
 
@@ -33,7 +35,7 @@ export const SnakeGame = ({
         let newRow: string[] = [];
 
         for (let columnId = 0; columnId < width; columnId++) {
-            newRow.push("x");
+            newRow.push("| _ |");
         }
 
         return newRow;
@@ -51,7 +53,7 @@ export const SnakeGame = ({
 
     function updateSnakeDisplay(oldPosition: Position, newPosition: Position) {
         let newGrid = [...grid];
-        newGrid[oldPosition.yPosition][oldPosition.xPosition] = " x ";
+        newGrid[oldPosition.yPosition][oldPosition.xPosition] = "| _ |";
         newGrid[newPosition.yPosition][newPosition.xPosition] = "Snake";
         setGrid(newGrid);
     }
