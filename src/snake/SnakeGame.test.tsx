@@ -179,5 +179,11 @@ describe("snake game", () => {
 
             expect(food).toBeInTheDocument();
         });
+
+        // Food spawns randomly
+
+        // Food doesn't spawn on snake
+
+        // Food respawns after snake collides with it
     });
 });
