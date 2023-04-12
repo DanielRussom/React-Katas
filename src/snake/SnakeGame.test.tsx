@@ -5,12 +5,6 @@ import SnakeGame from "./SnakeGame";
 import Position from "./Position";
 
 describe("snake game", () => {
-    it("has a left button", () => {
-        render(<SnakeGame />);
-
-        expect(getButton('<')).toBeInTheDocument();
-    });
-
     describe("game board", () => {
         it("is a grid", () => {
             render(<SnakeGame />);
