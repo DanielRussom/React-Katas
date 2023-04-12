@@ -41,6 +41,11 @@ export const SnakeGame = ({
         return newRow;
     }
 
+    function turnSnakeLeft(): void {
+        const oldSnakePosition = snake.position;
+        updateSnakeDisplay(oldSnakePosition, snake.turnSnakeLeft());
+    }
+
     function turnSnakeRight(): void {
         const oldSnakePosition = snake.position;
         updateSnakeDisplay(oldSnakePosition, snake.turnSnakeRight());
@@ -60,7 +65,7 @@ export const SnakeGame = ({
 
     return (
         <>
-            <button>&lt;</button>
+            <button onClick={turnSnakeLeft}>&lt;</button>
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 

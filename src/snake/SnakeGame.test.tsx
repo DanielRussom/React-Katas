@@ -168,6 +168,23 @@ describe("snake game", () => {
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
+        it.each([
+            [1, new Position(1, 2)]
+        ])
+            ("turns left", (times, expectedPosition) => {
+                render(<SnakeGame height={5} width={5} />);
+
+                for (let i = 0; i < times; i++) {
+                    clickButton('<');
+                }
+
+                const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
+                const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
+
+                expect(snakeLocation).toHaveTextContent("Snake");
+                expect(screen.getAllByText("Snake").length).toEqual(1);
+            });
+
     });
 
     describe("Food", () => {
@@ -181,6 +198,7 @@ describe("snake game", () => {
         });
 
         // Food spawns randomly
+        // Handle spawning in a different component? This way we can mock it out to make this test reliable
 
         // Food doesn't spawn on snake
 

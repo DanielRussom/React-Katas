@@ -8,6 +8,7 @@ enum Direction {
   }
 
 export class Snake {
+    readonly numberOfDirections = 4;
     directionIndex = 0;
 
     position : Position
@@ -37,8 +38,17 @@ export class Snake {
         return this.position;
     }
 
+    turnSnakeLeft(): Position {
+        this.directionIndex = (this.directionIndex - 1);
+        if(this.directionIndex < 0){
+            this.directionIndex = this.numberOfDirections - 1;
+        }
+        
+        return this.moveSnake();
+    }
+
     turnSnakeRight(): Position {
-        this.directionIndex = (this.directionIndex + 1) % 4;
+        this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
         return this.moveSnake();
     }
