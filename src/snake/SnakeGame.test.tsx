@@ -7,15 +7,19 @@ import { FoodSpawner } from "./FoodSpawner";
 
 jest.mock("./FoodSpawner");
 
-let foodPosition = new Position(0, 0);
 
-beforeEach(() => {
-    const pickedFoodFunction = jest.fn()
-        .mockReturnValue(foodPosition)
-    FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-});
+// beforeEach(() => {
+// });
 
 describe("snake game", () => {
+    beforeEach(() => {
+
+        FoodSpawner.prototype.pickFoodPosition =  jest.fn().mockImplementation(() => {
+            return new Position(0,0);
+        });
+
+    });
+
     describe("game board", () => {
         it("is a grid", () => {
             render(<SnakeGame />);
@@ -207,13 +211,21 @@ describe("snake game", () => {
         });
 
         it("exists in the expected location", () => {
-            foodPosition = new Position(1,1);
+            let foodPosition = new Position(1, 1);
+            
+            let pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
+                return new Position(1,1);
+            });
+            
+            
+            FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+
             render(<SnakeGame height={7} width={7} />);
 
-            const pickedFoodFunction = jest.fn()
-            .mockReturnValueOnce(new Position(1, 1))
+            // const pickedFoodFunction = jest.fn()
+            // .mockReturnValueOnce(new Position(1, 1))
 
-            FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+            // FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
                 
 
             const secondRow = screen.getByTitle("GameBoard").childNodes[1];
