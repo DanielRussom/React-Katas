@@ -7,6 +7,14 @@ import { FoodSpawner } from "./FoodSpawner";
 
 jest.mock("./FoodSpawner");
 
+let foodPosition = new Position(0, 0);
+
+beforeEach(() => {
+    const pickedFoodFunction = jest.fn()
+        .mockReturnValue(foodPosition)
+    FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+});
+
 describe("snake game", () => {
     describe("game board", () => {
         it("is a grid", () => {
@@ -199,6 +207,7 @@ describe("snake game", () => {
         });
 
         it("exists in the expected location", () => {
+            foodPosition = new Position(1,1);
             render(<SnakeGame height={7} width={7} />);
 
             const pickedFoodFunction = jest.fn()

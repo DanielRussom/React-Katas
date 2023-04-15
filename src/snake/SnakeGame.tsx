@@ -3,13 +3,17 @@ import { useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
+import { FoodSpawner } from "./FoodSpawner";
 
 export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
+    const foodSpawner = new FoodSpawner();
+
     const [snake] = useState(new Snake(getInitialSnakePosition()));
     const [grid, setGrid] = useState<string[][]>(buildGrid());
+
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -27,7 +31,8 @@ export const SnakeGame = ({
 
         grid[snake.position.yPosition][snake.position.xPosition] = "Snake"
         
-        grid[0][0] = "Food"
+        const foodPosition = foodSpawner.pickFoodPosition(grid);
+        grid[foodPosition.yPosition][foodPosition.xPosition] = "Food"
         return grid;
     }
 
