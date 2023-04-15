@@ -1,8 +1,11 @@
 import { render, screen, within } from "@testing-library/react";
 import * as React from "react";
-import { clickButton, getButton } from "../../testExtensions/screenTestExtensions";
+import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
 import Position from "./Position";
+import { FoodSpawner } from "./FoodSpawner";
+
+jest.mock("./FoodSpawner");
 
 describe("snake game", () => {
     describe("game board", () => {
@@ -193,6 +196,24 @@ describe("snake game", () => {
             const food = within(gameBoard).getByText("Food");
 
             expect(food).toBeInTheDocument();
+        });
+
+        it("exists in the expected location", () => {
+            render(<SnakeGame height={7} width={7} />);
+
+            const pickedFoodFunction = jest.fn()
+            .mockReturnValueOnce(new Position(1, 1))
+
+            FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+                
+
+            const secondRow = screen.getByTitle("GameBoard").childNodes[1];
+            const foodLocation = secondRow.childNodes[1];
+
+            expect(foodLocation).toHaveTextContent("Food");
+            expect(screen.getAllByText("Food").length).toEqual(1);
+
+            expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
         });
 
         // Food spawns randomly
