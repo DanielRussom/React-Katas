@@ -1,7 +1,7 @@
 import Position from "./Position";
 
 export class FoodSpawner {
-    pickFoodPosition(grid : string[][]): Position {     
-        throw new Error("Not implemented");
+    pickFoodPosition(grid : string[][]): Position {  
+        return new Position(0,0);
     }
 };
