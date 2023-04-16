@@ -14,8 +14,8 @@ jest.mock("./FoodSpawner");
 describe("snake game", () => {
     beforeEach(() => {
 
-        FoodSpawner.prototype.pickFoodPosition =  jest.fn().mockImplementation(() => {
-            return new Position(0,0);
+        FoodSpawner.prototype.pickFoodPosition = jest.fn().mockImplementation(() => {
+            return new Position(0, 0);
         });
 
     });
@@ -210,32 +210,28 @@ describe("snake game", () => {
             expect(food).toBeInTheDocument();
         });
 
-        it("exists in the expected location", () => {
-            let foodPosition = new Position(1, 1);
-            
-            let pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
-                return new Position(1,1);
+        it.each([
+            [ new Position(1,1)],
+            [ new Position(3,4)],
+            [ new Position(6,6)]
+        ])
+            ("exists in the expected location", (expectedPosition) => {
+                const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
+                    return expectedPosition;
+                });
+
+                FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+
+                render(<SnakeGame height={7} width={7} />);
+
+                const secondRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
+                const foodLocation = secondRow.childNodes[expectedPosition.xPosition];
+
+                expect(foodLocation).toHaveTextContent("Food");
+                expect(screen.getAllByText("Food").length).toEqual(1);
+
+                expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
             });
-            
-            
-            FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-
-            render(<SnakeGame height={7} width={7} />);
-
-            // const pickedFoodFunction = jest.fn()
-            // .mockReturnValueOnce(new Position(1, 1))
-
-            // FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-                
-
-            const secondRow = screen.getByTitle("GameBoard").childNodes[1];
-            const foodLocation = secondRow.childNodes[1];
-
-            expect(foodLocation).toHaveTextContent("Food");
-            expect(screen.getAllByText("Food").length).toEqual(1);
-
-            expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
-        });
 
         // Food spawns randomly
         // Handle spawning in a different component? This way we can mock it out to make this test reliable
