@@ -7,10 +7,6 @@ import { FoodSpawner } from "./FoodSpawner";
 
 jest.mock("./FoodSpawner");
 
-
-// beforeEach(() => {
-// });
-
 describe("snake game", () => {
     beforeEach(() => {
 
