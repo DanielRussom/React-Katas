@@ -38,7 +38,24 @@ describe("Food spawner", () => {
         expect(result).toEqual(new Position(0,1));
         expect(randomFunction).toHaveBeenCalledTimes(1);
         
-        expect(randomFunction).toHaveBeenCalledWith(1);
+        expect(randomFunction).toHaveBeenCalledWith(2);
     });
 
+
+    it("picks a position from 0-2", () => {
+        const randomFunction = jest.fn().mockImplementationOnce(() => {
+            return 0;
+        });
+
+        Random.prototype.getNumber = randomFunction;
+
+        const spawner = new FoodSpawner();
+
+        const input = [["", "", ""]];
+        spawner.pickFoodPosition(input)
+        
+        expect(randomFunction).toHaveBeenCalledTimes(1);
+        
+        expect(randomFunction).toHaveBeenCalledWith(3);
+    })
 });
