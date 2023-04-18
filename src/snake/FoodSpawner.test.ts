@@ -24,10 +24,12 @@ describe("Food spawner", () => {
 
     it.each([
         [[["", ""]], 2],
-        [[["", "", ""]], 3]
+        [[["", "", ""]], 3],
+        [[[""],[""]], 2]
     ])
     ("picks a position from the expected range", (input, expectedRange) => {
 
+        console.log(input);
         const randomFunction = jest.fn().mockImplementationOnce(() => {
             return 1;
         });
