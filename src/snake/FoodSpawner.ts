@@ -5,10 +5,10 @@ export class FoodSpawner {
     pickFoodPosition(grid : string[][]): Position {  
         const randomizer = new Random();
 
-        let randomLimit = grid[0].length;
+        let randomLimit = 0;
 
-        if(grid.length > 1){
-            randomLimit += grid[1].length;
+        for(let i = 0; i < grid.length; i++){
+            randomLimit += grid[i].length;
         }
 
         const result = randomizer.getNumber(randomLimit);
