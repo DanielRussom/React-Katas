@@ -8,7 +8,7 @@ jest.mock("./Random");
 describe("Food spawner", () => {
     beforeEach(() => {
 
-        Random.prototype.getNumber = jest.fn().mockImplementation(() => {
+        Random.prototype.getNumberBelowLimit = jest.fn().mockImplementation(() => {
             return 0;
         });
 
@@ -34,15 +34,30 @@ describe("Food spawner", () => {
             return 1;
         });
 
-        Random.prototype.getNumber = randomFunction;
+        Random.prototype.getNumberBelowLimit = randomFunction;
 
         const spawner = new FoodSpawner();
 
         const result = spawner.pickFoodPosition(input)
 
         expect(result).toEqual(new Position(0, 1));
-        expect(randomFunction).toHaveBeenCalledTimes(1);
-
         expect(randomFunction).toHaveBeenCalledWith(expectedRange);
+    });
+
+    it("picks an empty position", () => {
+        
+        const randomFunction = jest.fn().mockImplementationOnce(() => {
+            return 1;
+        });
+
+        Random.prototype.getNumberBelowLimit = randomFunction;
+
+        const spawner = new FoodSpawner();
+
+        const result = spawner.pickFoodPosition([["Snake", ""]])
+        expect(randomFunction).toHaveBeenCalledWith(1);
+        expect(result).toEqual(new Position(0, 1));
+
+
     });
 });
