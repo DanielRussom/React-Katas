@@ -57,7 +57,5 @@ describe("Food spawner", () => {
         const result = spawner.pickFoodPosition([["Snake", ""]])
         expect(randomFunction).toHaveBeenCalledWith(1);
         expect(result).toEqual(new Position(0, 1));
-
-
     });
 });
