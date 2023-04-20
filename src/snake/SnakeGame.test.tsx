@@ -229,11 +229,6 @@ describe("snake game", () => {
                 expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
             });
 
-        // Food spawns randomly
-        // Handle spawning in a different component? This way we can mock it out to make this test reliable
-
-        // Food doesn't spawn on snake
-
         // Food respawns after snake collides with it
     });
 });

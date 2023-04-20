@@ -1,6 +1,6 @@
 
 export class Random {
-    getNumber(limit : number): number {     
+    getNumberBelowLimit(limit : number): number {     
         throw new Error("Not implemented");
     }
 };
