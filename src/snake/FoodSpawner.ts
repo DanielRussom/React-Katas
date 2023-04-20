@@ -8,8 +8,7 @@ export class FoodSpawner {
         let validPositions = this.getValidPositions(grid);
 
         const result = randomizer.getNumberBelowLimit(validPositions.length);
-
-        return new Position(0,result);
+        return validPositions[result];
     }
 
     private getValidPositions(grid: string[][]): Position[] {
@@ -29,7 +28,7 @@ export class FoodSpawner {
             if (grid[i][j] !== "") {
                 continue;
             }
-            
+
             const newPosition = new Position(j, i);
             validPositionsInRow.push(newPosition);
         }

@@ -38,24 +38,38 @@ describe("Food spawner", () => {
 
         const spawner = new FoodSpawner();
 
-        const result = spawner.pickFoodPosition(input)
+        spawner.pickFoodPosition(input)
 
-        expect(result).toEqual(new Position(0, 1));
         expect(randomFunction).toHaveBeenCalledWith(expectedRange);
     });
 
     it("picks an empty position", () => {
+            
+        const randomFunction = jest.fn().mockImplementationOnce(() => {
+            return 0;
+        });
+    
+        Random.prototype.getNumberBelowLimit = randomFunction;
+    
+        const spawner = new FoodSpawner();
+    
+        const result = spawner.pickFoodPosition([["Snake", ""]])
+        expect(randomFunction).toHaveBeenCalledWith(1);
+        expect(result).toEqual(new Position(1, 0));
+    });
+
+    it("picks 1,1", () => {
         
         const randomFunction = jest.fn().mockImplementationOnce(() => {
-            return 1;
+            return 3;
         });
 
         Random.prototype.getNumberBelowLimit = randomFunction;
 
         const spawner = new FoodSpawner();
 
-        const result = spawner.pickFoodPosition([["Snake", ""]])
-        expect(randomFunction).toHaveBeenCalledWith(1);
-        expect(result).toEqual(new Position(0, 1));
-    });
+        const result = spawner.pickFoodPosition([["",""],["",""]])
+
+        expect(result).toEqual(new Position(1, 1));
+    })
 });
