@@ -25,7 +25,7 @@ export class FoodSpawner {
         let validPositionsInRow : Position[] = [];
 
         for (let j = 0; j < grid[i].length; j++) {
-            if (grid[i][j] !== "") {
+            if (grid[i][j] !== "" && grid[i][j] !== "| _ |") {
                 continue;
             }
 
