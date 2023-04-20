@@ -1,6 +1,6 @@
 
 export class Random {
     getNumberBelowLimit(limit : number): number {     
-        throw new Error("Not implemented");
+        return Math.floor(Math.random() * limit);
     }
 };

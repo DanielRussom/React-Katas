@@ -2,15 +2,19 @@ import { render, screen } from "@testing-library/react";
 import SnakeGame from "./SnakeGame";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
+import { Random } from "./Random";
 
-// jest.mock("./FoodSpawner");
 
-describe.skip("snake eating food feature", () => {
+jest.mock("./Random");
+
+describe("snake eating food feature", () => {
     it("should increase the snake's length and have the snake in the expected position", () => {
-        // FoodSpawner.prototype.getFoodLocation =
-        //     jest.fn()
-        //         .mockReturnValueOnce(new Position(1, 1))
-        //         .mockReturnValueOnce(new Position(3, 3));
+        const randomFunction = jest.fn().mockImplementationOnce(() => {
+            return 8; // (1,1)
+        }).mockImplementationOnce(() => {
+            return 24; // (3,3)
+        })
+        Random.prototype.getNumberBelowLimit = randomFunction;
 
         render(<SnakeGame height={7} width={7} />);
 
