@@ -187,10 +187,9 @@ describe("snake game", () => {
                     clickButton('<');
                 }
 
-                const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
-                const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
+                const expectedSnakePosition = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-                expect(snakeLocation).toHaveTextContent("Snake");
+                expect(expectedSnakePosition).toHaveTextContent("Snake");
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 
