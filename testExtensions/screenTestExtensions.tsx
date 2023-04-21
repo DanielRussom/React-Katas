@@ -19,6 +19,3 @@ HTMLElement.prototype.getChildAt = function(position: Position) {
     const row = this.childNodes[position.yPosition];
     return row.childNodes[position.xPosition];
 }
-
-export const getChildAt = (element: HTMLElement, position : Position) => {
-}
