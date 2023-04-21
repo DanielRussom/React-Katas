@@ -56,62 +56,56 @@ describe("snake game", () => {
 
     describe("snake", () => {
         it.each([
-            [5, 2],
-            [6, 2],
-            [7, 3]
+            [5, new Position(2, 2)],
+            [6, new Position(2, 2)],
+            [7, new Position(3, 3)]
         ])
-            ("spawns in the middle of the game board", (gridSize, snakeLocation) => {
+            ("spawns in the middle of the game board", (gridSize, expectedPosition) => {
                 render(<SnakeGame height={gridSize} width={gridSize} />);
 
-                const middleRow = screen.getByTitle("GameBoard").childNodes[snakeLocation];
-                const middleColumn = middleRow.childNodes[snakeLocation];
-
-                const snake = middleColumn;
-
-                expect(snake).toHaveTextContent("Snake");
+                const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
+    
+                expect(expectedSnakeLocation).toHaveTextContent("Snake");
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 
         it("moves forward once in a 5x5 grid", () => {
+            const expectedPosition = new Position(2, 1);
+
             render(<SnakeGame height={5} width={5} />);
 
             clickButton('Move');
 
-            const middleRow = screen.getByTitle("GameBoard").childNodes[1];
-            const middleColumn = middleRow.childNodes[2];
+            const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-            const snake = middleColumn;
-
-            expect(snake).toHaveTextContent("Snake");
+            expect(expectedSnakeLocation).toHaveTextContent("Snake");
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
         it("moves forward once in a 7x7 grid", () => {
+            const expectedPosition = new Position(3, 2);
+
             render(<SnakeGame height={7} width={7} />);
 
             clickButton('Move');
 
-            const snakeRow = screen.getByTitle("GameBoard").childNodes[2];
-            const middleColumn = snakeRow.childNodes[3];
+            const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-            const snake = middleColumn;
-
-            expect(snake).toHaveTextContent("Snake");
+            expect(expectedSnakeLocation).toHaveTextContent("Snake");
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
         it("moves forward twice in a 5x5 grid", () => {
+            const expectedPosition = new Position(2, 0)
+
             render(<SnakeGame height={5} width={5} />);
 
             clickButton('Move');
             clickButton('Move');
 
-            const snakeRow = screen.getByTitle("GameBoard").childNodes[0];
-            const middleColumn = snakeRow.childNodes[2];
+            const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-            const snake = middleColumn;
-
-            expect(snake).toHaveTextContent("Snake");
+            expect(expectedSnakeLocation).toHaveTextContent("Snake");
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
@@ -129,10 +123,9 @@ describe("snake game", () => {
                     clickButton('>');
                 }
 
-                const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
-                const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
+                const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-                expect(snakeLocation).toHaveTextContent("Snake");
+                expect(expectedSnakeLocation).toHaveTextContent("Snake");
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 
@@ -149,10 +142,9 @@ describe("snake game", () => {
                 }
                 clickButton('Move');
 
-                const snakeRow = screen.getByTitle("GameBoard").childNodes[expectedPosition.yPosition];
-                const snakeLocation = snakeRow.childNodes[expectedPosition.xPosition];
+                const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-                expect(snakeLocation).toHaveTextContent("Snake");
+                expect(expectedSnakeLocation).toHaveTextContent("Snake");
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 

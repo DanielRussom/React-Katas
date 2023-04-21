@@ -3,6 +3,7 @@ import SnakeGame from "./SnakeGame";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import { Random } from "./Random";
+import Position from "./Position";
 
 
 jest.mock("./Random");
@@ -19,10 +20,9 @@ describe("snake eating food feature", () => {
         render(<SnakeGame height={7} width={7} />);
 
         let gameBoard = screen.getByTitle("GameBoard");
-        let secondRow = gameBoard.childNodes[1];
-
-        const firstFoodCell = secondRow.childNodes[1];
-        expect(firstFoodCell).toHaveTextContent("Food");
+        
+        let expectedFoodLocation = gameBoard.getChildAt(new Position(1,1));
+        expect(expectedFoodLocation).toHaveTextContent("Food");
 
         clickButton('Move');
         clickButton('Move');
@@ -30,21 +30,17 @@ describe("snake eating food feature", () => {
         clickButton('Move');
 
         gameBoard = screen.getByTitle("GameBoard");
-        secondRow = gameBoard.childNodes[1];
+        
+        const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(1,1));
+        const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(2,1))
 
-        const firstSnakeCell = secondRow.childNodes[1];
-        const secondSnakeCell = secondRow.childNodes[2];
-
-        expect(firstSnakeCell).toHaveTextContent("Snake");
-        expect(secondSnakeCell).toHaveTextContent("Snake");
+        expect(firstExpectedSnakeCell).toHaveTextContent("Snake");
+        expect(secondExpectedSnakeCell).toHaveTextContent("Snake");
 
         expect(screen.getAllByText("Snake").length).toEqual(2);
 
-
-        const fourthRow = gameBoard.childNodes[3];
-
-        const secondFoodCell = fourthRow.childNodes[3];
-        expect(secondFoodCell).toHaveTextContent("Food");
+        expectedFoodLocation = gameBoard.getChildAt(new Position(3,3));
+        expect(expectedFoodLocation).toHaveTextContent("Food");
 
     });
 });
