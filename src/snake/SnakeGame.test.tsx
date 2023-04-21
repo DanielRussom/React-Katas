@@ -64,44 +64,22 @@ describe("snake game", () => {
                 render(<SnakeGame height={gridSize} width={gridSize} />);
 
                 const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
-    
+
                 expect(expectedSnakeLocation).toHaveTextContent("Snake");
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 
-        it("moves forward once in a 5x5 grid", () => {
-            const expectedPosition = new Position(2, 1);
+        it.each(
+            [[5, 1, new Position(2, 1)],
+            [5, 2, new Position(2, 0)],
+            [7, 1, new Position(3, 2)]]
+        )("moves forward to expected location", (gridSize, timesToMove, expectedPosition) => {
 
-            render(<SnakeGame height={5} width={5} />);
+            render(<SnakeGame height={gridSize} width={gridSize} />);
 
-            clickButton('Move');
-
-            const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
-
-            expect(expectedSnakeLocation).toHaveTextContent("Snake");
-            expect(screen.getAllByText("Snake").length).toEqual(1);
-        });
-
-        it("moves forward once in a 7x7 grid", () => {
-            const expectedPosition = new Position(3, 2);
-
-            render(<SnakeGame height={7} width={7} />);
-
-            clickButton('Move');
-
-            const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
-
-            expect(expectedSnakeLocation).toHaveTextContent("Snake");
-            expect(screen.getAllByText("Snake").length).toEqual(1);
-        });
-
-        it("moves forward twice in a 5x5 grid", () => {
-            const expectedPosition = new Position(2, 0)
-
-            render(<SnakeGame height={5} width={5} />);
-
-            clickButton('Move');
-            clickButton('Move');
+            for (let i = 0; i < timesToMove; i++) {
+                clickButton('Move');
+            }
 
             const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
@@ -198,9 +176,9 @@ describe("snake game", () => {
         });
 
         it.each([
-            [ new Position(1,1)],
-            [ new Position(3,4)],
-            [ new Position(6,6)]
+            [new Position(1, 1)],
+            [new Position(3, 4)],
+            [new Position(6, 6)]
         ])
             ("exists in the expected location", (expectedPosition) => {
                 const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
