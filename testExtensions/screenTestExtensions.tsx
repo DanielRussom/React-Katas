@@ -9,7 +9,16 @@ export const clickButton = (buttonName : string) => {
     userEvent.click(screen.getByRole('button', { name: buttonName }));
 }
 
-export const getChildAt = (element: HTMLElement, position : Position) => {
-    const row = element.childNodes[position.yPosition];
+declare global {
+    interface HTMLElement{
+        getChildAt(position: Position);
+    }
+}
+
+HTMLElement.prototype.getChildAt = function(position: Position) {
+    const row = this.childNodes[position.yPosition];
     return row.childNodes[position.xPosition];
+}
+
+export const getChildAt = (element: HTMLElement, position : Position) => {
 }

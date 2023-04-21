@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import * as React from "react";
-import { clickButton, getChildAt } from "../../testExtensions/screenTestExtensions";
+import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
 import Position from "./Position";
 import { FoodSpawner } from "./FoodSpawner";
@@ -220,7 +220,7 @@ describe("snake game", () => {
 
                 render(<SnakeGame height={7} width={7} />);
 
-                const expectedFoodLocation = getChildAt(screen.getByTitle("GameBoard"), expectedPosition);
+                const expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
                 expect(expectedFoodLocation).toHaveTextContent("Food");
                 expect(screen.getAllByText("Food").length).toEqual(1);
