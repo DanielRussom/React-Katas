@@ -3,16 +3,14 @@ import { useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
-import { FoodSpawner } from "./FoodSpawner";
 
 export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
-    const foodSpawner = new FoodSpawner();
 
     const [snake] = useState(new Snake(getInitialSnakePosition()));
-    const [grid, setGrid] = useState<string[][]>(buildGrid());
+    const [snakePosition, setSnakePosition] = useState(snake.position);
 
 
     function getInitialSnakePosition(): Position {
@@ -22,29 +20,7 @@ export const SnakeGame = ({
         return new Position(xPosition, yPosition);        
     }
 
-    function buildGrid() {
-        let grid: string[][] = [];
-
-        for (let rowId = 0; rowId < height; rowId++) {
-            grid.push(buildRow(width));
-        }
-
-        grid[snake.position.yPosition][snake.position.xPosition] = "Snake"
-        
-        const foodPosition = foodSpawner.pickFoodPosition(grid);
-        grid[foodPosition.yPosition][foodPosition.xPosition] = "Food"
-        return grid;
-    }
-
-    function buildRow(width: number) {
-        let newRow: string[] = [];
-
-        for (let columnId = 0; columnId < width; columnId++) {
-            newRow.push("| _ |");
-        }
-
-        return newRow;
-    }
+    
 
     function turnSnakeLeft(): void {
         const oldSnakePosition = snake.position;
@@ -62,10 +38,7 @@ export const SnakeGame = ({
     }
 
     function updateSnakeDisplay(oldPosition: Position, newPosition: Position) {
-        let newGrid = [...grid];
-        newGrid[oldPosition.yPosition][oldPosition.xPosition] = "| _ |";
-        newGrid[newPosition.yPosition][newPosition.xPosition] = "Snake";
-        setGrid(newGrid);
+        setSnakePosition(new Position(snake.position.xPosition, snake.position.yPosition));
     }
 
     return (
@@ -74,7 +47,7 @@ export const SnakeGame = ({
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <Grid grid={grid} />
+            <Grid height={height} width={width} snakeLocation={snakePosition} />
         </>
     )
 }
