@@ -16,6 +16,6 @@ declare global {
 }
 
 HTMLElement.prototype.getChildAt = function(position: Position) {
-    const row = this.childNodes[position.yPosition];
-    return row.childNodes[position.xPosition];
+    const row = this.childNodes[position.y];
+    return row.childNodes[position.x];
 }

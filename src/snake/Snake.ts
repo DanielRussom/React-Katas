@@ -52,18 +52,18 @@ export class Snake {
     }
     
     moveSnakeUp() {
-        this.position = new Position(this.position.xPosition,  this.position.yPosition - 1);
+        this.position = new Position(this.position.x,  this.position.y - 1);
     }
     
     moveSnakeLeft() {
-        this.position = new Position(this.position.xPosition - 1,  this.position.yPosition);
+        this.position = new Position(this.position.x - 1,  this.position.y);
     }
     
     moveSnakeRight() {
-        this.position = new Position(this.position.xPosition + 1,  this.position.yPosition);
+        this.position = new Position(this.position.x + 1,  this.position.y);
     }
 
     moveSnakeDown() {
-        this.position = new Position(this.position.xPosition,  this.position.yPosition + 1);
+        this.position = new Position(this.position.x,  this.position.y + 1);
     }
 };

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { FoodSpawner } from "./FoodSpawner";
+import Position from "./Position";
 
 export default function Grid({
     height = 5,
@@ -10,14 +11,14 @@ export default function Grid({
     const foodSpawner = new FoodSpawner();
 
     const [grid, setGrid] = useState<string[][]>(buildGrid());
-    const [storedSnakeLocation, setStoredSnakeLocation] = useState(snakeLocation);
+    const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakeLocation);
 
-    if (storedSnakeLocation.yPosition !== snakeLocation.yPosition ||
-        storedSnakeLocation.xPosition !== snakeLocation.xPosition) {
+    if (storedSnakeLocation.y !== snakeLocation.y ||
+        storedSnakeLocation.x !== snakeLocation.x) {
 
         let newGrid = [...grid];
-        newGrid[storedSnakeLocation.yPosition][storedSnakeLocation.xPosition] = "| _ |";
-        newGrid[snakeLocation.yPosition][snakeLocation.xPosition] = "Snake";
+        newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = "| _ |";
+        newGrid[snakeLocation.y][snakeLocation.x] = "Snake";
         setGrid(newGrid);
         setStoredSnakeLocation(snakeLocation);
     }
@@ -29,10 +30,10 @@ export default function Grid({
             grid.push(buildRow(width));
         }
 
-        grid[snakeLocation.yPosition][snakeLocation.xPosition] = "Snake"
+        grid[snakeLocation.y][snakeLocation.x] = "Snake"
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
-        grid[foodPosition.yPosition][foodPosition.xPosition] = "Food"
+        grid[foodPosition.y][foodPosition.x] = "Food"
         return grid;
     }
     function buildRow(width: number) {

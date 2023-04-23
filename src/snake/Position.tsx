@@ -1,9 +1,9 @@
 export default class Position {
-    readonly xPosition: number;
-    readonly yPosition: number;
+    readonly x: number;
+    readonly y: number;
 
-    constructor(xPosition: number, yPosition: number) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
     }
 }

@@ -12,15 +12,12 @@ export const SnakeGame = ({
     const [snake] = useState(new Snake(getInitialSnakePosition()));
     const [snakePosition, setSnakePosition] = useState(snake.position);
 
-
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
         const yPosition = Math.round(height / 2) - 1;
 
         return new Position(xPosition, yPosition);        
-    }
-
-    
+    }    
 
     function turnSnakeLeft(): void {
         snake.turnSnakeLeft();
@@ -38,7 +35,7 @@ export const SnakeGame = ({
     }
 
     function updateSnakeDisplay() {
-        setSnakePosition(new Position(snake.position.xPosition, snake.position.yPosition));
+        setSnakePosition(new Position(snake.position.x, snake.position.y));
     }
 
     return (
