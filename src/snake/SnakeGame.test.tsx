@@ -17,6 +17,7 @@ describe("snake game", () => {
     });
 
     describe("game board", () => {
+        // Mock out Grid
         it("is a grid", () => {
             render(<SnakeGame />);
 
