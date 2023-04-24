@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { FoodSpawner } from "./FoodSpawner";
 import Position from "./Position";
+import { EmptySpace, FoodToken, SnakeToken } from "./Constants";
 
 export default function Grid({
     height = 5,
@@ -18,13 +19,13 @@ export default function Grid({
 
         let newGrid = [...grid];
         let oldValue = grid[snakeLocation.y][snakeLocation.x];
-        newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = "| _ |";
-        newGrid[snakeLocation.y][snakeLocation.x] = "Snake";
+        newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = EmptySpace;
+        newGrid[snakeLocation.y][snakeLocation.x] = SnakeToken;
 
         
-        if(oldValue === "Food"){
+        if(oldValue === FoodToken){
             const foodPosition = foodSpawner.pickFoodPosition(newGrid);
-            newGrid[foodPosition.y][foodPosition.x] = "Food"
+            newGrid[foodPosition.y][foodPosition.x] = FoodToken
         }
 
         setGrid(newGrid);
@@ -38,17 +39,17 @@ export default function Grid({
             grid.push(buildRow(width));
         }
 
-        grid[snakeLocation.y][snakeLocation.x] = "Snake"
+        grid[snakeLocation.y][snakeLocation.x] = SnakeToken
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
-        grid[foodPosition.y][foodPosition.x] = "Food"
+        grid[foodPosition.y][foodPosition.x] = FoodToken
         return grid;
     }
     function buildRow(width: number) {
         let newRow: string[] = [];
 
         for (let columnId = 0; columnId < width; columnId++) {
-            newRow.push("| _ |");
+            newRow.push(EmptySpace);
         }
 
         return newRow;

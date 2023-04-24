@@ -4,6 +4,7 @@ import * as React from "react";
 import Position from "./Position";
 import { FoodSpawner } from "./FoodSpawner";
 import "../../testExtensions/screenTestExtensions";
+import { FoodToken } from "./Constants";
 
 jest.mock("./FoodSpawner");
 
@@ -54,7 +55,7 @@ describe("game board", () => {
             render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)}/>);
 
             const gameBoard = screen.getByTitle("GameBoard");
-            const food = within(gameBoard).getByText("Food");
+            const food = within(gameBoard).getByText(FoodToken);
 
             expect(food).toBeInTheDocument();
         });
@@ -75,8 +76,8 @@ describe("game board", () => {
 
                 const expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-                expect(expectedFoodLocation).toHaveTextContent("Food");
-                expect(screen.getAllByText("Food").length).toEqual(1);
+                expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+                expect(screen.getAllByText(FoodToken).length).toEqual(1);
 
                 expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
             });
@@ -92,16 +93,14 @@ describe("game board", () => {
                 const {rerender} = render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)}/>);
                 let expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1,1));
 
-                expect(expectedFoodLocation).toHaveTextContent("Food");
-                expect(screen.getAllByText("Food").length).toEqual(1);
+                expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+                expect(screen.getAllByText(FoodToken).length).toEqual(1);
 
                 rerender(<Grid height={7} width={7} snakeLocation={new Position(1, 1)}/>)
                 expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(0,0));
 
-                expect(expectedFoodLocation).toHaveTextContent("Food");
-                expect(screen.getAllByText("Food").length).toEqual(1);
+                expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+                expect(screen.getAllByText(FoodToken).length).toEqual(1);
             });
-
-        // Food respawns after snake collides with it
     });
 });
