@@ -81,6 +81,27 @@ describe("game board", () => {
                 expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
             });
 
+            it("respawns after being eaten", () => {
+                const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
+                    return new Position(1,1);
+                }).mockImplementationOnce(() => {
+                    return new Position(0,0);
+                });
+
+                FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+                const {rerender} = render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)}/>);
+                let expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1,1));
+
+                expect(expectedFoodLocation).toHaveTextContent("Food");
+                expect(screen.getAllByText("Food").length).toEqual(1);
+
+                rerender(<Grid height={7} width={7} snakeLocation={new Position(1, 1)}/>)
+                expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(0,0));
+
+                expect(expectedFoodLocation).toHaveTextContent("Food");
+                expect(screen.getAllByText("Food").length).toEqual(1);
+            });
+
         // Food respawns after snake collides with it
     });
 });

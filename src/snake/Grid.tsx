@@ -10,15 +10,23 @@ export default function Grid({
 }) {
     const foodSpawner = new FoodSpawner();
 
-    const [grid, setGrid] = useState<string[][]>(buildGrid());
+    const [grid, setGrid] = useState<string[][]>(() => buildGrid());
     const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakeLocation);
 
     if (storedSnakeLocation.y !== snakeLocation.y ||
         storedSnakeLocation.x !== snakeLocation.x) {
 
         let newGrid = [...grid];
+        let oldValue = grid[snakeLocation.y][snakeLocation.x];
         newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = "| _ |";
         newGrid[snakeLocation.y][snakeLocation.x] = "Snake";
+
+        
+        if(oldValue === "Food"){
+            const foodPosition = foodSpawner.pickFoodPosition(newGrid);
+            newGrid[foodPosition.y][foodPosition.x] = "Food"
+        }
+
         setGrid(newGrid);
         setStoredSnakeLocation(snakeLocation);
     }
