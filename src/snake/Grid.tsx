@@ -24,13 +24,13 @@ export default function Grid({
     const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakeLocation);
     if (storedSnakeLocation.y !== snakeLocation.y ||
         storedSnakeLocation.x !== snakeLocation.x) {
-        feedSnake();
         let newGrid = [...grid];
         let oldValue = grid[snakeLocation.y][snakeLocation.x];
         newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = EmptySpace;
         newGrid[snakeLocation.y][snakeLocation.x] = SnakeToken;
 
         if(oldValue === FoodToken){
+            feedSnake();
             const foodPosition = foodSpawner.pickFoodPosition(newGrid);
             newGrid[foodPosition.y][foodPosition.x] = FoodToken
         }

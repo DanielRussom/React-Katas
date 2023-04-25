@@ -64,6 +64,18 @@ describe("game board", () => {
         expect(screen.getAllByText("Snake").length).toEqual(1);
     });
 
+    it("repopulates the snake in the expected location", () => {
+        const snakePosition = new Position(2, 2);
+        const { rerender } = render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()} />);
+        rerender(<Grid height={7} width={7} snakeLocation={snakePosition} feedSnake={() => feedSnakeFunction()} />)
+
+        const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
+
+        expect(expectedSnakeLocation).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+        expect(feedSnakeFunction).toBeCalledTimes(0);
+    });
+
     describe("Food", () => {
         it("exists in the grid", () => {
             render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()} />);
