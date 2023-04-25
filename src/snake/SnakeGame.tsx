@@ -44,7 +44,7 @@ export const SnakeGame = ({
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <Grid height={height} width={width} snakeLocation={snakePosition} />
+            <Grid height={height} width={width} snakeLocation={snakePosition} feedSnake={() => {}}/>
         </>
     )
 }

@@ -31,11 +31,12 @@ describe("snake eating food feature", () => {
         clickButton('Move');
         clickButton('<');
         clickButton('Move');
+        clickButton('Move');
 
         gameBoard = screen.getByTitle("GameBoard");
         
-        const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(1,1));
-        const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(2,1))
+        const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(0,1));
+        const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(1,1))
 
         expect(firstExpectedSnakeCell).toHaveTextContent("Snake");
         expect(secondExpectedSnakeCell).toHaveTextContent("Snake");
