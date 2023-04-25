@@ -20,7 +20,7 @@ describe("game board", () => {
     });
 
     it("is a grid", () => {
-        render(<Grid height={5} width={5} snakeLocation={new Position(2, 2)} feedSnake={() => feedSnakeFunction()}/>);
+        render(<Grid height={5} width={5} snakeLocation={new Position(2, 2)} feedSnake={() => feedSnakeFunction()} />);
 
         const board = screen.getByTitle("GameBoard");
 
@@ -33,7 +33,7 @@ describe("game board", () => {
         5
     ]])
         ("has the expected row count", (expectedRows) => {
-            render(<Grid height={expectedRows} width={5} snakeLocation={new Position(0, 0)} feedSnake={() => feedSnakeFunction()}/>);
+            render(<Grid height={expectedRows} width={5} snakeLocation={new Position(0, 0)} feedSnake={() => feedSnakeFunction()} />);
 
             const rows = screen.getByTitle("GameBoard").childNodes;
 
@@ -45,7 +45,7 @@ describe("game board", () => {
         2,
         3
     ]])("has the expected column count", (expectedColumns) => {
-        render(<Grid height={5} width={expectedColumns} snakeLocation={new Position(0, 0)}feedSnake={() => feedSnakeFunction()} />);
+        render(<Grid height={5} width={expectedColumns} snakeLocation={new Position(0, 0)} feedSnake={() => feedSnakeFunction()} />);
 
         const firstRow = screen.getByTitle("GameBoard").childNodes[0];
 
@@ -54,9 +54,19 @@ describe("game board", () => {
         expect(columns.length).toEqual(expectedColumns);
     });
 
+    it("populates the snake in the expected location", () => {
+        const snakePosition = new Position(2, 2);
+        render(<Grid height={5} width={5} snakeLocation={snakePosition} feedSnake={() => feedSnakeFunction()} />);
+
+        const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
+
+        expect(expectedSnakeLocation).toHaveTextContent("Snake");
+        expect(screen.getAllByText("Snake").length).toEqual(1);
+    });
+
     describe("Food", () => {
         it("exists in the grid", () => {
-            render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()}/>);
+            render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()} />);
 
             const gameBoard = screen.getByTitle("GameBoard");
             const food = within(gameBoard).getByText(FoodToken);
@@ -76,7 +86,7 @@ describe("game board", () => {
 
                 FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
 
-                render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()}/>);
+                render(<Grid height={7} width={7} snakeLocation={new Position(3, 3)} feedSnake={() => feedSnakeFunction()} />);
 
                 const expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
