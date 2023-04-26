@@ -82,49 +82,5 @@ describe("snake game", () => {
 
       expect(turnLeftFunction).toHaveBeenCalled();
     });
-
-    //     // Assert .turnRight was called
-    //     it.each([
-    //       [1, new Position(3, 2)],
-    //       [2, new Position(3, 3)],
-    //       [3, new Position(2, 3)],
-    //       [4, new Position(2, 2)],
-    //       [5, new Position(3, 2)],
-    //     ])("turns right", (times, expectedPosition) => {
-    //       render(<SnakeGame height={5} width={5} />);
-
-    //       for (let i = 0; i < times; i++) {
-    //         clickButton(">");
-    //       }
-
-    //       const expectedSnakeLocation = screen
-    //         .getByTitle("GameBoard")
-    //         .getChildAt(expectedPosition);
-
-    //       expect(expectedSnakeLocation).toHaveTextContent("Snake");
-    //       expect(screen.getAllByText("Snake").length).toEqual(1);
-    //     });
-
-    //     // Assert .turnLeft was called
-    //     it.each([
-    //       [1, new Position(1, 2)],
-    //       [2, new Position(1, 3)],
-    //       [3, new Position(2, 3)],
-    //       [4, new Position(2, 2)],
-    //       [5, new Position(1, 2)],
-    //     ])("turns left", (times, expectedPosition) => {
-    //       render(<SnakeGame height={5} width={5} />);
-
-    //       for (let i = 0; i < times; i++) {
-    //         clickButton("<");
-    //       }
-
-    //       const expectedSnakePosition = screen
-    //         .getByTitle("GameBoard")
-    //         .getChildAt(expectedPosition);
-
-    //       expect(expectedSnakePosition).toHaveTextContent("Snake");
-    //       expect(screen.getAllByText("Snake").length).toEqual(1);
-    //     });
   });
 });
