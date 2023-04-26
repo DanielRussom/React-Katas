@@ -30,8 +30,12 @@ export const SnakeGame = ({
     }
 
     function moveSnake(): void {
-        snake.move()
-        updateSnakeDisplay();
+        const snakePosition = snake.move()
+        updateSnakeDisplayTo(snakePosition);
+    }
+
+    function updateSnakeDisplayTo(newPosition) {
+        setSnakePosition(new Position(newPosition.x, newPosition.y));
     }
 
     function updateSnakeDisplay() {
