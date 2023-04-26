@@ -37,16 +37,16 @@ export class Snake {
     return this.position;
   }
 
-  turnLeft() {
+  turnLeft(): Position {
     this.directionIndex = this.directionIndex - 1;
     if (this.directionIndex < 0) {
       this.directionIndex = this.numberOfDirections - 1;
     }
 
-    this.move();
+    return this.move();
   }
 
-  turnRight() {
+  turnRight(): Position {
     this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
     return this.move();
