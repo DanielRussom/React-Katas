@@ -53,6 +53,7 @@ describe("snake game", () => {
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
+            // Assert .turnRight was called
         it.each([
             [1, new Position(3, 2)],
             [2, new Position(3, 3)],
@@ -109,6 +110,7 @@ describe("snake game", () => {
             expect(screen.getAllByText("Snake").length).toEqual(1);
         });
 
+            // Assert .turnLeft was called
         it.each([
             [1, new Position(1, 2)],
             [2, new Position(1, 3)],
