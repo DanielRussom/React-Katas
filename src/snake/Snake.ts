@@ -17,7 +17,7 @@ export class Snake {
         this.position = initialPosition;
     }
 
-    moveSnake() {        
+    move() {        
         if(this.directionIndex === Direction.Down){
             this.moveSnakeDown();
         }
@@ -42,13 +42,13 @@ export class Snake {
             this.directionIndex = this.numberOfDirections - 1;
         }
         
-        this.moveSnake();
+        this.move();
     }
 
     turnSnakeRight() {
         this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
-        this.moveSnake();
+        this.move();
     }
     
     moveSnakeUp() {

@@ -30,7 +30,7 @@ export const SnakeGame = ({
     }
 
     function moveSnake(): void {
-        snake.moveSnake()
+        snake.move()
         updateSnakeDisplay();
     }
 
