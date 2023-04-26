@@ -6,9 +6,8 @@ describe("snake game", () => {
     const expectedPosition = new Position(2, 2);
 
     const snake = new Snake(expectedPosition);
-    const actualPosition = snake.position;
 
-    expect(actualPosition).toEqual(expectedPosition);
+    expect(snake.position).toEqual(expectedPosition);
   });
 
   it.each([
@@ -24,9 +23,25 @@ describe("snake game", () => {
         snake.move();
       }
 
-      const actualPosition = snake.position;
-
-      expect(actualPosition).toEqual(expectedPosition);
+      expect(snake.position).toEqual(expectedPosition);
     }
   );
+  
+  it.each([
+    [1, new Position(3, 2)],
+    [2, new Position(3, 3)],
+    [3, new Position(2, 3)],
+    [4, new Position(2, 2)],
+    [5, new Position(3, 2)]
+])
+    ("turns right", (times, expectedPosition) => {
+        const snake = new Snake(new Position(2,2));
+
+        for (let i = 0; i < times; i++) {
+            snake.turnRight();
+        }
+        
+        expect(snake.position).toEqual(expectedPosition);
+    });
+
 });

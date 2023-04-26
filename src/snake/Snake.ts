@@ -36,7 +36,7 @@ export class Snake {
         }
     }
 
-    turnSnakeLeft() {
+    turnLeft() {
         this.directionIndex = (this.directionIndex - 1);
         if(this.directionIndex < 0){
             this.directionIndex = this.numberOfDirections - 1;
@@ -45,7 +45,7 @@ export class Snake {
         this.move();
     }
 
-    turnSnakeRight() {
+    turnRight() {
         this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
         this.move();
