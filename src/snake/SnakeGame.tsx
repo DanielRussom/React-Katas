@@ -25,8 +25,8 @@ export const SnakeGame = ({
     }
 
     function turnSnakeRight(): void {
-        snake.turnRight();
-        updateSnakeDisplay();
+        const snakePosition = snake.turnRight();
+        updateSnakeDisplayTo(snakePosition);
     }
 
     function moveSnake(): void {

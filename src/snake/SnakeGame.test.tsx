@@ -44,7 +44,6 @@ describe("snake game", () => {
     //   }
     // );
 
-    // Assert .move was called
     it("tells the snake to move", () => {
       const moveFunction = jest.fn().mockImplementationOnce(() => {
         return new Position(0, 0);
@@ -56,6 +55,19 @@ describe("snake game", () => {
       clickButton("Move");
 
       expect(moveFunction).toHaveBeenCalled();
+    });
+
+    it("tells the snake to turn right", () => {
+      const turnRightFunction = jest.fn().mockImplementationOnce(() => {
+        return new Position(0, 0);
+      });
+      Snake.prototype.turnRight = turnRightFunction;
+
+      render(<SnakeGame />);
+
+      clickButton(">");
+
+      expect(turnRightFunction).toHaveBeenCalled();
     });
 
     //     // Assert .turnRight was called
