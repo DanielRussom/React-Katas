@@ -16,7 +16,10 @@ describe("snake game", () => {
         expect(board).toHaveStyle("display: grid");
     });
 
+    
     describe("snake", () => {
+
+        // Assert snake was initialised with expected position
         it.each([
             [5, new Position(2, 2)],
             [6, new Position(2, 2)],
@@ -31,6 +34,7 @@ describe("snake game", () => {
                 expect(screen.getAllByText("Snake").length).toEqual(1);
             });
 
+            // Assert .move was called
         it.each(
             [[5, 1, new Position(2, 1)],
             [5, 2, new Position(2, 0)],
