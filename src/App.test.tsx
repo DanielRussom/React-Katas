@@ -27,13 +27,14 @@ describe("App", () => {
     expect(screen.queryByTestId("component-container")).toBeEmptyDOMElement()
   });
 
-  it('tree generator is displayed', () => {
+  it('tree generator is displayed', async () => {
     renderApp();
 
     const treeGeneratorNavigationButton = getButton('Christmas Tree Generator');
     userEvent.click(treeGeneratorNavigationButton);
 
-    const treeComponent = screen.getByTestId("tree-generator");
+    
+    const treeComponent = await screen.findByTestId("tree-generator");
     expect(treeComponent).toBeInTheDocument();
   });
 
