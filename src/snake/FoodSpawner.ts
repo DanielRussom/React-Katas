@@ -1,3 +1,4 @@
+import { EmptySpace } from "./Constants";
 import Position from "./Position";
 import { Random } from "./Random";
 
@@ -25,7 +26,7 @@ export class FoodSpawner {
         let validPositionsInRow : Position[] = [];
 
         for (let j = 0; j < grid[i].length; j++) {
-            if (grid[i][j] !== "" && grid[i][j] !== "| _ |") {
+            if (grid[i][j] !== EmptySpace) {
                 continue;
             }
 

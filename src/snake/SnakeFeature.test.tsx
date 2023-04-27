@@ -4,6 +4,7 @@ import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import { Random } from "./Random";
 import Position from "./Position";
+import { FoodToken, SnakeToken } from "./Constants";
 
 
 jest.mock("./Random");
@@ -25,7 +26,7 @@ describe.skip("snake eating food feature", () => {
         let gameBoard = screen.getByTitle("GameBoard");
         
         let expectedFoodLocation = gameBoard.getChildAt(new Position(1,1));
-        expect(expectedFoodLocation).toHaveTextContent("Food");
+        expect(expectedFoodLocation).toHaveTextContent(FoodToken);
 
         clickButton('Move');
         clickButton('Move');
@@ -38,13 +39,13 @@ describe.skip("snake eating food feature", () => {
         const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(0,1));
         const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(1,1))
 
-        expect(firstExpectedSnakeCell).toHaveTextContent("Snake");
-        expect(secondExpectedSnakeCell).toHaveTextContent("Snake");
+        expect(firstExpectedSnakeCell).toHaveTextContent(SnakeToken);
+        expect(secondExpectedSnakeCell).toHaveTextContent(SnakeToken);
 
-        expect(screen.getAllByText("Snake").length).toEqual(2);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(2);
 
         expectedFoodLocation = gameBoard.getChildAt(new Position(3,3));
-        expect(expectedFoodLocation).toHaveTextContent("Food");
+        expect(expectedFoodLocation).toHaveTextContent(FoodToken);
 
     });
 });

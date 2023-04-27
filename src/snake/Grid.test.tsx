@@ -60,8 +60,8 @@ describe("game board", () => {
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
 
-        expect(expectedSnakeLocation).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
+        expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(1);
     });
 
     it("repopulates the snake in the expected location", () => {
@@ -71,8 +71,8 @@ describe("game board", () => {
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
 
-        expect(expectedSnakeLocation).toHaveTextContent("Snake");
-        expect(screen.getAllByText("Snake").length).toEqual(1);
+        expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(1);
         expect(feedSnakeFunction).toBeCalledTimes(0);
     });
 

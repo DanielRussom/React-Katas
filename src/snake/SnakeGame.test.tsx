@@ -15,7 +15,7 @@ describe("snake game", () => {
   beforeEach(() => {
     Snake.prototype.move = jest.fn();
   });
-  // Mock out Grid
+
   it("game board is rendered", () => {
     render(<SnakeGame />);
 
@@ -25,7 +25,6 @@ describe("snake game", () => {
   });
 
   describe("snake", () => {
-   // Assert snake was initialised with expected position
     it.each([
       [5, new Position(2, 2)],
       [6, new Position(2, 2)],
