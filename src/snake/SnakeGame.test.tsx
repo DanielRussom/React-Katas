@@ -25,24 +25,20 @@ describe("snake game", () => {
   });
 
   describe("snake", () => {
-    // Assert snake was initialised with expected position
-    // it.each([
-    //   [5, new Position(2, 2)],
-    //   [6, new Position(2, 2)],
-    //   [7, new Position(3, 3)],
-    // ])(
-    //   "spawns in the middle of the game board",
-    //   (gridSize, expectedPosition) => {
-    //     render(<SnakeGame height={gridSize} width={gridSize} />);
+   // Assert snake was initialised with expected position
+    it.each([
+      [5, new Position(2, 2)],
+      [6, new Position(2, 2)],
+      [7, new Position(3, 3)],
+    ])(
+      "spawns in the middle of the game board",
+      (gridSize, expectedPosition) => {
+        render(<SnakeGame height={gridSize} width={gridSize} />);
 
-    //     const expectedSnakeLocation = screen
-    //       .getByTitle("GameBoard")
-    //       .getChildAt(expectedPosition);
-
-    //     expect(expectedSnakeLocation).toHaveTextContent("Snake");
-    //     expect(screen.getAllByText("Snake").length).toEqual(1);
-    //   }
-    // );
+        expect(Snake).toBeCalledWith(expectedPosition);
+        expect(Snake).toBeCalledTimes(1);
+      }
+    );
 
     it("tells the snake to move", () => {
       const moveFunction = jest.fn().mockImplementationOnce(() => {
@@ -53,6 +49,7 @@ describe("snake game", () => {
       render(<SnakeGame />);
 
       clickButton("Move");
+
 
       expect(moveFunction).toHaveBeenCalled();
     });
