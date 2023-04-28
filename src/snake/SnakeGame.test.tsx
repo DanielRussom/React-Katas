@@ -7,9 +7,11 @@ import Position from "./Position";
 
 jest.mock("./Snake");
 
-jest.mock("./Grid", () => () => {
+const mockGrid = jest.fn();
+jest.mock("./Grid", () => (props) => {
+  mockGrid(props);
   return <div data-testid="gameBoard" />;
-});
+})
 
 describe("snake game", () => {
   beforeEach(() => {
@@ -22,6 +24,14 @@ describe("snake game", () => {
     const board = screen.getByTestId("gameBoard");
 
     expect(board).toBeInTheDocument();
+
+    expect(mockGrid).toHaveBeenCalled();
+    expect(mockGrid).toHaveBeenCalledWith(
+      expect.objectContaining({
+        height: 5,
+        width: 5
+      })
+    );
   });
 
   describe("snake", () => {
@@ -78,5 +88,6 @@ describe("snake game", () => {
 
       expect(turnLeftFunction).toHaveBeenCalled();
     });
+
   });
 });
