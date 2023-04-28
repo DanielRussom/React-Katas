@@ -10,6 +10,7 @@ jest.mock("./Snake");
 const mockGrid = jest.fn();
 jest.mock("./Grid", () => (props) => {
   mockGrid(props);
+  props.feedSnake();
   return <div data-testid="gameBoard" />;
 })
 
@@ -50,7 +51,7 @@ describe("snake game", () => {
     );
 
     it("tells the snake to move", () => {
-      const moveFunction = jest.fn().mockImplementationOnce(() => {
+      const moveFunction = jest.fn().mockImplementation(() => {
         return new Position(0, 0);
       });
       Snake.prototype.move = moveFunction;
@@ -88,6 +89,17 @@ describe("snake game", () => {
 
       expect(turnLeftFunction).toHaveBeenCalled();
     });
+
+    // it("tells the snake it has been fed", () => {
+    //   const feedFunction = jest.fn();
+    //   Snake.prototype.feed = feedFunction;
+
+    //   render(<SnakeGame />);
+
+    //   clickButton("<");
+
+    //   expect(feedFunction).toHaveBeenCalled();
+    // });
 
   });
 });
