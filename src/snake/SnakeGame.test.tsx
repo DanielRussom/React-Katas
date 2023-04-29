@@ -17,6 +17,8 @@ jest.mock("./Grid", () => (props) => {
 describe("snake game", () => {
   beforeEach(() => {
     Snake.prototype.move = jest.fn();
+    
+    Snake.prototype.feed = jest.fn();
   });
 
   it("game board is rendered", () => {
@@ -90,16 +92,14 @@ describe("snake game", () => {
       expect(turnLeftFunction).toHaveBeenCalled();
     });
 
-    // it("tells the snake it has been fed", () => {
-    //   const feedFunction = jest.fn();
-    //   Snake.prototype.feed = feedFunction;
+    it("tells the snake it has been fed", () => {
+      const feedFunction = jest.fn();
+      Snake.prototype.feed = feedFunction;
 
-    //   render(<SnakeGame />);
+      render(<SnakeGame />);
 
-    //   clickButton("<");
-
-    //   expect(feedFunction).toHaveBeenCalled();
-    // });
+      expect(feedFunction).toHaveBeenCalled();
+    });
 
   });
 });

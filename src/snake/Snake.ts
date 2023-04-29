@@ -8,6 +8,10 @@ enum Direction {
 }
 
 export class Snake {
+  feed() {
+      throw new Error("Method not implemented.");
+  }
+  
   readonly numberOfDirections = 4;
   directionIndex = 0;
 

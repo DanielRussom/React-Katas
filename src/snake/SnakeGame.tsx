@@ -30,7 +30,6 @@ export const SnakeGame = ({
     }
 
     function moveSnake(): void {
-        console.log("Moved!");
         const snakePosition = snake.move()
         updateSnakeDisplay(snakePosition);
     }
@@ -39,13 +38,17 @@ export const SnakeGame = ({
         setSnakePosition(new Position(newPosition.x, newPosition.y));
     }
 
+    function feedSnake() {
+        snake.feed();
+    }
+
     return (
         <>
             <button onClick={turnSnakeLeft}>&lt;</button>
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <Grid height={height} width={width} snakeLocation={snakePosition} feedSnake={() => moveSnake()}/>
+            <Grid height={height} width={width} snakeLocation={snakePosition} feedSnake={() => feedSnake()}/>
         </>
     )
 }
