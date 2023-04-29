@@ -10,6 +10,8 @@ describe("snake game", () => {
     expect(snake.position).toEqual(expectedPosition);
   });
 
+  
+describe("movement", () => {
   it.each([
     [new Position(2, 2), 1, new Position(2, 1)],
     [new Position(2, 2), 2, new Position(2, 0)],
@@ -82,8 +84,10 @@ describe("snake game", () => {
     snake.move();
     snake.move();
 
+    expect(snake.positions.length).toEqual(1);
     expect(snake.position).toEqual(expectedPosition);
   });
+});
 
   it("stores a second position", () => {
     const snake = new Snake(new Position(2, 2));
@@ -92,5 +96,7 @@ describe("snake game", () => {
     snake.feed();
 
     expect(snake.positions.length).toEqual(2);
+    expect(snake.positions[0]).toEqual(new Position(2,1));
+    expect(snake.positions[1]).toEqual(new Position(2,2));
   })
 });

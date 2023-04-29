@@ -8,9 +8,6 @@ enum Direction {
 }
 
 export class Snake {
-  feed() {
-      throw new Error("Method not implemented.");
-  }
 
   readonly numberOfDirections = 4;
   directionIndex = 0;
@@ -20,6 +17,10 @@ export class Snake {
 
   constructor(initialPosition: Position) {
     this.position = initialPosition;
+  }
+
+  feed() {
+    this.positions.push(new Position(0,0))
   }
 
   move(): Position {
@@ -39,6 +40,7 @@ export class Snake {
       this.moveSnakeRight();
     }
 
+    this.positions[0] = this.position;
     return this.position;
   }
 
