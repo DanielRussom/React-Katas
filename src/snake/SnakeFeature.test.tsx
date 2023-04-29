@@ -9,8 +9,8 @@ import { FoodToken, SnakeToken } from "./Constants";
 
 jest.mock("./Random");
 
-describe.skip("snake eating food feature", () => {
-    it("should increase the snake's length and have the snake in the expected position", () => {
+describe("snake eating food feature", () => {
+    it.skip("should increase the snake's length and have the snake in the expected position", () => {
         const randomFunction = 
         jest.fn()
         .mockImplementationOnce(() => {

@@ -11,11 +11,12 @@ export class Snake {
   feed() {
       throw new Error("Method not implemented.");
   }
-  
+
   readonly numberOfDirections = 4;
   directionIndex = 0;
 
   position: Position;
+  positions = new Array<Position>();
 
   constructor(initialPosition: Position) {
     this.position = initialPosition;

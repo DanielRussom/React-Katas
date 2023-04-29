@@ -24,8 +24,9 @@ export default function Grid({
     const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakeLocation);
     if (storedSnakeLocation.y !== snakeLocation.y ||
         storedSnakeLocation.x !== snakeLocation.x) {
-        let newGrid = [...grid];
         let oldValue = grid[snakeLocation.y][snakeLocation.x];
+        
+        let newGrid = [...grid];
         newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = EmptySpace;
         newGrid[snakeLocation.y][snakeLocation.x] = SnakeToken;
 

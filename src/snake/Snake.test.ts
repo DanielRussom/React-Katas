@@ -33,7 +33,7 @@ describe("snake game", () => {
     [3, new Position(2, 3)],
     [4, new Position(2, 2)],
     [5, new Position(3, 2)],
-  ])("turns right", (times, expectedPosition) => {
+  ])("turns right %i times", (times, expectedPosition) => {
     const snake = new Snake(new Position(2, 2));
 
     for (let i = 0; i < times; i++) {
@@ -49,7 +49,7 @@ describe("snake game", () => {
     [3, new Position(2, 3)],
     [4, new Position(2, 2)],
     [5, new Position(1, 2)],
-  ])("turns left", (times, expectedPosition) => {
+  ])('turns left %i times', (times, expectedPosition) => {
     const snake = new Snake(new Position(2, 2));
 
     for (let i = 0; i < times; i++) {
@@ -84,4 +84,13 @@ describe("snake game", () => {
 
     expect(snake.position).toEqual(expectedPosition);
   });
+
+  it("stores a second position", () => {
+    const snake = new Snake(new Position(2, 2));
+    
+    snake.move();
+    snake.feed();
+
+    expect(snake.positions.length).toEqual(2);
+  })
 });
