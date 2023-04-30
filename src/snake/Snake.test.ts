@@ -89,15 +89,18 @@ describe("movement", () => {
   });
 });
 
-  it("stores a second position after moving", () => {
-    //TODO Parameterize
-    const snake = new Snake(new Position(2, 2));
+  it.each([
+    [new Position(2,2), [new Position(2,1), new Position(2,2)]],
+    [new Position(3,3), [new Position(3,2), new Position(3,3)]],
+    [new Position(4,2), [new Position(4,1), new Position(4,2)]]
+  ])("grows after feeding", (startingPosition, expectedPositions) => {
+    const snake = new Snake(startingPosition);
     
     snake.move();
     snake.feed();
 
     expect(snake.positions.length).toEqual(2);
-    expect(snake.positions[0]).toEqual(new Position(2,1));
-    expect(snake.positions[1]).toEqual(new Position(2,2));
+    expect(snake.positions[0]).toEqual(expectedPositions[0]);
+    expect(snake.positions[1]).toEqual(expectedPositions[1]);
   })
 });

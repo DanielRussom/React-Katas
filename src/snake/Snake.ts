@@ -13,16 +13,19 @@ export class Snake {
   directionIndex = 0;
 
   positions = new Array<Position>();
+  lastPosition : Position;
 
   constructor(initialPosition: Position) {
     this.positions[0] = initialPosition;
+    this.lastPosition = initialPosition;
   }
 
   feed() {
-    this.positions.push(new Position(2,2))
+    this.positions.push(this.lastPosition)
   }
 
   move(): Position {
+    this.lastPosition = this.positions[0];
     if (this.directionIndex === Direction.Down) {
       this.moveSnakeDown();
     }
