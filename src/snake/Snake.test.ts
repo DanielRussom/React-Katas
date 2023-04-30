@@ -89,7 +89,8 @@ describe("movement", () => {
   });
 });
 
-  it("stores a second position", () => {
+  it("stores a second position after moving", () => {
+    //TODO Parameterize
     const snake = new Snake(new Position(2, 2));
     
     snake.move();

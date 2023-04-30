@@ -20,7 +20,7 @@ export class Snake {
   }
 
   feed() {
-    this.positions.push(new Position(0,0))
+    this.positions.push(new Position(2,2))
   }
 
   move(): Position {
