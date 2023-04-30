@@ -12,11 +12,10 @@ export class Snake {
   readonly numberOfDirections = 4;
   directionIndex = 0;
 
-  position: Position;
   positions = new Array<Position>();
 
   constructor(initialPosition: Position) {
-    this.position = initialPosition;
+    this.positions[0] = initialPosition;
   }
 
   feed() {
@@ -40,8 +39,7 @@ export class Snake {
       this.moveSnakeRight();
     }
 
-    this.positions[0] = this.position;
-    return this.position;
+    return this.positions[0];
   }
 
   turnLeft(): Position {
@@ -60,18 +58,18 @@ export class Snake {
   }
 
   moveSnakeUp() {
-    this.position = new Position(this.position.x, this.position.y - 1);
+    this.positions[0] = new Position(this.positions[0].x, this.positions[0].y - 1);
   }
 
   moveSnakeLeft() {
-    this.position = new Position(this.position.x - 1, this.position.y);
+    this.positions[0] = new Position(this.positions[0].x - 1, this.positions[0].y);
   }
 
   moveSnakeRight() {
-    this.position = new Position(this.position.x + 1, this.position.y);
+    this.positions[0] = new Position(this.positions[0].x + 1, this.positions[0].y);
   }
 
   moveSnakeDown() {
-    this.position = new Position(this.position.x, this.position.y + 1);
+    this.positions[0] = new Position(this.positions[0].x, this.positions[0].y + 1);
   }
 }

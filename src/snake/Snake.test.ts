@@ -7,7 +7,7 @@ describe("snake game", () => {
 
     const snake = new Snake(expectedPosition);
 
-    expect(snake.position).toEqual(expectedPosition);
+    expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
   
@@ -25,7 +25,7 @@ describe("movement", () => {
         snake.move();
       }
 
-      expect(snake.position).toEqual(expectedPosition);
+      expect(snake.positions[0]).toEqual(expectedPosition);
     }
   );
 
@@ -42,7 +42,7 @@ describe("movement", () => {
       snake.turnRight();
     }
 
-    expect(snake.position).toEqual(expectedPosition);
+    expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
   it.each([
@@ -58,7 +58,7 @@ describe("movement", () => {
       snake.turnLeft();
     }
 
-    expect(snake.position).toEqual(expectedPosition);
+    expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
   it.each([
@@ -73,7 +73,7 @@ describe("movement", () => {
     }
     snake.move();
 
-    expect(snake.position).toEqual(expectedPosition);
+    expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
   it("moves right and then forward twice", () => {
@@ -85,7 +85,7 @@ describe("movement", () => {
     snake.move();
 
     expect(snake.positions.length).toEqual(1);
-    expect(snake.position).toEqual(expectedPosition);
+    expect(snake.positions[0]).toEqual(expectedPosition);
   });
 });
 
