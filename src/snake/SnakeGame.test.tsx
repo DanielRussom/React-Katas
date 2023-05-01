@@ -23,16 +23,32 @@ describe("snake game", () => {
 
   it("game board is rendered", () => {
     render(<SnakeGame />);
-
     const board = screen.getByTestId("gameBoard");
 
     expect(board).toBeInTheDocument();
 
-    expect(mockGrid).toHaveBeenCalled();
     expect(mockGrid).toHaveBeenCalledWith(
       expect.objectContaining({
         height: 5,
         width: 5
+      })
+    );
+  });
+
+  it("game board is passed the correct snake position", () => {
+    // jest.spyOn(Snake.prototype, 'positions', 'get').mockReturnValue([new Position(0,0)]);
+    Snake.prototype.positions = jest.fn().mockReturnValue(new Position(0,0))
+    render(<SnakeGame />);
+    const board = screen.getByTestId("gameBoard");
+
+    expect(board).toBeInTheDocument();
+
+    expect(mockGrid).toHaveBeenCalledWith(
+      expect.objectContaining({
+        snakeLocation: expect.objectContaining({
+          x: 0,
+          y: 0
+        })
       })
     );
   });

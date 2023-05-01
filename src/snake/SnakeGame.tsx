@@ -10,7 +10,7 @@ export const SnakeGame = ({
 }) => {
 
     const [snake] = useState(new Snake(getInitialSnakePosition()));
-    const [snakePosition, setSnakePosition] = useState(snake.position);
+    const [snakePosition, setSnakePosition] = useState(snake.positions);
 
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
