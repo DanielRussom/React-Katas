@@ -5,8 +5,6 @@ import SnakeGame from "./SnakeGame";
 import { Snake } from "./Snake";
 import Position from "./Position";
 
-jest.mock("./Snake");
-
 const mockGrid = jest.fn();
 jest.mock("./Grid", () => (props) => {
   mockGrid(props);
@@ -15,12 +13,6 @@ jest.mock("./Grid", () => (props) => {
 })
 
 describe("snake game", () => {
-  beforeEach(() => {
-    Snake.prototype.move = jest.fn();
-    
-    Snake.prototype.feed = jest.fn();
-  });
-
   it("game board is rendered", () => {
     render(<SnakeGame />);
     const board = screen.getByTestId("gameBoard");
@@ -35,24 +27,6 @@ describe("snake game", () => {
     );
   });
 
-  it("game board is passed the correct snake position", () => {
-    // jest.spyOn(Snake.prototype, 'positions', 'get').mockReturnValue([new Position(0,0)]);
-    Snake.prototype.positions = jest.fn().mockReturnValue(new Position(0,0))
-    render(<SnakeGame />);
-    const board = screen.getByTestId("gameBoard");
-
-    expect(board).toBeInTheDocument();
-
-    expect(mockGrid).toHaveBeenCalledWith(
-      expect.objectContaining({
-        snakeLocation: expect.objectContaining({
-          x: 0,
-          y: 0
-        })
-      })
-    );
-  });
-
   describe("snake", () => {
     it.each([
       [5, new Position(2, 2)],
@@ -63,10 +37,15 @@ describe("snake game", () => {
       (gridSize, expectedPosition) => {
         render(<SnakeGame height={gridSize} width={gridSize} />);
 
-        expect(Snake).toBeCalledWith(expectedPosition);
-        expect(Snake).toBeCalledTimes(1);
-      }
-    );
+        expect(mockGrid).toHaveBeenCalledWith(
+          expect.objectContaining({
+            snakeLocation: expect.objectContaining({
+              x: expectedPosition.x,
+              y: expectedPosition.y
+            })
+          })
+        )
+      });
 
     it("tells the snake to move", () => {
       const moveFunction = jest.fn().mockImplementation(() => {
@@ -77,7 +56,6 @@ describe("snake game", () => {
       render(<SnakeGame />);
 
       clickButton("Move");
-
 
       expect(moveFunction).toHaveBeenCalled();
     });
