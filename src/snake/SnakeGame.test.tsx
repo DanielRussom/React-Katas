@@ -37,14 +37,11 @@ describe("snake game", () => {
       (gridSize, expectedPosition) => {
         render(<SnakeGame height={gridSize} width={gridSize} />);
 
-        expect(mockGrid).toHaveBeenCalledWith(
-          expect.objectContaining({
-            snakeLocation: expect.objectContaining({
-              x: expectedPosition.x,
-              y: expectedPosition.y
-            })
-          })
-        )
+        const firstMockCall = mockGrid.mock.calls[0][0];
+        const actualSnakePositions = firstMockCall.snakePositions;
+
+        expect(actualSnakePositions.length).toEqual(1);
+        expect(actualSnakePositions[0]).toEqual(expectedPosition)
       });
 
     it("tells the snake to move", () => {

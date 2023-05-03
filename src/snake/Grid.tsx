@@ -7,28 +7,28 @@ import { EmptySpace, FoodToken, SnakeToken } from "./Constants";
 export type GridProperties = {
     height: number,
     width: number,
-    snakeLocation: Position,
-    feedSnake: Function
+    snakePositions: Position[]
+    feedSnake: Function,
 }
 
 
 export default function Grid({
     height = 5,
     width = 5,
-    snakeLocation,
+    snakePositions,
     feedSnake
 }: GridProperties) {
     const foodSpawner = new FoodSpawner();
 
     const [grid, setGrid] = useState<string[][]>(() => buildGrid());
-    const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakeLocation);
-    if (storedSnakeLocation.y !== snakeLocation.y ||
-        storedSnakeLocation.x !== snakeLocation.x) {
-        let oldValue = grid[snakeLocation.y][snakeLocation.x];
+    const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snakePositions[0]);
+    if (storedSnakeLocation.y !== snakePositions[0].y ||
+        storedSnakeLocation.x !== snakePositions[0].x) {
+        let oldValue = grid[snakePositions[0].y][snakePositions[0].x];
         
         let newGrid = [...grid];
         newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = EmptySpace;
-        newGrid[snakeLocation.y][snakeLocation.x] = SnakeToken;
+        newGrid[snakePositions[0].y][snakePositions[0].x] = SnakeToken;
 
         if(oldValue === FoodToken){
             feedSnake();
@@ -37,7 +37,7 @@ export default function Grid({
         }
 
         setGrid(newGrid);
-        setStoredSnakeLocation(snakeLocation);
+        setStoredSnakeLocation(snakePositions[0]);
     }
 
     function buildGrid() {
@@ -47,7 +47,7 @@ export default function Grid({
             grid.push(buildRow(width));
         }
 
-        grid[snakeLocation.y][snakeLocation.x] = SnakeToken
+        grid[snakePositions[0].y][snakePositions[0].x] = SnakeToken
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
         grid[foodPosition.y][foodPosition.x] = FoodToken
