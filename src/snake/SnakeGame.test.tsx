@@ -8,7 +8,7 @@ import Position from "./Position";
 const mockGrid = jest.fn();
 jest.mock("./Grid", () => (props) => {
   mockGrid(props);
-  props.feedSnake();
+  // props.feedSnake();
   return <div data-testid="gameBoard" />;
 })
 

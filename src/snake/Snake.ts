@@ -24,7 +24,7 @@ export class Snake {
     this.positions.push(this.lastPosition)
   }
 
-  move(): Position {
+  move(): Position[] {
     this.lastPosition = this.positions[0];
     if (this.directionIndex === Direction.Down) {
       this.moveSnakeDown();
@@ -42,10 +42,10 @@ export class Snake {
       this.moveSnakeRight();
     }
 
-    return this.positions[0];
+    return this.positions;
   }
 
-  turnLeft(): Position {
+  turnLeft(): Position[] {
     this.directionIndex = this.directionIndex - 1;
     if (this.directionIndex < 0) {
       this.directionIndex = this.numberOfDirections - 1;
@@ -54,7 +54,7 @@ export class Snake {
     return this.move();
   }
 
-  turnRight(): Position {
+  turnRight(): Position[] {
     this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
     return this.move();
