@@ -177,6 +177,15 @@ describe("stack exercise", () => {
       var sizeDisplay = screen.getByText(`Size: 1`);
       expect(sizeDisplay).toBeInTheDocument();
     })
+
+    it('awdawd', () => {
+      
+      render(<StackExercise />);
+
+      const thing = screen.getByText("thing");
+
+      expect(thing).not.toBeVisible();
+    })
   });
 
 });

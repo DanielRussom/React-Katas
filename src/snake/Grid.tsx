@@ -11,7 +11,6 @@ export type GridProperties = {
     feedSnake: Function,
 }
 
-
 export default function Grid({
     height = 5,
     width = 5,

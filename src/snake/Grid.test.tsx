@@ -83,7 +83,7 @@ describe("game board", () => {
             const gameBoard = screen.getByTitle("GameBoard");
             const food = within(gameBoard).getByText(FoodToken);
 
-            expect(food).toBeInTheDocument();
+            expect(food).toBeVisi.toBeInTheDocument();
         });
 
         it.each([

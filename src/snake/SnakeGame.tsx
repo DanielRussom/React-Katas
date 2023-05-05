@@ -1,15 +1,17 @@
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
+import { SnakeContext } from "../App";
 
 export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
 
-    const [snake] = useState(new Snake(getInitialSnakePosition()));
+    const otherSnake = useContext(SnakeContext);
+    const [snake] = useState(otherSnake!);
     const [snakePositions, setSnakePosition] = useState(snake.positions);
 
     function getInitialSnakePosition(): Position {
