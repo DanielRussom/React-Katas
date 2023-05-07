@@ -10,8 +10,7 @@ export const SnakeGame = ({
     width = 5,
 }) => {
 
-    const otherSnake = useContext(SnakeContext);
-    const [snake] = useState(otherSnake!);
+    const snake = useContext(SnakeContext)!;
     const [snakePositions, setSnakePosition] = useState(snake.positions);
 
     function getInitialSnakePosition(): Position {

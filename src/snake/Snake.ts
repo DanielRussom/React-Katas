@@ -20,6 +20,12 @@ export class Snake {
     this.lastPosition = initialPosition;
   }
 
+  //TODO Refactor this out
+  setInitialPosition(initialPosition: Position){
+    this.positions[0] = initialPosition;
+    this.lastPosition = initialPosition;
+  }
+
   feed() {
     this.positions.push(this.lastPosition)
   }
