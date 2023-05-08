@@ -48,6 +48,7 @@ export class Snake {
       this.moveSnakeRight();
     }
 
+    console.warn(this.positions);
     return this.positions;
   }
 
