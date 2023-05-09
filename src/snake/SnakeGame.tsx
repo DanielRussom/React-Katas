@@ -11,6 +11,7 @@ export const SnakeGame = ({
 }) => {
 
     const { snake, setSnake } = useContext(SnakeContext);
+    const [forceRerender, setForceRerender] = useState(0);
     // const [snakePositions, setSnakePosition] = useState(snake.positions);
     
 
@@ -30,7 +31,9 @@ export const SnakeGame = ({
     }
 
     function updateSnakeDisplay(newPositions) {
-        // setSnake(new Snake(new Position(0,0)));
+        setSnake(new Snake(newPositions[0]));
+        console.warn(snake.positions)
+        setForceRerender(forceRerender + 1);
         // console.warn(snake);
     }
 

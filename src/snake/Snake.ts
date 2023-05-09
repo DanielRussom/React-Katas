@@ -16,6 +16,7 @@ export class Snake {
   lastPosition : Position;
 
   constructor(initialPosition: Position) {
+    console.warn("New snake")
     this.positions[0] = initialPosition;
     this.lastPosition = initialPosition;
   }

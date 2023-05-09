@@ -8,7 +8,7 @@ import Position from './snake/Position';
 
 const TreeGenerator = lazy(() => import('./tree-generator/TreeGenerator'))
 
-export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>({snake: new Snake(new Position(0,0)), setSnake: () => {}});
+export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>(undefined!);
 function App() { 
   
   //TODO Wrap SnakeGame's Ui with a "SnakeGameControls"??? Take this out of App
@@ -22,8 +22,12 @@ function App() {
     return new Position(xPosition, yPosition);        
 }
   const [snake, setSnake] = useState(new Snake(getInitialSnakePosition()))
-  const value = {snake: snake, setSnake: setSnake};
+  // const value = {snake: snake, setSnake: setSnake};
   const [displayedComponent, setDisplayedComponent] = useState<JSX.Element>();
+
+  React.useEffect(() => {
+    console.log('Snake updated', snake.positions)
+  }, [snake])
 
 
   return (
@@ -31,7 +35,7 @@ function App() {
       <Suspense fallback={<h1>Loading...</h1>}>
         <button onClick={() => setDisplayedComponent(<TreeGenerator />)}>Christmas Tree Generator</button>
         <button onClick={() => setDisplayedComponent(<StackExercise />)}>Stack Exercise</button>
-        <button onClick={() => setDisplayedComponent(<SnakeContext.Provider value={value}><SnakeGame /></SnakeContext.Provider>)}>Snake</button>
+        <button onClick={() => setDisplayedComponent(<SnakeContext.Provider value={{snake: snake, setSnake: setSnake}}><SnakeGame /></SnakeContext.Provider>)}>Snake</button>
 
         <div data-testid="component-container">
           {displayedComponent}
