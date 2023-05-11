@@ -3,8 +3,9 @@ import { createContext, useContext, useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
+import { SnakeContext } from "../App";
 
-export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>(undefined!);
+// export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>(undefined!);
 
 export const SnakeGame = ({
     height = 5,
@@ -22,9 +23,9 @@ export const SnakeGame = ({
 
     return new Position(xPosition, yPosition);        
 }
-  const [snake, setSnake] = useState(new Snake(getInitialSnakePosition()))
+const { snake, setSnake } = useContext(SnakeContext);
   // const value = {snake: snake, setSnake: setSnake};
-  
+
     const [forceRerender, setForceRerender] = useState(0);
     // const [snakePositions, setSnakePosition] = useState(snake.positions);
     
@@ -58,9 +59,9 @@ export const SnakeGame = ({
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <SnakeContext.Provider value={{snake: snake, setSnake: setSnake}}>
+            {/* <SnakeContext.Provider value={{snake: snake, setSnake: setSnake}}> */}
                 <Grid height={height} width={width}/>
-            </SnakeContext.Provider>
+            {/* </SnakeContext.Provider> */}
         </>
     )
 }
