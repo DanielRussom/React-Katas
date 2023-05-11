@@ -1,16 +1,33 @@
 import * as React from "react";
-import { useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
-import { SnakeContext } from "../App";
+
+export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>(undefined!);
 
 export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
+    
+    
+  //TODO Wrap SnakeGame's Ui with a "SnakeGameControls"??? Take this out of App
+//   const height = 5;
+//   const width = 5;
+ 
+  function getInitialSnakePosition(): Position {
+    const xPosition = Math.round(width / 2) - 1;
+    const yPosition = Math.round(height / 2) - 1;
 
-    const { snake, setSnake } = useContext(SnakeContext);
+    return new Position(xPosition, yPosition);        
+}
+  const [snake, setSnake] = useState(new Snake(getInitialSnakePosition()))
+  // const value = {snake: snake, setSnake: setSnake};
+  React.useEffect(() => {
+    console.log('Snake updated', snake.positions)
+  }, [snake])
+
     const [forceRerender, setForceRerender] = useState(0);
     // const [snakePositions, setSnakePosition] = useState(snake.positions);
     
@@ -33,7 +50,7 @@ export const SnakeGame = ({
     function updateSnakeDisplay(newPositions) {
         setSnake(new Snake(newPositions[0]));
         console.warn(snake.positions)
-        setForceRerender(forceRerender + 1);
+        //setForceRerender(forceRerender + 1);
         // console.warn(snake);
     }
 
@@ -44,7 +61,9 @@ export const SnakeGame = ({
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <Grid height={height} width={width}/>
+            <SnakeContext.Provider value={{snake: snake, setSnake: setSnake}}>
+                <Grid height={height} width={width}/>
+            </SnakeContext.Provider>
         </>
     )
 }
