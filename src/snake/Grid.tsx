@@ -4,6 +4,7 @@ import { FoodSpawner } from "./FoodSpawner";
 import Position from "./Position";
 import { EmptySpace, FoodToken, SnakeToken } from "./Constants";
 import { SnakeContext } from "./SnakeGame";
+import { Snake } from "./Snake";
 
 export type GridProperties = {
     height: number,
@@ -30,6 +31,7 @@ export default function Grid({
 
         if(oldValue === FoodToken){
             snake.feed();
+            setSnake(new Snake(new Position(0,0)));
             const foodPosition = foodSpawner.pickFoodPosition(newGrid);
             newGrid[foodPosition.y][foodPosition.x] = FoodToken
         }

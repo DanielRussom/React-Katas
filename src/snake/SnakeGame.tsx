@@ -24,10 +24,7 @@ export const SnakeGame = ({
 }
   const [snake, setSnake] = useState(new Snake(getInitialSnakePosition()))
   // const value = {snake: snake, setSnake: setSnake};
-  React.useEffect(() => {
-    console.log('Snake updated', snake.positions)
-  }, [snake])
-
+  
     const [forceRerender, setForceRerender] = useState(0);
     // const [snakePositions, setSnakePosition] = useState(snake.positions);
     
