@@ -12,6 +12,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "ci-build": "set CI = false && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
