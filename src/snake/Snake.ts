@@ -16,7 +16,6 @@ export class Snake {
   lastPosition : Position;
 
   constructor(initialPosition: Position) {
-    console.warn("New snake")
     this.positions[0] = initialPosition;
     this.lastPosition = initialPosition;
   }
@@ -29,6 +28,7 @@ export class Snake {
 
   feed() {
     this.positions.push(this.lastPosition)
+    console.warn("Fed!");
   }
 
   move(): Position[] {
@@ -49,7 +49,6 @@ export class Snake {
       this.moveSnakeRight();
     }
 
-    console.warn(this.positions);
     return this.positions;
   }
 

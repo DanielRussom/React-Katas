@@ -45,10 +45,7 @@ export const SnakeGame = ({
     }
 
     function updateSnakeDisplay(newPositions) {
-        setSnake(new Snake(newPositions[0]));
-        console.warn(snake.positions)
-        //setForceRerender(forceRerender + 1);
-        // console.warn(snake);
+        setSnake(Object.assign(Object.create(snake)));
     }
 
 
