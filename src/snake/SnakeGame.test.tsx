@@ -21,7 +21,6 @@ describe("snake game", () => {
       [7, new Position(3, 3)],
     ])(
       "spawns in the middle of the game board",
-      //TODO Move this to grid
       (gridSize, expectedPosition) => {
         render(<SnakeGame height={gridSize} width={gridSize} />);
 

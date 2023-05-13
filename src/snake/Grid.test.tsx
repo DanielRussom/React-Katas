@@ -137,7 +137,7 @@ describe("game board", () => {
         });
         
         //TODO Do we still want this as well?
-        it.skip("calls feed snake method", () => {
+        it("calls feed snake method", () => {
             const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
                 return new Position(1, 1);
             }).mockImplementationOnce(() => {
@@ -145,11 +145,17 @@ describe("game board", () => {
             });
 
             FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+
+            
+      const feedFunction = jest.fn().mockImplementationOnce(() => {
+        return new Position(0, 0);
+      });
+      Snake.prototype.feed = feedFunction;
             const { rerender } = render(<SnakeContext.Provider value={{snake: new Snake(new Position(3,3)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
 
             rerender(<SnakeContext.Provider value={{snake: new Snake(new Position(1,1)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
             
-            expect(feedSnakeFunction).toBeCalledTimes(1);
+         expect(feedFunction).toHaveBeenCalled();
         })
    });
 });

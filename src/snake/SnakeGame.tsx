@@ -1,21 +1,15 @@
 import * as React from "react";
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
 import { SnakeContext } from "./SnakeContext";
-
 
 export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
     
-    
-  //TODO Wrap SnakeGame's Ui with a "SnakeGameControls"??? Take this out of App
-//   const height = 5;
-//   const width = 5;
- 
   function getInitialSnakePosition(): Position {
     const xPosition = Math.round(width / 2) - 1;
     const yPosition = Math.round(height / 2) - 1;
@@ -23,11 +17,6 @@ export const SnakeGame = ({
     return new Position(xPosition, yPosition);        
 }
   const [snake, setSnake] = useState(new Snake(getInitialSnakePosition()))
-  // const value = {snake: snake, setSnake: setSnake};
-  
-    const [forceRerender, setForceRerender] = useState(0);
-    // const [snakePositions, setSnakePosition] = useState(snake.positions);
-    
 
     function turnSnakeLeft(): void {
         const snakePosition = snake.turnLeft();
@@ -47,7 +36,6 @@ export const SnakeGame = ({
     function updateSnakeDisplay(newPositions) {
         setSnake(Object.assign(Object.create(snake)));
     }
-
 
     return (
         <>

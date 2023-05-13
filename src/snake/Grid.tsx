@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { FoodSpawner } from "./FoodSpawner";
 import Position from "./Position";
 import { EmptySpace, FoodToken, SnakeToken } from "./Constants";
-import { Snake } from "./Snake";
 import { SnakeContext } from "./SnakeContext";
 
 export type GridProperties = {
