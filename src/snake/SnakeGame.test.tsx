@@ -4,32 +4,14 @@ import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
 import { Snake } from "./Snake";
 import Position from "./Position";
-import { SnakeContext } from "./SnakeContext";
-
-const mockGrid = jest.fn();
-jest.mock("./Grid", () => (props) => {
-  mockGrid(props);
-  // props.feedSnake();
-  return <div data-testid="gameBoard" />;
-})
+import { SnakeToken } from "./Constants";
 
 describe("snake game", () => {
-  it("does", () => {
-    expect(true).toBeTruthy();
-  });
-
   it("game board is rendered", () => {
-    render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
-    const board = screen.getByTestId("gameBoard");
+    render(<SnakeGame />);
+    const board = screen.getByTitle("GameBoard");
 
     expect(board).toBeInTheDocument();
-
-    expect(mockGrid).toHaveBeenCalledWith(
-      expect.objectContaining({
-        height: 5,
-        width: 5
-      })
-    );
   });
 
   describe("snake", () => {
@@ -43,11 +25,10 @@ describe("snake game", () => {
       (gridSize, expectedPosition) => {
         render(<SnakeGame height={gridSize} width={gridSize} />);
 
-        const firstMockCall = mockGrid.mock.calls[0][0];
-        const actualSnakePositions = firstMockCall.snakePositions;
+        const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
-        expect(actualSnakePositions.length).toEqual(1);
-        expect(actualSnakePositions[0]).toEqual(expectedPosition)
+        expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(1);
       });
 
     it("tells the snake to move", () => {
@@ -56,7 +37,7 @@ describe("snake game", () => {
       });
       Snake.prototype.move = moveFunction;
 
-      render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
+      render(<SnakeGame />);
 
       clickButton("Move");
 
@@ -69,8 +50,8 @@ describe("snake game", () => {
       });
       Snake.prototype.turnRight = turnRightFunction;
 
-      render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
-
+      render(<SnakeGame />);
+      
       clickButton(">");
 
       expect(turnRightFunction).toHaveBeenCalled();
@@ -82,8 +63,8 @@ describe("snake game", () => {
       });
       Snake.prototype.turnLeft = turnLeftFunction;
 
-      render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
-
+      render(<SnakeGame />);
+      
       clickButton("<");
 
       expect(turnLeftFunction).toHaveBeenCalled();
