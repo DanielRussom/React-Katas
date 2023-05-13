@@ -3,8 +3,8 @@ import { createContext, useContext, useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
 import { Snake } from "./Snake";
+import { SnakeContext } from "./SnakeContext";
 
-export const SnakeContext = createContext<{snake: Snake, setSnake: Function}>(undefined!);
 
 export const SnakeGame = ({
     height = 5,

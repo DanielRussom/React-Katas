@@ -6,7 +6,7 @@ import { FoodSpawner } from "./FoodSpawner";
 import "../../testExtensions/screenTestExtensions";
 import { FoodToken, SnakeToken } from "./Constants";
 import { Snake } from "./Snake";
-import { SnakeContext } from "./SnakeGame";
+import { SnakeContext } from "./SnakeContext";
 
 jest.mock("./FoodSpawner");
 

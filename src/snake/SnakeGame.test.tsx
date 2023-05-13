@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
-import SnakeGame, { SnakeContext } from "./SnakeGame";
+import SnakeGame from "./SnakeGame";
 import { Snake } from "./Snake";
 import Position from "./Position";
+import { SnakeContext } from "./SnakeContext";
 
 const mockGrid = jest.fn();
 jest.mock("./Grid", () => (props) => {
@@ -16,6 +17,7 @@ describe("snake game", () => {
   it("does", () => {
     expect(true).toBeTruthy();
   });
+
   it("game board is rendered", () => {
     render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
     const board = screen.getByTestId("gameBoard");
@@ -31,7 +33,7 @@ describe("snake game", () => {
   });
 
   describe("snake", () => {
-    it.skip.each([
+    it.each([
       [5, new Position(2, 2)],
       [6, new Position(2, 2)],
       [7, new Position(3, 3)],
@@ -39,8 +41,7 @@ describe("snake game", () => {
       "spawns in the middle of the game board",
       //TODO Move this to grid
       (gridSize, expectedPosition) => {
-        render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><SnakeGame /></SnakeContext.Provider>);
-        // render(<SnakeGame height={gridSize} width={gridSize} />);
+        render(<SnakeGame height={gridSize} width={gridSize} />);
 
         const firstMockCall = mockGrid.mock.calls[0][0];
         const actualSnakePositions = firstMockCall.snakePositions;
