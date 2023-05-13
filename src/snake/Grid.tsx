@@ -18,15 +18,25 @@ export default function Grid({
 
     const { snake, setSnake } = useContext(SnakeContext);
     // const snakePosition = useContext(SnakeContext)?.positions;
+    const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position>(snake.positions[0]);
     const [grid, setGrid] = useState<string[][]>(() => buildGrid());
-    const [storedSnakeLocation, setStoredSnakeLocation] = useState<Position>(snake.positions[0]);
+
+    React.useEffect(() => {
+        console.warn("Updated!")
+    }, [storedSnakeLocations])
     
-    if (storedSnakeLocation.y !== snake.positions[0].y ||
-        storedSnakeLocation.x !== snake.positions[0].x) {
+    React.useEffect(() => {
+        console.warn("Updated2!")
+        console.warn(snake.positions)
+        console.warn(storedSnakeLocations)
+    }, [snake])
+
+    if (storedSnakeLocations.y !== snake.positions[0].y ||
+        storedSnakeLocations.x !== snake.positions[0].x) {
         let oldValue = grid[snake.positions[0].y][snake.positions[0].x];
         
         let newGrid = [...grid];
-        newGrid[storedSnakeLocation.y][storedSnakeLocation.x] = EmptySpace;
+        newGrid[storedSnakeLocations.y][storedSnakeLocations.x] = EmptySpace;
         newGrid[snake.positions[0].y][snake.positions[0].x] = SnakeToken;
 
         if(oldValue === FoodToken){
@@ -37,7 +47,7 @@ export default function Grid({
         }
 
         setGrid(newGrid);
-        setStoredSnakeLocation(snake.positions[0]);
+        setStoredSnakeLocations(snake.positions[0]);
     }
 
     function buildGrid() {
@@ -47,7 +57,12 @@ export default function Grid({
             grid.push(buildRow(width));
         }
 
-        grid[snake.positions[0].y][snake.positions[0].x] = SnakeToken
+        console.warn(snake.positions)
+        snake.positions.forEach(position => {
+            console.warn(position)
+            grid[position.y][position.x] = SnakeToken
+            
+        });
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
         grid[foodPosition.y][foodPosition.x] = FoodToken

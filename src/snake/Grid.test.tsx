@@ -25,7 +25,7 @@ describe("game board", () => {
     });
 
     it("is a grid", () => {
-        render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
+        render(<SnakeContext.Provider value={{snake: new Snake([new Position(2,2)]), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
 
         const board = screen.getByTitle("GameBoard");
 
@@ -38,7 +38,7 @@ describe("game board", () => {
         5
     ]])
         ("has the expected row count", (expectedRows) => {
-            render(<SnakeContext.Provider value={{snake: new Snake(new Position(0,0)), setSnake: () => {}}}><Grid height={expectedRows} width={5}/></SnakeContext.Provider>);
+            render(<SnakeContext.Provider value={{snake: new Snake([new Position(0,0)]), setSnake: () => {}}}><Grid height={expectedRows} width={5}/></SnakeContext.Provider>);
 
             const rows = screen.getByTitle("GameBoard").childNodes;
 
@@ -50,7 +50,7 @@ describe("game board", () => {
         2,
         3
     ]])("has the expected column count", (expectedColumns) => {
-        render(<SnakeContext.Provider value={{snake: new Snake(new Position(0,0)), setSnake: () => {}}}><Grid height={5} width={expectedColumns}/></SnakeContext.Provider>);
+        render(<SnakeContext.Provider value={{snake: new Snake([new Position(0,0)]), setSnake: () => {}}}><Grid height={5} width={expectedColumns}/></SnakeContext.Provider>);
 
         const firstRow = screen.getByTitle("GameBoard").childNodes[0];
 
@@ -61,12 +61,25 @@ describe("game board", () => {
 
     it("populates the snake in the expected location", () => {
         const snakePosition = new Position(2, 2);
-        render(<SnakeContext.Provider value={{snake: new Snake(snakePosition), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
+        render(<SnakeContext.Provider value={{snake: new Snake([snakePosition]), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
 
         expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
         expect(screen.getAllByText(SnakeToken).length).toEqual(1);
+    });
+
+    it("populates a longer snake in the expected locations", () => {
+        const firstSnakePosition = new Position(2, 2);
+        const secondSnakePosition = new Position(1, 2);
+        render(<SnakeContext.Provider value={{snake: new Snake([firstSnakePosition,secondSnakePosition]), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
+
+        const firstExpectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(firstSnakePosition);
+        const secondExpectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(secondSnakePosition);
+
+        expect(firstExpectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(secondExpectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(2);
     });
 
     //TODO Review value of this test
@@ -84,7 +97,7 @@ describe("game board", () => {
 
     describe("Food", () => {
         it("exists in the grid", () => {
-            render(<SnakeContext.Provider value={{snake: new Snake(new Position(2,2)), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
+            render(<SnakeContext.Provider value={{snake: new Snake([new Position(2,2)]), setSnake: () => {}}}><Grid height={5} width={5}/></SnakeContext.Provider>);
 
             const gameBoard = screen.getByTitle("GameBoard");
             const food = within(gameBoard).getByText(FoodToken);
@@ -104,7 +117,7 @@ describe("game board", () => {
 
                 FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
 
-                render(<SnakeContext.Provider value={{snake: new Snake(new Position(3,3)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
+                render(<SnakeContext.Provider value={{snake: new Snake([new Position(3,3)]), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
 
                 const expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
@@ -122,14 +135,14 @@ describe("game board", () => {
             });
 
             FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-            const { rerender } = render(<SnakeContext.Provider value={{snake: new Snake(new Position(3,3)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
+            const { rerender } = render(<SnakeContext.Provider value={{snake: new Snake([new Position(3,3)]), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
 
             let expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1, 1));
 
             expect(expectedFoodLocation).toHaveTextContent(FoodToken);
             expect(screen.getAllByText(FoodToken).length).toEqual(1);
 
-            rerender(<SnakeContext.Provider value={{snake: new Snake(new Position(1,1)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
+            rerender(<SnakeContext.Provider value={{snake: new Snake([new Position(1,1)]), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
             expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(0, 0));
 
             expect(expectedFoodLocation).toHaveTextContent(FoodToken);
@@ -151,9 +164,9 @@ describe("game board", () => {
         return new Position(0, 0);
       });
       Snake.prototype.feed = feedFunction;
-            const { rerender } = render(<SnakeContext.Provider value={{snake: new Snake(new Position(3,3)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
+            const { rerender } = render(<SnakeContext.Provider value={{snake: new Snake([new Position(3,3)]), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
 
-            rerender(<SnakeContext.Provider value={{snake: new Snake(new Position(1,1)), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
+            rerender(<SnakeContext.Provider value={{snake: new Snake([new Position(1,1)]), setSnake: () => {}}}><Grid height={7} width={7}/></SnakeContext.Provider>);
             
          expect(feedFunction).toHaveBeenCalled();
         })

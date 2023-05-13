@@ -15,10 +15,11 @@ export class Snake {
   positions = new Array<Position>();
   lastPosition : Position;
 
-  constructor(initialPosition: Position) {
-    this.positions[0] = initialPosition;
-    this.lastPosition = initialPosition;
+  constructor(initialPositions: Position[]) {
+    this.positions = initialPositions;
+    this.lastPosition = initialPositions[0];
   }
+
 
   //TODO Refactor this out
   setInitialPosition(initialPosition: Position){
@@ -28,7 +29,6 @@ export class Snake {
 
   feed() {
     this.positions.push(this.lastPosition)
-    console.warn("Fed!");
   }
 
   move(): Position[] {
