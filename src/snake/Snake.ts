@@ -68,7 +68,8 @@ export class Snake {
   }
 
   moveSnakeUp() {
-    this.positions[0] = new Position(this.positions[0].x, this.positions[0].y - 1);
+    this.positions.unshift(new Position(this.positions[0].x, this.positions[0].y - 1))
+    this.positions.pop()
   }
 
   moveSnakeLeft() {

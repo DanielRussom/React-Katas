@@ -21,23 +21,12 @@ export default function Grid({
     const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position>(snake.positions[0]);
     const [grid, setGrid] = useState<string[][]>(() => buildGrid());
 
-    React.useEffect(() => {
-        console.warn("Updated!")
-    }, [storedSnakeLocations])
-    
-    React.useEffect(() => {
-        console.warn("Updated2!")
-        console.warn(snake.positions)
-        console.warn(storedSnakeLocations)
-    }, [snake])
-
     if (storedSnakeLocations.y !== snake.positions[0].y ||
         storedSnakeLocations.x !== snake.positions[0].x) {
         let oldValue = grid[snake.positions[0].y][snake.positions[0].x];
         
         let newGrid = [...grid];
         newGrid[storedSnakeLocations.y][storedSnakeLocations.x] = EmptySpace;
-        newGrid[snake.positions[0].y][snake.positions[0].x] = SnakeToken;
 
         if(oldValue === FoodToken){
             snake.feed();
@@ -59,9 +48,7 @@ export default function Grid({
 
         console.warn(snake.positions)
         snake.positions.forEach(position => {
-            console.warn(position)
             grid[position.y][position.x] = SnakeToken
-            
         });
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);

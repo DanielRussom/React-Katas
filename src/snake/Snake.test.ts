@@ -87,6 +87,18 @@ describe("movement", () => {
     expect(snake.positions.length).toEqual(1);
     expect(snake.positions[0]).toEqual(expectedPosition);
   });
+
+  it("move multiple segments", () => {
+    const expectedFirstPosition = new Position(2, 1);
+    const expectedSecondPosition = new Position(2, 2);
+    const snake = new Snake([new Position(2, 2), new Position(2, 3)]);
+
+    snake.move();
+
+    expect(snake.positions.length).toEqual(2);
+    expect(snake.positions[0]).toEqual(expectedFirstPosition);
+    expect(snake.positions[1]).toEqual(expectedSecondPosition);
+  });
 });
 
   it.each([
