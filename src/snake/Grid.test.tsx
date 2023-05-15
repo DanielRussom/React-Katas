@@ -101,6 +101,27 @@ describe("game board", () => {
         expect(feedSnakeFunction).toBeCalledTimes(0);
     });
 
+    it("repopulates a snake with two segments in the expected locations", () => {
+        const snakePositions = [new Position(3, 1), new Position(3, 2)];
+        const { rerender } = render(
+            <SnakeContext.Provider value={{ snake: new Snake([new Position(3, 3), new Position(3, 4)]), setSnake: () => { } }}>
+                <Grid height={7} width={7} />
+            </SnakeContext.Provider>);
+
+        rerender(
+            <SnakeContext.Provider value={{ snake: new Snake([new Position(3, 1), new Position(3, 2)]), setSnake: () => { } }}>
+                <Grid height={7} width={7} />
+            </SnakeContext.Provider>);
+
+
+        expect(screen.getAllByText(SnakeToken).length).toEqual(2);
+
+        const firstSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePositions[0]);
+        expect(firstSnakeLocation).toHaveTextContent(SnakeToken);
+        const secondSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePositions[1]);
+        expect(secondSnakeLocation).toHaveTextContent(SnakeToken);
+    });
+
     describe("Food", () => {
         it("exists in the grid", () => {
             render(<SnakeContext.Provider value={{ snake: new Snake([new Position(2, 2)]), setSnake: () => { } }}><Grid height={5} width={5} /></SnakeContext.Provider>);

@@ -23,11 +23,19 @@ export default function Grid({
 
     if (storedSnakeLocations.y !== snake.positions[0].y ||
         storedSnakeLocations.x !== snake.positions[0].x) {
+        
         let oldValue = grid[snake.positions[0].y][snake.positions[0].x];
         
         let newGrid = [...grid];
         newGrid[storedSnakeLocations.y][storedSnakeLocations.x] = EmptySpace;
-        newGrid[snake.positions[0].y][snake.positions[0].x] = SnakeToken;
+        
+        // storedSnakeLocations.forEach(position => {
+        //     grid[position.y][position.x] = EmptySpace;
+        // });
+
+        snake.positions.forEach(position => {
+            grid[position.y][position.x] = SnakeToken
+        });
 
         if(oldValue === FoodToken){
             snake.feed();
