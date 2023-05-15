@@ -27,6 +27,7 @@ export default function Grid({
         
         let newGrid = [...grid];
         newGrid[storedSnakeLocations.y][storedSnakeLocations.x] = EmptySpace;
+        newGrid[snake.positions[0].y][snake.positions[0].x] = SnakeToken;
 
         if(oldValue === FoodToken){
             snake.feed();

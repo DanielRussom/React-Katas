@@ -77,7 +77,8 @@ export class Snake {
   }
 
   moveSnakeRight() {
-    this.positions[0] = new Position(this.positions[0].x + 1, this.positions[0].y);
+    this.positions.unshift(new Position(this.positions[0].x + 1, this.positions[0].y))
+    this.positions.pop()
   }
 
   moveSnakeDown() {

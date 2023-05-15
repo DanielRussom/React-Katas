@@ -88,16 +88,22 @@ describe("movement", () => {
     expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
-  it("move multiple segments", () => {
-    const expectedFirstPosition = new Position(2, 1);
-    const expectedSecondPosition = new Position(2, 2);
+  it.each([
+    [0, [new Position(2, 1), new Position(2, 2)]],
+    [1, [new Position(4, 2), new Position(3, 2)]]
+  ])("move multiple segments in given direction", (timesTurning, expectedPositions) => {
     const snake = new Snake([new Position(2, 2), new Position(2, 3)]);
+
+    for(let i = 0; i < timesTurning; i++){
+      snake.turnRight();
+    }
 
     snake.move();
 
     expect(snake.positions.length).toEqual(2);
-    expect(snake.positions[0]).toEqual(expectedFirstPosition);
-    expect(snake.positions[1]).toEqual(expectedSecondPosition);
+    for(let i = 0; i < expectedPositions.length; i++){
+      expect(snake.positions[i]).toEqual(expectedPositions[i]);
+    }
   });
 });
 
