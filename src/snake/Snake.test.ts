@@ -65,7 +65,7 @@ describe("movement", () => {
     [1, new Position(4, 2)],
     [2, new Position(3, 4)],
     [3, new Position(1, 3)],
-  ])("turns right and then forward", (times, expectedPosition) => {
+  ])("turns right %i times and then forward", (times, expectedPosition) => {
     const snake = new Snake([new Position(2, 2)]);
 
     for (let i = 0; i < times; i++) {
@@ -90,7 +90,9 @@ describe("movement", () => {
 
   it.each([
     [0, [new Position(2, 1), new Position(2, 2)]],
-    [1, [new Position(4, 2), new Position(3, 2)]]
+    [1, [new Position(4, 2), new Position(3, 2)]],
+    [2, [new Position(3, 4), new Position(3, 3)]],
+    [3, [new Position(1, 3), new Position(2, 3)]]
   ])("move multiple segments in given direction", (timesTurning, expectedPositions) => {
     const snake = new Snake([new Position(2, 2), new Position(2, 3)]);
 
