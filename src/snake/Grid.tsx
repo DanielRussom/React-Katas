@@ -17,21 +17,20 @@ export default function Grid({
     const foodSpawner = new FoodSpawner();
 
     const { snake, setSnake } = useContext(SnakeContext);
-    // const snakePosition = useContext(SnakeContext)?.positions;
-    const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position>(snake.positions[0]);
+    
+    const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position[]>([...snake.positions]);
     const [grid, setGrid] = useState<string[][]>(() => buildGrid());
 
-    if (storedSnakeLocations.y !== snake.positions[0].y ||
-        storedSnakeLocations.x !== snake.positions[0].x) {
+    if (storedSnakeLocations[0].y !== snake.positions[0].y ||
+        storedSnakeLocations[0].x !== snake.positions[0].x) {
         
         let oldValue = grid[snake.positions[0].y][snake.positions[0].x];
         
         let newGrid = [...grid];
-        newGrid[storedSnakeLocations.y][storedSnakeLocations.x] = EmptySpace;
         
-        // storedSnakeLocations.forEach(position => {
-        //     grid[position.y][position.x] = EmptySpace;
-        // });
+        storedSnakeLocations.forEach(position => {
+            grid[position.y][position.x] = EmptySpace;
+        });
 
         snake.positions.forEach(position => {
             grid[position.y][position.x] = SnakeToken
@@ -45,7 +44,7 @@ export default function Grid({
         }
 
         setGrid(newGrid);
-        setStoredSnakeLocations(snake.positions[0]);
+        setStoredSnakeLocations([...snake.positions]);
     }
 
     function buildGrid() {
