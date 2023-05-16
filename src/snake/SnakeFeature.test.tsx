@@ -10,13 +10,13 @@ import { FoodToken, SnakeToken } from "./Constants";
 jest.mock("./Random");
 
 describe("snake eating food feature", () => {
-    it.skip("should increase the snake's length and have the snake in the expected position", () => {
+    it("should increase the snake's length and have the snake in the expected position", () => {
         const randomFunction = 
         jest.fn()
         .mockImplementationOnce(() => {
             return 8; // (1,1)
         }).mockImplementationOnce(() => {
-            return 24; // (3,3)
+            return 23; // (3,3)
         })
         //return undefined 
         Random.prototype.getNumberBelowLimit = randomFunction;
@@ -44,6 +44,7 @@ describe("snake eating food feature", () => {
 
         expect(screen.getAllByText(SnakeToken).length).toEqual(2);
 
+        
         expectedFoodLocation = gameBoard.getChildAt(new Position(3,3));
         expect(expectedFoodLocation).toHaveTextContent(FoodToken);
 
