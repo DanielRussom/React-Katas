@@ -32,7 +32,6 @@ export class Snake {
   }
 
   move(): Position[] {
-    this.lastPosition = this.positions[0];
     if (this.directionIndex === Direction.Down) {
       this.moveSnakeDown();
     }
@@ -69,7 +68,7 @@ export class Snake {
 
   moveSnakeUp() {
     this.positions.unshift(new Position(this.positions[0].x, this.positions[0].y - 1))
-    this.positions.pop()
+    this.lastPosition = this.positions.pop()!
   }
 
   moveSnakeLeft() {

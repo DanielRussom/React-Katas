@@ -113,7 +113,7 @@ describe("movement", () => {
     [new Position(2,2), [new Position(2,1), new Position(2,2)]],
     [new Position(3,3), [new Position(3,2), new Position(3,3)]],
     [new Position(4,2), [new Position(4,1), new Position(4,2)]]
-  ])("grows after feeding", (startingPosition, expectedPositions) => {
+  ])("grows after eating once", (startingPosition, expectedPositions) => {
     const snake = new Snake([startingPosition]);
     
     snake.move();
@@ -122,5 +122,20 @@ describe("movement", () => {
     expect(snake.positions.length).toEqual(2);
     expect(snake.positions[0]).toEqual(expectedPositions[0]);
     expect(snake.positions[1]).toEqual(expectedPositions[1]);
+  })
+
+  it("grows after eating twice", () => {
+    const snake = new Snake([new Position(2,2)]);
+    
+    snake.move();
+    snake.feed();
+
+    snake.move();
+    snake.feed();
+
+    expect(snake.positions.length).toEqual(3);
+    expect(snake.positions[0]).toEqual(new Position(2,0));
+    expect(snake.positions[1]).toEqual(new Position(2,1));
+    expect(snake.positions[2]).toEqual(new Position(2,2));
   })
 });
