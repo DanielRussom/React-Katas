@@ -21,13 +21,7 @@ export class Snake {
   }
 
 
-  //TODO Refactor this out
-  setInitialPosition(initialPosition: Position){
-    this.positions[0] = initialPosition;
-    this.lastPosition = initialPosition;
-  }
-
-  feed() {
+  eatFood() {
     this.positions.push(this.lastPosition)
   }
 
@@ -73,16 +67,16 @@ export class Snake {
 
   moveSnakeLeft() {
     this.positions.unshift(new Position(this.positions[0].x - 1, this.positions[0].y))
-    this.positions.pop()
+    this.lastPosition = this.positions.pop()!
   }
 
   moveSnakeRight() {
     this.positions.unshift(new Position(this.positions[0].x + 1, this.positions[0].y))
-    this.positions.pop()
+    this.lastPosition = this.positions.pop()!
   }
 
   moveSnakeDown() {
     this.positions.unshift(new Position(this.positions[0].x, this.positions[0].y + 1))
-    this.positions.pop()
+    this.lastPosition = this.positions.pop()!
   }
 }

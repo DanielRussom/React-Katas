@@ -176,7 +176,6 @@ describe("game board", () => {
             expect(screen.getAllByText(FoodToken).length).toEqual(1);
         });
 
-        //TODO Do we still want this as well?
         it("calls feed snake method", () => {
             const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
                 return new Position(1, 1);
@@ -190,7 +189,7 @@ describe("game board", () => {
             const feedFunction = jest.fn().mockImplementationOnce(() => {
                 return new Position(0, 0);
             });
-            Snake.prototype.feed = feedFunction;
+            Snake.prototype.eatFood = feedFunction;
             const { rerender } = render(<SnakeContext.Provider value={{ snake: new Snake([new Position(3, 3)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
 
             rerender(<SnakeContext.Provider value={{ snake: new Snake([new Position(1, 1)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);

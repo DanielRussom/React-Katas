@@ -117,7 +117,7 @@ describe("movement", () => {
     const snake = new Snake([startingPosition]);
     
     snake.move();
-    snake.feed();
+    snake.eatFood();
 
     expect(snake.positions.length).toEqual(2);
     expect(snake.positions[0]).toEqual(expectedPositions[0]);
@@ -128,10 +128,10 @@ describe("movement", () => {
     const snake = new Snake([new Position(2,2)]);
     
     snake.move();
-    snake.feed();
+    snake.eatFood();
 
     snake.move();
-    snake.feed();
+    snake.eatFood();
 
     expect(snake.positions.length).toEqual(3);
     expect(snake.positions[0]).toEqual(new Position(2,0));

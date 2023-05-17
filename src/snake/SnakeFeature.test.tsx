@@ -16,7 +16,7 @@ describe("snake eating food feature", () => {
         .mockImplementationOnce(() => {
             return 8; // (1,1)
         }).mockImplementationOnce(() => {
-            return 23; // (3,3)
+            return 22; // (3,3)
         })
         //return undefined 
         Random.prototype.getNumberBelowLimit = randomFunction;

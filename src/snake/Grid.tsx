@@ -29,15 +29,16 @@ export default function Grid({
         let newGrid = [...grid];
         
         storedSnakeLocations.forEach(position => {
-            grid[position.y][position.x] = EmptySpace;
+            newGrid[position.y][position.x] = EmptySpace;
         });
 
         snake.positions.forEach(position => {
-            grid[position.y][position.x] = SnakeToken
+            newGrid[position.y][position.x] = SnakeToken
         });
 
         if(oldValue === FoodToken){
-            snake.feed();
+            snake.eatFood();
+            newGrid[snake.lastPosition.y][snake.lastPosition.x] = SnakeToken
             setSnake(Object.assign(Object.create(snake)));
             const foodPosition = foodSpawner.pickFoodPosition(newGrid);
             newGrid[foodPosition.y][foodPosition.x] = FoodToken
@@ -54,7 +55,6 @@ export default function Grid({
             grid.push(buildRow(width));
         }
 
-        console.warn(snake.positions)
         snake.positions.forEach(position => {
             grid[position.y][position.x] = SnakeToken
         });
