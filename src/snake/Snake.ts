@@ -20,7 +20,6 @@ export class Snake {
     this.lastPosition = initialPositions[0];
   }
 
-
   eatFood() {
     this.positions.push(this.lastPosition)
   }

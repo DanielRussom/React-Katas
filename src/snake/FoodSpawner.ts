@@ -5,10 +5,8 @@ import { Random } from "./Random";
 export class FoodSpawner {
     pickFoodPosition(grid : string[][]): Position {  
         const randomizer = new Random();
-        console.warn(grid)
 
         let validPositions = this.getValidPositions(grid);
-        console.warn(validPositions);
 
         const result = randomizer.getNumberBelowLimit(validPositions.length);
         return validPositions[result];

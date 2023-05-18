@@ -89,6 +89,7 @@ describe("game board", () => {
                 <Grid height={7} width={7} />
             </SnakeContext.Provider>);
 
+//TODO Test avoiding rerender
         rerender(
             <SnakeContext.Provider value={{ snake: new Snake([new Position(2, 2)]), setSnake: () => { } }}>
                 <Grid height={7} width={7} />
