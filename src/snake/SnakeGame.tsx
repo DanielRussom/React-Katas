@@ -17,28 +17,24 @@ export const SnakeGame = ({
     return new Position(xPosition, yPosition);        
 }
   const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
-  const [forceRerender, setForceRerender] = useState(0)
 
     function turnSnakeLeft(): void {
-        const snakePosition = snake.turnLeft();
-        updateSnakeDisplay(snakePosition);
+        snake.turnLeft();
+        updateSnakeDisplay();
     }
 
     function turnSnakeRight(): void {
-        const snakePosition = snake.turnRight();
-        updateSnakeDisplay(snakePosition);
+        snake.turnRight();
+        updateSnakeDisplay();
     }
 
     function moveSnake(): void {
-        const snakePosition = snake.move();
-        updateSnakeDisplay(snakePosition);
-        console.warn(snake);
+        snake.move();
+        updateSnakeDisplay();
     }
 
-    function updateSnakeDisplay(newPositions) {
+    function updateSnakeDisplay() {
         setSnake(Object.assign(Object.create(snake)));
-        setForceRerender(forceRerender + 1);
-
     }
 
     return (
