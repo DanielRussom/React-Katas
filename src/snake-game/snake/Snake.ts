@@ -1,5 +1,5 @@
 import { Directions } from "./Directions";
-import Position from "./Position";
+import Position from "../Position";
 
 export class Snake {
   readonly numberOfDirections = 4;

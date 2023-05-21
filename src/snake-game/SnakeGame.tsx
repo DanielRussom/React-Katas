@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Grid from "./Grid";
 import Position from "./Position";
-import { Snake } from "./Snake";
+import { Snake } from "./snake/Snake";
 import { SnakeContext } from "./SnakeContext";
 
 export const SnakeGame = ({
