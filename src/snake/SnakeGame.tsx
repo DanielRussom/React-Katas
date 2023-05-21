@@ -9,14 +9,14 @@ export const SnakeGame = ({
     height = 5,
     width = 5,
 }) => {
-    
-  function getInitialSnakePosition(): Position {
-    const xPosition = Math.round(width / 2) - 1;
-    const yPosition = Math.round(height / 2) - 1;
+    function getInitialSnakePosition(): Position {
+        const xPosition = Math.round(width / 2) - 1;
+        const yPosition = Math.round(height / 2) - 1;
 
-    return new Position(xPosition, yPosition);        
-}
-  const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
+        return new Position(xPosition, yPosition);
+    }
+
+    const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
 
     function turnSnakeLeft(): void {
         snake.turnLeft();
@@ -34,7 +34,11 @@ export const SnakeGame = ({
     }
 
     function updateSnakeDisplay() {
-        setSnake(Object.assign(Object.create(snake)));
+        setSnake(copy(snake));
+    }
+
+    function copy(snake: Snake): Snake {
+        return Object.assign(Object.create(snake));
     }
 
     return (
@@ -43,13 +47,11 @@ export const SnakeGame = ({
             <button onClick={moveSnake}>Move</button>
             <button onClick={turnSnakeRight}>&gt;</button>
 
-            <SnakeContext.Provider value={{snake: snake, setSnake: setSnake}}>
-                <Grid height={height} width={width}/>
+            <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
+                <Grid height={height} width={width} />
             </SnakeContext.Provider>
         </>
     )
 }
 
 export default SnakeGame;
-
-

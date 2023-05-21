@@ -1,18 +1,11 @@
+import { Directions } from "./Directions";
 import Position from "./Position";
 
-enum Direction {
-  Up = 0,
-  Right = 1,
-  Down = 2,
-  Left = 3,
-}
-
 export class Snake {
-
   readonly numberOfDirections = 4;
   directionIndex = 0;
 
-  positions = new Array<Position>();
+  positions : Array<Position>;
   lastPosition : Position;
 
   constructor(initialPositions: Position[]) {
@@ -24,26 +17,6 @@ export class Snake {
     this.positions.push(this.lastPosition)
   }
 
-  move(): Position[] {
-    if (this.directionIndex === Direction.Down) {
-      this.moveSnakeDown();
-    }
-
-    if (this.directionIndex === Direction.Left) {
-      this.moveSnakeLeft();
-    }
-
-    if (this.directionIndex === Direction.Up) {
-      this.moveSnakeUp();
-    }
-
-    if (this.directionIndex === Direction.Right) {
-      this.moveSnakeRight();
-    }
-
-    return this.positions;
-  }
-
   turnLeft(): Position[] {
     this.directionIndex = this.directionIndex - 1;
     if (this.directionIndex < 0) {
@@ -53,29 +26,50 @@ export class Snake {
     return this.move();
   }
 
-  turnRight(): Position[] {
+  turnRight() {
     this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
 
-    return this.move();
+    this.move();
   }
 
-  moveSnakeUp() {
-    this.positions.unshift(new Position(this.positions[0].x, this.positions[0].y - 1))
-    this.lastPosition = this.positions.pop()!
+  move(): Position[] {
+    if (this.directionIndex === Directions.Up) {
+      this.moveSnakeUp();
+    }
+
+    if (this.directionIndex === Directions.Down) {
+      this.moveSnakeDown();
+    }
+    
+    if (this.directionIndex === Directions.Left) {
+      this.moveSnakeLeft();
+    }
+
+    if (this.directionIndex === Directions.Right) {
+      this.moveSnakeRight();
+    }
+
+    return this.positions;
   }
 
-  moveSnakeLeft() {
-    this.positions.unshift(new Position(this.positions[0].x - 1, this.positions[0].y))
-    this.lastPosition = this.positions.pop()!
+  private moveSnakeUp() {
+    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y - 1));
   }
 
-  moveSnakeRight() {
-    this.positions.unshift(new Position(this.positions[0].x + 1, this.positions[0].y))
-    this.lastPosition = this.positions.pop()!
+  private moveSnakeDown() {
+    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y + 1));
   }
 
-  moveSnakeDown() {
-    this.positions.unshift(new Position(this.positions[0].x, this.positions[0].y + 1))
-    this.lastPosition = this.positions.pop()!
+  private moveSnakeLeft() {
+    this.updatePositions(new Position(this.positions[0].x - 1, this.positions[0].y));
+  }
+
+  private moveSnakeRight() {
+    this.updatePositions(new Position(this.positions[0].x + 1, this.positions[0].y));
+  }
+
+  private updatePositions(newPosition: Position) {
+    this.positions.unshift(newPosition);
+    this.lastPosition = this.positions.pop()!;
   }
 }
