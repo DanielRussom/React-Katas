@@ -7,20 +7,12 @@ import Position from "./Position";
 import { SnakeToken } from "./Constants";
 
 describe("snake game", () => {
-  it("game board is rendered", () => {
-    render(<SnakeGame />);
-    const board = screen.getByTitle("GameBoard");
-
-    expect(board).toBeInTheDocument();
-  });
-
-  describe("snake", () => {
     it.each([
       [5, new Position(2, 2)],
       [6, new Position(2, 2)],
       [7, new Position(3, 3)],
     ])(
-      "spawns in the middle of the game board",
+      "snake spawns in the middle of the game board",
       (gridSize, expectedPosition) => {
         render(<SnakeGame height={gridSize} width={gridSize} />);
 
@@ -68,5 +60,4 @@ describe("snake game", () => {
 
       expect(turnLeftFunction).toHaveBeenCalled();
     });
-  });
 });

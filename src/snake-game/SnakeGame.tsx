@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import Grid from "./Grid";
+import Grid from "./grid/Grid";
 import Position from "./Position";
 import { Snake } from "./snake/Snake";
 import { SnakeContext } from "./SnakeContext";

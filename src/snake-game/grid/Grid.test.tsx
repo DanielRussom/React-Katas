@@ -1,14 +1,14 @@
 import { render, screen, within } from "@testing-library/react";
 import Grid from "./Grid";
 import * as React from "react";
-import Position from "./Position";
-import { FoodSpawner } from "./FoodSpawner";
-import "../../testExtensions/screenTestExtensions";
-import { FoodToken, SnakeToken } from "./Constants";
-import { Snake } from "./snake/Snake";
-import { SnakeContext } from "./SnakeContext";
+import Position from "../Position";
+import { FoodSpawner } from "../FoodSpawner";
+import "../../../testExtensions/screenTestExtensions";
+import { FoodToken, SnakeToken } from "../Constants";
+import { Snake } from "../snake/Snake";
+import { SnakeContext } from "../SnakeContext";
 
-jest.mock("./FoodSpawner");
+jest.mock("../FoodSpawner");
 
 let feedSnakeFunction: Function;
 
