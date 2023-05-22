@@ -1,0 +1,75 @@
+import { Directions } from "./Directions";
+import Position from "../Position";
+
+export class Snake {
+  readonly numberOfDirections = 4;
+  directionIndex = 0;
+
+  positions : Array<Position>;
+  lastPosition : Position;
+
+  constructor(initialPositions: Position[]) {
+    this.positions = initialPositions;
+    this.lastPosition = initialPositions[0];
+  }
+
+  eatFood() {
+    this.positions.push(this.lastPosition)
+  }
+
+  turnLeft(): Position[] {
+    this.directionIndex = this.directionIndex - 1;
+    if (this.directionIndex < 0) {
+      this.directionIndex = this.numberOfDirections - 1;
+    }
+
+    return this.move();
+  }
+
+  turnRight() {
+    this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
+
+    this.move();
+  }
+
+  move(): Position[] {
+    if (this.directionIndex === Directions.Up) {
+      this.moveSnakeUp();
+    }
+
+    if (this.directionIndex === Directions.Down) {
+      this.moveSnakeDown();
+    }
+    
+    if (this.directionIndex === Directions.Left) {
+      this.moveSnakeLeft();
+    }
+
+    if (this.directionIndex === Directions.Right) {
+      this.moveSnakeRight();
+    }
+
+    return this.positions;
+  }
+
+  private moveSnakeUp() {
+    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y - 1));
+  }
+
+  private moveSnakeDown() {
+    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y + 1));
+  }
+
+  private moveSnakeLeft() {
+    this.updatePositions(new Position(this.positions[0].x - 1, this.positions[0].y));
+  }
+
+  private moveSnakeRight() {
+    this.updatePositions(new Position(this.positions[0].x + 1, this.positions[0].y));
+  }
+
+  private updatePositions(newPosition: Position) {
+    this.positions.unshift(newPosition);
+    this.lastPosition = this.positions.pop()!;
+  }
+}

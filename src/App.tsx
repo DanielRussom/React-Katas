@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Suspense, lazy, useState } from 'react';
 import './App.css';
 import StackExercise from './stack-exercise/StackExercise';
-import SnakeGame from './snake/SnakeGame';
+import SnakeGame from './snake-game/SnakeGame';
 
 const TreeGenerator = lazy(() => import('./tree-generator/TreeGenerator'))
 

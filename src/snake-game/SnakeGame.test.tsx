@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
-import { Snake } from "./Snake";
+import { Snake } from "./snake/Snake";
 import Position from "./Position";
 import { SnakeToken } from "./Constants";
 
