@@ -22,5 +22,5 @@ steps:
   displayName: "npm build"
   
 - script: | 
-    npm test
+    npm run test -- --watchAll=false --coverage --ci
   displayName: "tests"
