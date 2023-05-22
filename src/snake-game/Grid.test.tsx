@@ -29,7 +29,7 @@ describe("game board", () => {
 
         const board = screen.getByTitle("GameBoard");
 
-        expect(board).toHaveStyle("display: griaad");
+        expect(board).toHaveStyle("display: grid");
     });
 
     it.each([[
