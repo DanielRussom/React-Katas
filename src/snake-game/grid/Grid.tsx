@@ -4,6 +4,7 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
+import { Snake } from "../snake/Snake";
 
 export type GridProperties = {
     height: number,
@@ -25,32 +26,38 @@ export default function Grid({
         if (storedSnakeLocations[0].y !== snake.positions[0].y ||
             storedSnakeLocations[0].x !== snake.positions[0].x) {
             
-            let oldValue = grid[snake.positions[0].y][snake.positions[0].x];
-            
+            let newlyOccupiedTile = grid[snake.positions[0].y][snake.positions[0].x];
             let newGrid = [...grid];
             
-            storedSnakeLocations.forEach(position => {
-                newGrid[position.y][position.x] = EmptySpace;
-            });
-    
-            snake.positions.forEach(position => {
-                newGrid[position.y][position.x] = SnakeToken
-            });
-    
-            if(oldValue === FoodToken){
-                snake.eatFood();
-                newGrid[snake.lastPosition.y][snake.lastPosition.x] = SnakeToken
-                setSnake(Object.assign(Object.create(snake)));
-                const foodPosition = foodSpawner.pickFoodPosition(newGrid);
-                newGrid[foodPosition.y][foodPosition.x] = FoodToken
+            refreshSnakeDisplay(newGrid);
+            
+            if(newlyOccupiedTile === FoodToken){
+                handleEatenFood(newGrid);
             }
     
             setGrid(newGrid);
             setStoredSnakeLocations([...snake.positions]);
         }
-    }, [foodSpawner, grid, setSnake, snake, storedSnakeLocations])
 
-    
+        function refreshSnakeDisplay(newGrid: string[][]) {
+            storedSnakeLocations.forEach(position => {
+                newGrid[position.y][position.x] = EmptySpace;
+            });
+        
+            snake.positions.forEach(position => {
+                newGrid[position.y][position.x] = SnakeToken;
+            });
+        }
+
+        function handleEatenFood(newGrid: string[][]) {
+            snake.eatFood();
+            newGrid[snake.lastPosition.y][snake.lastPosition.x] = SnakeToken;
+            setSnake(Object.assign(Object.create(snake)));
+        
+            const foodPosition = foodSpawner.pickFoodPosition(newGrid);
+            newGrid[foodPosition.y][foodPosition.x] = FoodToken;
+        }
+    }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations])
 
     function buildGrid() {
         let grid: string[][] = [];
@@ -67,6 +74,7 @@ export default function Grid({
         grid[foodPosition.y][foodPosition.x] = FoodToken
         return grid;
     }
+    
     function buildRow(width: number) {
         let newRow: string[] = [];
 
@@ -90,3 +98,4 @@ export default function Grid({
         </div>
     );
 }
+
