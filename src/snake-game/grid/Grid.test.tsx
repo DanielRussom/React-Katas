@@ -13,9 +13,6 @@ jest.mock("../FoodSpawner");
 let feedSnakeFunction: Function;
 
 describe("game board", () => {
-    it("does", () => {
-        expect(true).toBeTruthy();
-    });
     beforeEach(() => {
         FoodSpawner.prototype.pickFoodPosition = jest.fn().mockImplementation(() => {
             return new Position(0, 0);
@@ -25,7 +22,7 @@ describe("game board", () => {
     });
 
     it("is a grid", () => {
-        render(<SnakeContext.Provider value={{ snake: new Snake([new Position(2, 2)]), setSnake: () => { } }}><Grid height={5} width={5} /></SnakeContext.Provider>);
+        renderWithContext(<Grid height={5} width={5} />, [new Position(2, 2)]);
 
         const board = screen.getByTitle("GameBoard");
 
@@ -38,7 +35,7 @@ describe("game board", () => {
         5
     ]])
         ("has the expected row count", (expectedRows) => {
-            render(<SnakeContext.Provider value={{ snake: new Snake([new Position(0, 0)]), setSnake: () => { } }}><Grid height={expectedRows} width={5} /></SnakeContext.Provider>);
+            renderWithContext(<Grid height={expectedRows} width={5} />, [new Position(0, 0)]);
 
             const rows = screen.getByTitle("GameBoard").childNodes;
 
@@ -50,10 +47,9 @@ describe("game board", () => {
         2,
         3
     ]])("has the expected column count", (expectedColumns) => {
-        render(<SnakeContext.Provider value={{ snake: new Snake([new Position(0, 0)]), setSnake: () => { } }}><Grid height={5} width={expectedColumns} /></SnakeContext.Provider>);
+        renderWithContext(<Grid height={5} width={expectedColumns} />, [new Position(0, 0)]);
 
         const firstRow = screen.getByTitle("GameBoard").childNodes[0];
-
         const columns = firstRow.childNodes;
 
         expect(columns.length).toEqual(expectedColumns);
@@ -61,7 +57,7 @@ describe("game board", () => {
 
     it("populates the snake in the expected location", () => {
         const snakePosition = new Position(2, 2);
-        render(<SnakeContext.Provider value={{ snake: new Snake([snakePosition]), setSnake: () => { } }}><Grid height={5} width={5} /></SnakeContext.Provider>);
+        renderWithContext(<Grid height={5} width={5} />, [snakePosition]);
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
 
@@ -199,3 +195,7 @@ describe("game board", () => {
         })
     });
 });
+
+function renderWithContext(grid: JSX.Element, snakePositions: Position[]) {
+    render(<SnakeContext.Provider value={{ snake: new Snake(snakePositions), setSnake: () => { } }}>{grid}</SnakeContext.Provider>);
+}
