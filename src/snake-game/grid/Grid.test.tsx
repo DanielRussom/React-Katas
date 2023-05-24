@@ -22,7 +22,7 @@ describe("game board", () => {
     });
 
     it("is a grid", () => {
-        renderWithContext(<Grid height={5} width={5} />, [new Position(2, 2)]);
+        render(buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)]));
 
         const board = screen.getByTitle("GameBoard");
 
@@ -35,7 +35,7 @@ describe("game board", () => {
         5
     ]])
         ("has the expected row count", (expectedRows) => {
-            renderWithContext(<Grid height={expectedRows} width={5} />, [new Position(0, 0)]);
+            render(buildWithContext(<Grid height={expectedRows} width={5} />, [new Position(0, 0)]));
 
             const rows = screen.getByTitle("GameBoard").childNodes;
 
@@ -47,7 +47,7 @@ describe("game board", () => {
         2,
         3
     ]])("has the expected column count", (expectedColumns) => {
-        renderWithContext(<Grid height={5} width={expectedColumns} />, [new Position(0, 0)]);
+        render(buildWithContext(<Grid height={5} width={expectedColumns} />, [new Position(0, 0)]));
 
         const firstRow = screen.getByTitle("GameBoard").childNodes[0];
         const columns = firstRow.childNodes;
@@ -57,7 +57,7 @@ describe("game board", () => {
 
     it("populates the snake in the expected location", () => {
         const snakePosition = new Position(2, 2);
-        renderWithContext(<Grid height={5} width={5} />, [snakePosition]);
+        render(buildWithContext(<Grid height={5} width={5} />, [snakePosition]));
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePosition);
 
@@ -69,7 +69,7 @@ describe("game board", () => {
         const firstSnakePosition = new Position(2, 2);
         const secondSnakePosition = new Position(1, 2);
         
-        renderWithContext(<Grid height={5} width={5} />, [firstSnakePosition, secondSnakePosition]) 
+        render(buildWithContext(<Grid height={5} width={5} />, [firstSnakePosition, secondSnakePosition]));
 
         const firstExpectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(firstSnakePosition);
         const secondExpectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(secondSnakePosition);
@@ -80,10 +80,10 @@ describe("game board", () => {
     });
 
     it("repopulates the snake in the expected location", () => {
-        const { rerender } = renderWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]) 
+        const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
         
         const updatedSnakePosition = new Position(2, 2);
-        rerenderWithContext(<Grid height={7} width={7} />, [updatedSnakePosition], rerender);
+        rerender(buildWithContext(<Grid height={7} width={7} />, [updatedSnakePosition]));
 
         const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(updatedSnakePosition);
 
@@ -93,23 +93,20 @@ describe("game board", () => {
     });
 
     it("repopulates a snake with two segments in the expected locations", () => {
-        const snakePositions = [new Position(3, 1), new Position(3, 2)];
-        const { rerender } = renderWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 4)]);
-
-        rerenderWithContext(<Grid height={7} width={7} />, snakePositions, rerender);
-
+        const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 4)]));
+        
+        const updatedSnakePositions = [new Position(3, 1), new Position(3, 2)];
+        rerender(buildWithContext(<Grid height={7} width={7} />, updatedSnakePositions))
 
         expect(screen.getAllByText(SnakeToken).length).toEqual(2);
 
-        const firstSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePositions[0]);
-        expect(firstSnakeLocation).toHaveTextContent(SnakeToken);
-        const secondSnakeLocation = screen.getByTitle("GameBoard").getChildAt(snakePositions[1]);
-        expect(secondSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getByTitle("GameBoard").getChildAt(updatedSnakePositions[0])).toHaveTextContent(SnakeToken);
+        expect(screen.getByTitle("GameBoard").getChildAt(updatedSnakePositions[1])).toHaveTextContent(SnakeToken);
     });
 
     describe("Food", () => {
         it("exists in the grid", () => {
-            render(<SnakeContext.Provider value={{ snake: new Snake([new Position(2, 2)]), setSnake: () => { } }}><Grid height={5} width={5} /></SnakeContext.Provider>);
+            render(buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)]));
 
             const gameBoard = screen.getByTitle("GameBoard");
             const food = within(gameBoard).getByText(FoodToken);
@@ -129,7 +126,7 @@ describe("game board", () => {
 
                 FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
 
-                render(<SnakeContext.Provider value={{ snake: new Snake([new Position(3, 3)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
+                render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
 
                 const expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
 
@@ -147,14 +144,14 @@ describe("game board", () => {
             });
 
             FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-            const { rerender } = render(<SnakeContext.Provider value={{ snake: new Snake([new Position(3, 3)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
+            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
 
             let expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1, 1));
 
             expect(expectedFoodLocation).toHaveTextContent(FoodToken);
             expect(screen.getAllByText(FoodToken).length).toEqual(1);
 
-            rerender(<SnakeContext.Provider value={{ snake: new Snake([new Position(1, 1)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
+            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(1, 1)]));
             expectedFoodLocation = screen.getByTitle("GameBoard").getChildAt(new Position(0, 0));
 
             expect(expectedFoodLocation).toHaveTextContent(FoodToken);
@@ -170,24 +167,20 @@ describe("game board", () => {
 
             FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
 
-
             const feedFunction = jest.fn().mockImplementationOnce(() => {
                 return new Position(0, 0);
             });
             Snake.prototype.eatFood = feedFunction;
-            const { rerender } = render(<SnakeContext.Provider value={{ snake: new Snake([new Position(3, 3)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
 
-            rerender(<SnakeContext.Provider value={{ snake: new Snake([new Position(1, 1)]), setSnake: () => { } }}><Grid height={7} width={7} /></SnakeContext.Provider>);
+            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
+
+            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(1, 1)]));
 
             expect(feedFunction).toHaveBeenCalled();
         })
     });
 });
 
-function renderWithContext(grid: JSX.Element, snakePositions: Position[]) {
-    return render(<SnakeContext.Provider value={{ snake: new Snake(snakePositions), setSnake: () => { } }}>{grid}</SnakeContext.Provider>);
-}
-
-function rerenderWithContext(grid: JSX.Element, snakePositions: Position[], rerender: (ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>) => void) {
-    rerender(<SnakeContext.Provider value={{ snake: new Snake(snakePositions), setSnake: () => { } }}>{grid}</SnakeContext.Provider>);
+function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {
+    return <SnakeContext.Provider value={{ snake: new Snake(snakePositions), setSnake: () => { } }}>{grid}</SnakeContext.Provider>;
 }
