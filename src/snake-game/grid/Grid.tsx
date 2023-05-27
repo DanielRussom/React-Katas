@@ -4,7 +4,6 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
-import { Snake } from "../snake/Snake";
 
 export type GridProperties = {
     height: number,
