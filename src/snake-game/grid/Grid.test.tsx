@@ -183,7 +183,9 @@ describe("game board", () => {
     describe("kills snake", () => {
         it.each([
             [new Position(3, -1)],
-            [new Position(-1, 3)]
+            [new Position(-1, 3)],
+            [new Position(3, 7)],
+            [new Position(7, 3)]
         ])
         ("when snake moves off of the board", (newPosition) => {
             const killSnakeFunction = jest.fn();

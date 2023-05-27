@@ -4,6 +4,7 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
+import { Snake } from "../snake/Snake";
 
 export type GridProperties = {
     height: number,
@@ -25,7 +26,7 @@ export default function Grid({
         if (storedSnakeLocations[0].y !== snake.positions[0].y ||
             storedSnakeLocations[0].x !== snake.positions[0].x) {
 
-            if(snake.positions[0].y < 0 || snake.positions[0].x < 0){
+            if(snakeIsOffBoard(snake)){
                 snake.die();
                 return;
             }
@@ -61,7 +62,11 @@ export default function Grid({
             const foodPosition = foodSpawner.pickFoodPosition(newGrid);
             newGrid[foodPosition.y][foodPosition.x] = FoodToken;
         }
-    }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations])
+
+        function snakeIsOffBoard(snake: Snake) {
+            return snake.positions[0].y < 0 || snake.positions[0].x < 0 || snake.positions[0].y >= height || snake.positions[0].x >= width;
+        }
+    }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations, height, width])
 
     function buildGrid() {
         let grid: string[][] = [];
