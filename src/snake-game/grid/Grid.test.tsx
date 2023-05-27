@@ -181,12 +181,16 @@ describe("game board", () => {
     });
 
     describe("kills snake", () => {
-        it("when snake moves off the top of the board", () => {
+        it.each([
+            [new Position(3, -1)],
+            [new Position(-1, 3)]
+        ])
+        ("when snake moves off of the board", (newPosition) => {
             const killSnakeFunction = jest.fn();
             Snake.prototype.die = killSnakeFunction;
 
             const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
-            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, -1)]));
+            rerender(buildWithContext(<Grid height={7} width={7} />, [newPosition]));
 
             expect(killSnakeFunction).toHaveBeenCalled();
         })

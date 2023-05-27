@@ -25,7 +25,7 @@ export default function Grid({
         if (storedSnakeLocations[0].y !== snake.positions[0].y ||
             storedSnakeLocations[0].x !== snake.positions[0].x) {
 
-            if(snake.positions[0].y < 0){
+            if(snake.positions[0].y < 0 || snake.positions[0].x < 0){
                 snake.die();
                 return;
             }
