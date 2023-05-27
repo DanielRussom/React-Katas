@@ -39,11 +39,6 @@ export default function Grid({
             if(newlyOccupiedTile === FoodToken){
                 handleEatenFood(newGrid);
             }
-            
-            if(newlyOccupiedTile === SnakeToken){
-                snake.die();
-                return;
-            }
     
             setGrid(newGrid);
             setStoredSnakeLocations([...snake.positions]);

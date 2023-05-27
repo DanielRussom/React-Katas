@@ -68,7 +68,7 @@ describe("game board", () => {
     it("populates a longer snake in the expected locations", () => {
         const firstSnakePosition = new Position(2, 2);
         const secondSnakePosition = new Position(1, 2);
-        
+
         render(buildWithContext(<Grid height={5} width={5} />, [firstSnakePosition, secondSnakePosition]));
 
         const firstExpectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(firstSnakePosition);
@@ -81,7 +81,7 @@ describe("game board", () => {
 
     it("repopulates the snake in the expected location", () => {
         const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
-        
+
         const updatedSnakePosition = new Position(2, 2);
         rerender(buildWithContext(<Grid height={7} width={7} />, [updatedSnakePosition]));
 
@@ -94,7 +94,7 @@ describe("game board", () => {
 
     it("repopulates a snake with two segments in the expected locations", () => {
         const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 4)]));
-        
+
         const updatedSnakePositions = [new Position(3, 1), new Position(3, 2)];
         rerender(buildWithContext(<Grid height={7} width={7} />, updatedSnakePositions))
 
@@ -180,14 +180,13 @@ describe("game board", () => {
         })
     });
 
-    describe("kills snake", () => {
-        it.each([
-            [new Position(3, -1)],
-            [new Position(-1, 3)],
-            [new Position(3, 7)],
-            [new Position(7, 3)]
-        ])
-        ("when snake moves off of the board", (newPosition) => {
+    it.each([
+        [new Position(3, -1)],
+        [new Position(-1, 3)],
+        [new Position(3, 7)],
+        [new Position(7, 3)]
+    ])
+        ("kills snake when moved off of the board", (newPosition) => {
             const killSnakeFunction = jest.fn();
             Snake.prototype.die = killSnakeFunction;
 
@@ -196,28 +195,6 @@ describe("game board", () => {
 
             expect(killSnakeFunction).toHaveBeenCalled();
         })
-
-        it("when snake collides with itself", () => {
-            const killSnakeFunction = jest.fn();
-            Snake.prototype.die = killSnakeFunction;
-
-            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 2)]));
-            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 2), new Position(3, 2)]));
-
-            expect(killSnakeFunction).toHaveBeenCalled();
-        });
-
-        it("not when moving into a newly opened space", () => {
-
-            const killSnakeFunction = jest.fn();
-            Snake.prototype.die = killSnakeFunction;
-
-            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 2)]));
-            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 2), new Position(3, 3)]));
-
-            expect(killSnakeFunction).not.toHaveBeenCalled();
-        })
-    })
 });
 
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {

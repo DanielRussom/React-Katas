@@ -8,6 +8,7 @@ describe("snake game", () => {
     const snake = new Snake([expectedPosition]);
 
     expect(snake.positions[0]).toEqual(expectedPosition);
+    expect(snake.isDead).toBeFalsy();
   });
 
   
@@ -137,5 +138,29 @@ describe("movement", () => {
     expect(snake.positions[0]).toEqual(new Position(2,0));
     expect(snake.positions[1]).toEqual(new Position(2,1));
     expect(snake.positions[2]).toEqual(new Position(2,2));
+  })
+
+  it("dies", () => {
+    const snake = new Snake([new Position(2,2)]);
+
+    snake.die();
+
+    expect(snake.isDead).toBeTruthy();
+  })
+
+  it("dies after colliding with itself", () => {
+    const snake = new Snake([new Position(1,1), new Position(1,2), new Position(2,2), new Position(2,1), new Position(2,0)]);
+
+    snake.turnRight();
+
+    expect(snake.isDead).toBeTruthy();
+  })
+
+  it("doesn't die after moving into the space its tail just left", () => {
+    const snake = new Snake([new Position(1,1), new Position(1,2), new Position(2,2), new Position(2,1)]);
+
+    snake.turnRight();
+
+    expect(snake.isDead).toBeFalsy();
   })
 });

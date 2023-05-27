@@ -7,10 +7,12 @@ export class Snake {
 
   positions : Array<Position>;
   lastPosition : Position;
+  isDead: boolean;
 
   constructor(initialPositions: Position[]) {
     this.positions = initialPositions;
     this.lastPosition = initialPositions[0];
+    this.isDead = false;
   }
 
   eatFood() {
@@ -18,7 +20,7 @@ export class Snake {
   }
   
   die() {
-    throw new Error("Not implemented!");
+    this.isDead = true;
   } 
 
   turnLeft(): Position[] {
