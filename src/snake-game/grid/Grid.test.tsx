@@ -206,6 +206,17 @@ describe("game board", () => {
 
             expect(killSnakeFunction).toHaveBeenCalled();
         });
+
+        it("not when moving into a newly opened space", () => {
+
+            const killSnakeFunction = jest.fn();
+            Snake.prototype.die = killSnakeFunction;
+
+            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 2)]));
+            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 2), new Position(3, 3)]));
+
+            expect(killSnakeFunction).not.toHaveBeenCalled();
+        })
     })
 });
 
