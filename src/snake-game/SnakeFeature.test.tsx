@@ -75,6 +75,8 @@ describe("Snake dying feature", () => {
         let expectedFoodLocation = gameBoard.getChildAt(foodLocation);
         expect(expectedFoodLocation).toHaveTextContent(FoodToken);
 
+        expect(screen.queryByText("You died!")).toBeNull();
+
         clickButton('Move');
         clickButton('Move');
 
