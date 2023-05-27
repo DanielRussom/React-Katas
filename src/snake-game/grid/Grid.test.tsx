@@ -179,6 +179,18 @@ describe("game board", () => {
             expect(feedFunction).toHaveBeenCalled();
         })
     });
+
+    describe("kills snake", () => {
+        it("when snake moves off the top of the board", () => {
+            const killSnakeFunction = jest.fn();
+            Snake.prototype.die = killSnakeFunction;
+
+            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
+            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, -1)]));
+
+            expect(killSnakeFunction).toHaveBeenCalled();
+        })
+    })
 });
 
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {

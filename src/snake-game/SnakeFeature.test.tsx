@@ -18,9 +18,9 @@ describe("snake eating food feature", () => {
         const randomFunction =
             jest.fn()
                 .mockImplementationOnce(() => {
-                    return getGridIndexForFoodSpawn(firstFoodLocation, gridHeight);
+                    return getGridIndexForFoodSpawn(firstFoodLocation, gridWidth);
                 }).mockImplementationOnce(() => {
-                    return getGridIndexForFoodSpawn(secondFoodLocation, gridHeight, 2);
+                    return getGridIndexForFoodSpawn(secondFoodLocation, gridWidth, 2);
                 })
 
         Random.prototype.getNumberBelowLimit = randomFunction;
@@ -50,8 +50,53 @@ describe("snake eating food feature", () => {
         expectedFoodLocation = gameBoard.getChildAt(secondFoodLocation);
         expect(expectedFoodLocation).toHaveTextContent(FoodToken);
     });
-
-    function getGridIndexForFoodSpawn(foodPosition, gridHeight, invalidPositionsOffset = 0) {
-        return (foodPosition.y * gridHeight) + foodPosition.x - invalidPositionsOffset
-    }
 });
+
+describe("Snake dying feature", () => {
+    it("should die after colliding with a wall", () => {
+
+        const foodLocation = new Position(1, 0);
+        const randomFunction =
+            jest.fn()
+                .mockImplementation(() => {
+                    return getGridIndexForFoodSpawn(foodLocation, 3);
+                }).mockImplementationOnce(() => {
+                })
+
+                Random.prototype.getNumberBelowLimit = randomFunction;
+
+        render(<SnakeGame height={3} width={3} />);
+
+        let gameBoard = screen.getByTitle("GameBoard");
+
+        let expectedSnakeLocation = gameBoard.getChildAt(new Position(1, 1));
+        expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+
+        let expectedFoodLocation = gameBoard.getChildAt(foodLocation);
+        expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+
+        clickButton('Move');
+        clickButton('Move');
+
+        expect(screen.getByRole('button', {name: "Move"})).toBeDisabled();
+        expect(screen.getByRole('button', {name: "<"})).toBeDisabled();
+        expect(screen.getByRole('button', {name: ">"})).toBeDisabled();
+
+        expect(screen.getByText("You died! Score: 2")).toBeInTheDocument();
+        
+        clickButton('Play again');
+
+        
+        expect(screen.getByRole('button', {name: "Move"})).toBeEnabled();
+        expect(screen.getByRole('button', {name: "<"})).toBeEnabled();
+        expect(screen.getByRole('button', {name: ">"})).toBeEnabled();
+        
+        expectedSnakeLocation = gameBoard.getChildAt(new Position(1, 1));
+        expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+        expect(screen.getAllByText(SnakeToken).length).toEqual(1);
+    })
+})
+
+function getGridIndexForFoodSpawn(foodPosition, gridWidth, invalidPositionsOffset = 0) {
+    return (foodPosition.y * gridWidth) + foodPosition.x - invalidPositionsOffset
+}

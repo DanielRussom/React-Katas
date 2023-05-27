@@ -16,6 +16,10 @@ export class Snake {
   eatFood() {
     this.positions.push(this.lastPosition)
   }
+  
+  die() {
+    throw new Error("Not implemented!");
+  } 
 
   turnLeft(): Position[] {
     this.directionIndex = this.directionIndex - 1;

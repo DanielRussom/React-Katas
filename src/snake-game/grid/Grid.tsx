@@ -24,6 +24,11 @@ export default function Grid({
     useEffect(() => {
         if (storedSnakeLocations[0].y !== snake.positions[0].y ||
             storedSnakeLocations[0].x !== snake.positions[0].x) {
+
+            if(snake.positions[0].y < 0){
+                snake.die();
+                return;
+            }
             
             let newlyOccupiedTile = grid[snake.positions[0].y][snake.positions[0].x];
             let newGrid = [...grid];
