@@ -196,6 +196,16 @@ describe("game board", () => {
 
             expect(killSnakeFunction).toHaveBeenCalled();
         })
+
+        it("when snake collides with itself", () => {
+            const killSnakeFunction = jest.fn();
+            Snake.prototype.die = killSnakeFunction;
+
+            const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3), new Position(3, 2)]));
+            rerender(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 2), new Position(3, 2)]));
+
+            expect(killSnakeFunction).toHaveBeenCalled();
+        });
     })
 });
 

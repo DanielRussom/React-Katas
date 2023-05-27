@@ -26,7 +26,7 @@ export default function Grid({
         if (storedSnakeLocations[0].y !== snake.positions[0].y ||
             storedSnakeLocations[0].x !== snake.positions[0].x) {
 
-            if(snakeIsOffBoard(snake)){
+            if(snakeIsOffBoard(snake.positions[0])){
                 snake.die();
                 return;
             }
@@ -38,6 +38,11 @@ export default function Grid({
             
             if(newlyOccupiedTile === FoodToken){
                 handleEatenFood(newGrid);
+            }
+            
+            if(newlyOccupiedTile === SnakeToken){
+                snake.die();
+                return;
             }
     
             setGrid(newGrid);
@@ -63,8 +68,8 @@ export default function Grid({
             newGrid[foodPosition.y][foodPosition.x] = FoodToken;
         }
 
-        function snakeIsOffBoard(snake: Snake) {
-            return snake.positions[0].y < 0 || snake.positions[0].x < 0 || snake.positions[0].y >= height || snake.positions[0].x >= width;
+        function snakeIsOffBoard(snakeHeadPosition: Position) {
+            return snakeHeadPosition.y < 0 || snakeHeadPosition.y >= height || snakeHeadPosition.x < 0 || snakeHeadPosition.x >= width;
         }
     }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations, height, width])
 
