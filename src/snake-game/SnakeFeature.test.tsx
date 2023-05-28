@@ -60,7 +60,6 @@ describe("Snake dying feature", () => {
             jest.fn()
                 .mockImplementation(() => {
                     return getGridIndexForFoodSpawn(foodLocation, 3);
-                }).mockImplementationOnce(() => {
                 })
 
                 Random.prototype.getNumberBelowLimit = randomFunction;

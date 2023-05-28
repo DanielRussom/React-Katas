@@ -27,6 +27,8 @@ export default function Grid({
 
             if(snakeIsOffBoard(snake.positions[0])){
                 snake.die();
+                setStoredSnakeLocations([...snake.positions]);
+                setSnake(Object.assign(Object.create(snake)));
                 return;
             }
             
@@ -75,11 +77,12 @@ export default function Grid({
         }
 
         snake.positions.forEach(position => {
-            grid[position.y][position.x] = SnakeToken
+            grid[position.y][position.x] = SnakeToken;
         });
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
-        grid[foodPosition.y][foodPosition.x] = FoodToken
+        console.warn(foodPosition);
+        grid[foodPosition.y][foodPosition.x] = FoodToken;
         return grid;
     }
 
