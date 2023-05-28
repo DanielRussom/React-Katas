@@ -8,7 +8,7 @@ describe("snake game", () => {
     const snake = new Snake([expectedPosition]);
 
     expect(snake.positions[0]).toEqual(expectedPosition);
-    expect(snake.isDead).toBeFalsy();
+    expect(snake.isDead()).toBe(false);
   });
 
   
@@ -145,7 +145,7 @@ describe("movement", () => {
 
     snake.die();
 
-    expect(snake.isDead).toBeTruthy();
+    expect(snake.isDead()).toBe(true);
   })
 
   it("dies after colliding with itself", () => {
@@ -153,7 +153,7 @@ describe("movement", () => {
 
     snake.turnRight();
 
-    expect(snake.isDead).toBeTruthy();
+    expect(snake.isDead()).toBe(true);
   })
 
   it("doesn't die after moving into the space its tail just left", () => {
@@ -161,6 +161,6 @@ describe("movement", () => {
 
     snake.turnRight();
 
-    expect(snake.isDead).toBeFalsy();
+    expect(snake.isDead()).toBe(false);
   })
 });

@@ -7,6 +7,12 @@ import Position from "./Position";
 import { SnakeToken } from "./Constants";
 
 describe("snake game", () => {
+  beforeEach(() => {
+    Snake.prototype.isDead = jest.fn().mockImplementation(() => {
+      return false;
+    });
+  });
+
     it.each([
       [5, new Position(2, 2)],
       [6, new Position(2, 2)],
@@ -60,4 +66,15 @@ describe("snake game", () => {
 
       expect(turnLeftFunction).toHaveBeenCalled();
     });
+
+    it("disables the movement buttons", () => {
+      const isDeadFunction = jest.fn().mockImplementation(() => {
+        return true;
+      });
+      Snake.prototype.isDead = isDeadFunction;
+
+      render(<SnakeGame />);
+
+      expect(screen.getByRole('button', {name: "Move"})).toBeDisabled();
+    })
 });

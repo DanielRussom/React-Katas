@@ -7,20 +7,24 @@ export class Snake {
 
   positions: Array<Position>;
   lastPosition: Position;
-  isDead: boolean;
+  private dead: boolean;
 
   constructor(initialPositions: Position[]) {
     this.positions = initialPositions;
     this.lastPosition = initialPositions[0];
-    this.isDead = false;
+    this.dead = false;
   }
 
   eatFood() {
     this.positions.push(this.lastPosition)
   }
 
+  isDead(){
+    return this.dead;
+  }
+
   die() {
-    this.isDead = true;
+    this.dead = true;
   }
 
   turnLeft(): Position[] {
