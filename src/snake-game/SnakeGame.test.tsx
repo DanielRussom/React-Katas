@@ -76,5 +76,7 @@ describe("snake game", () => {
       render(<SnakeGame />);
 
       expect(screen.getByRole('button', {name: "Move"})).toBeDisabled();
+      expect(screen.getByRole('button', {name: "<"})).toBeDisabled();
+      expect(screen.getByRole('button', {name: ">"})).toBeDisabled();
     })
 });

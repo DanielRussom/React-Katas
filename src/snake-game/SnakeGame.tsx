@@ -43,9 +43,9 @@ export const SnakeGame = ({
 
     return (
         <>
-            <button onClick={turnSnakeLeft}>&lt;</button>
+            <button onClick={turnSnakeLeft} disabled={snake.isDead()}>&lt;</button>
             <button onClick={moveSnake} disabled={snake.isDead()}>Move</button>
-            <button onClick={turnSnakeRight}>&gt;</button>
+            <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
             <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
                 <Grid height={height} width={width} />
