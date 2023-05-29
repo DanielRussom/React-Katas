@@ -28,7 +28,7 @@ export class Snake {
   }
 
   getSize() : number{
-    throw new Error("Not implemented!");
+    return 0;
   }
 
   turnLeft(): Position[] {

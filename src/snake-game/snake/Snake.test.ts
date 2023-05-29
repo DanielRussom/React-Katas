@@ -163,4 +163,12 @@ describe("movement", () => {
 
     expect(snake.isDead()).toBe(false);
   })
+
+  it("has a size of 0", () => {
+    const snake = new Snake([]);
+
+    const snakeSize = snake.getSize();
+
+    expect(snakeSize).toBe(0);
+  })
 });
