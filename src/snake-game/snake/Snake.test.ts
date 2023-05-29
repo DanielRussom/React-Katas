@@ -171,4 +171,12 @@ describe("movement", () => {
 
     expect(snakeSize).toBe(0);
   })
+
+  it("has a size of 1", () => {
+    const snake = new Snake([new Position(0,0)]);
+
+    const snakeSize = snake.getSize();
+
+    expect(snakeSize).toBe(1);
+  })
 });

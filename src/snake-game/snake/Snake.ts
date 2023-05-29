@@ -28,7 +28,7 @@ export class Snake {
   }
 
   getSize() : number{
-    return 0;
+    return this.positions.length;
   }
 
   turnLeft(): Position[] {
