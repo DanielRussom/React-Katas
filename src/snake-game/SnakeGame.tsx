@@ -47,7 +47,7 @@ export const SnakeGame = ({
             <button onClick={moveSnake} disabled={snake.isDead()}>Move</button>
             <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
-            { snake.isDead() ? <p>You died! Score: 1</p> : null}
+            { snake.isDead() ? <p>You died! Score: {snake.getSize()}</p> : null}
             
 
             <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>

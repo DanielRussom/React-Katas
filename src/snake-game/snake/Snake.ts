@@ -27,7 +27,7 @@ export class Snake {
     this.dead = true;
   }
 
-  getSize() {
+  getSize() : number{
     throw new Error("Not implemented!");
   }
 

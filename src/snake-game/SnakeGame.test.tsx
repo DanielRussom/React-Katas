@@ -98,7 +98,7 @@ describe("snake game", () => {
       expect(screen.queryByText(/Score:*/gm)).toBeNull();
     })
 
-    it.each([[1]])("displays the player's score", (expectedScore) => {
+    it.each([[1], [2], [5]])("displays the player's score", (expectedScore) => {
       const isDeadFunction = jest.fn().mockImplementation(() => {
         return true;
       });
