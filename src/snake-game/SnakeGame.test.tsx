@@ -79,4 +79,21 @@ describe("snake game", () => {
       expect(screen.getByRole('button', {name: "<"})).toBeDisabled();
       expect(screen.getByRole('button', {name: ">"})).toBeDisabled();
     })
+  
+    it("displays game over message", () => {
+      const isDeadFunction = jest.fn().mockImplementation(() => {
+        return true;
+      });
+      Snake.prototype.isDead = isDeadFunction;
+
+      render(<SnakeGame />);
+
+      expect(screen.getByText(/You died!.*/gm)).toBeInTheDocument();
+    })
+  
+    it("doesn't display game over message", () => {
+      render(<SnakeGame />);
+
+      expect(screen.queryByText(/You died!.*/gm)).toBeNull();
+    })
 });

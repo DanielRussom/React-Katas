@@ -81,7 +81,6 @@ export default function Grid({
         });
 
         const foodPosition = foodSpawner.pickFoodPosition(grid);
-        console.warn(foodPosition);
         grid[foodPosition.y][foodPosition.x] = FoodToken;
         return grid;
     }
