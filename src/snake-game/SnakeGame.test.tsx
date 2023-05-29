@@ -95,5 +95,23 @@ describe("snake game", () => {
       render(<SnakeGame />);
 
       expect(screen.queryByText(/You died!.*/gm)).toBeNull();
+      expect(screen.queryByText(/Score:*/gm)).toBeNull();
+    })
+
+    it.each([[1]])("displays the player's score", (expectedScore) => {
+      const isDeadFunction = jest.fn().mockImplementation(() => {
+        return true;
+      });
+      Snake.prototype.isDead = isDeadFunction;
+
+      const getSizeFunction = jest.fn().mockImplementation(() => {
+        return expectedScore;
+      });
+      Snake.prototype.getSize = getSizeFunction;
+
+      render(<SnakeGame />);
+
+      const playerScoreRegex = new RegExp(`.*Score: ${expectedScore}`);
+      expect(screen.getByText(playerScoreRegex)).toBeInTheDocument();
     })
 });

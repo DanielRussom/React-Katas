@@ -27,6 +27,10 @@ export class Snake {
     this.dead = true;
   }
 
+  getSize() {
+    throw new Error("Not implemented!");
+  }
+
   turnLeft(): Position[] {
     this.directionIndex = this.directionIndex - 1;
     if (this.directionIndex < 0) {
