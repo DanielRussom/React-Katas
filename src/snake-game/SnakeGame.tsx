@@ -17,6 +17,7 @@ export const SnakeGame = ({
     }
 
     const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
+    const [reset, setReset] = useState(false);
 
     function turnSnakeLeft(): void {
         snake.turnLeft();
@@ -41,17 +42,28 @@ export const SnakeGame = ({
         return Object.assign(Object.create(snake));
     }
 
+    function resetGame() {
+        setSnake(new Snake([getInitialSnakePosition()]))
+        setReset(true);
+    }
+
+    React.useEffect(() => {
+        if(reset === true){
+            setReset(false);
+        }
+    }, [reset]);
+
     return (
         <>
             <button onClick={turnSnakeLeft} disabled={snake.isDead()}>&lt;</button>
             <button onClick={moveSnake} disabled={snake.isDead()}>Move</button>
             <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
-            { snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => {setSnake(new Snake([getInitialSnakePosition()]))}}>Play again</button></> : null}
+            { snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => {resetGame()}}>Play again</button></> : null}
             
 
             <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
-                <Grid height={height} width={width} />
+                { !reset ? <Grid height={height} width={width} /> : null }
             </SnakeContext.Provider>
         </>
     )

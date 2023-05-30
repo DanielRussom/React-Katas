@@ -167,9 +167,7 @@ describe("game board", () => {
 
             FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
 
-            const feedFunction = jest.fn().mockImplementationOnce(() => {
-                return new Position(0, 0);
-            });
+            const feedFunction = jest.fn();
             Snake.prototype.eatFood = feedFunction;
 
             const { rerender } = render(buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)]));
@@ -194,7 +192,7 @@ describe("game board", () => {
             rerender(buildWithContext(<Grid height={7} width={7} />, [newPosition]));
 
             expect(killSnakeFunction).toHaveBeenCalled();
-        })
+        });
 });
 
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {
