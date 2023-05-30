@@ -17,7 +17,13 @@ export const SnakeGame = ({
     }
 
     const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
-    const [reset, setReset] = useState(false);
+    const [gameIsResetting, setGameIsResetting] = useState(false);
+
+    React.useEffect(() => {
+        if(gameIsResetting === true){
+            setGameIsResetting(false);
+        }
+    }, [gameIsResetting]);
 
     function turnSnakeLeft(): void {
         snake.turnLeft();
@@ -43,15 +49,9 @@ export const SnakeGame = ({
     }
 
     function resetGame() {
+        setGameIsResetting(true);
         setSnake(new Snake([getInitialSnakePosition()]))
-        setReset(true);
     }
-
-    React.useEffect(() => {
-        if(reset === true){
-            setReset(false);
-        }
-    }, [reset]);
 
     return (
         <>
@@ -63,7 +63,7 @@ export const SnakeGame = ({
             
 
             <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
-                { !reset ? <Grid height={height} width={width} /> : null }
+                { !gameIsResetting ? <Grid height={height} width={width} /> : null }
             </SnakeContext.Provider>
         </>
     )
