@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, renderHook, screen } from "@testing-library/react";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
@@ -11,7 +11,14 @@ describe("snake game", () => {
     Snake.prototype.getSize = jest.fn().mockImplementation(() => {
       return 1;
     });
+
+    jest.useFakeTimers();
   });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useFakeTimers();
+  })
 
   it.each([
     [5, new Position(2, 2)],
@@ -66,6 +73,17 @@ describe("snake game", () => {
 
     expect(turnLeftFunction).toHaveBeenCalled();
   });
+
+  it("calls the move function every second", () => {
+    const moveFunction = jest.fn();
+    Snake.prototype.move = moveFunction;
+
+    render(<SnakeGame />);
+
+    jest.advanceTimersByTime(1000);
+
+    expect(moveFunction).toHaveBeenCalledTimes(1);
+  })
 
   describe("When snake is dead", () => {
     it("disables the movement buttons", () => {

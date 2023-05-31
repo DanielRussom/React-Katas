@@ -16,18 +16,18 @@ export const SnakeGame = ({
         return new Position(xPosition, yPosition);
     }
 
-    React.useEffect(() => {
-        const intervalId = setInterval(() => {
-          // Function to be executed every x seconds
-          console.log('Triggered every x seconds');
-          moveSnake();
-        }, 500); // Specify the interval in milliseconds (e.g., 5000 ms = 5 seconds)
+    // React.useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //       // Function to be executed every x seconds
+    //       console.log('Triggered every x seconds');
+    //       moveSnake();
+    //     }, 500); // Specify the interval in milliseconds (e.g., 5000 ms = 5 seconds)
     
-        return () => {
-          // Clean up the interval when the component unmounts
-          clearInterval(intervalId);
-        };
-      }, [moveSnake]);
+    //     return () => {
+    //       // Clean up the interval when the component unmounts
+    //       clearInterval(intervalId);
+    //     };
+    //   }, [moveSnake]);
     
 
     const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
