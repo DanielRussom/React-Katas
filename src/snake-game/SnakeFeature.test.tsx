@@ -4,12 +4,21 @@ import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import { Random } from "./Random";
 import Position from "./Position";
-import { FoodToken, SnakeToken } from "./Constants";
+import { FoodToken, MovementSpeed, SnakeToken } from "./Constants";
 
 jest.mock("./Random");
 
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
+  jest.clearAllTimers();
+})
+
 describe("snake eating food feature", () => {
     it("should increase the snake's length and have the snake in the expected position", () => {
+        jest.useFakeTimers();
         const gridHeight = 7;
         const gridWidth = 7;
         const firstFoodLocation = new Position(1, 1);
@@ -32,15 +41,16 @@ describe("snake eating food feature", () => {
         let expectedFoodLocation = gameBoard.getChildAt(firstFoodLocation);
         expect(expectedFoodLocation).toHaveTextContent(FoodToken);
 
-        clickButton('Move');
-        clickButton('Move');
+        jest.advanceTimersByTime(MovementSpeed);
+        jest.advanceTimersByTime(MovementSpeed);
         clickButton('<');
-        clickButton('Move');
-        clickButton('Move');
+        jest.advanceTimersByTime(MovementSpeed);
+        jest.advanceTimersByTime(MovementSpeed);
 
         const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(0, 1));
         const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(1, 1))
 
+        // let gameBoaard = screen.getByTitle("GameBaard");
         expect(firstExpectedSnakeCell).toHaveTextContent(SnakeToken);
         expect(secondExpectedSnakeCell).toHaveTextContent(SnakeToken);
 
@@ -49,6 +59,7 @@ describe("snake eating food feature", () => {
 
         expectedFoodLocation = gameBoard.getChildAt(secondFoodLocation);
         expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+        jest.clearAllTimers();
     });
 });
 
@@ -76,10 +87,9 @@ describe("Snake dying feature", () => {
 
         expect(screen.queryByText(/You died!.*/gm)).toBeNull();
 
-        clickButton('Move');
-        clickButton('Move');
+        jest.advanceTimersByTime(MovementSpeed);
+        jest.advanceTimersByTime(MovementSpeed);
 
-        expect(screen.getByRole('button', {name: "Move"})).toBeDisabled();
         expect(screen.getByRole('button', {name: "<"})).toBeDisabled();
         expect(screen.getByRole('button', {name: ">"})).toBeDisabled();
 
@@ -88,7 +98,6 @@ describe("Snake dying feature", () => {
         clickButton('Play again');
 
         
-        expect(screen.getByRole('button', {name: "Move"})).toBeEnabled();
         expect(screen.getByRole('button', {name: "<"})).toBeEnabled();
         expect(screen.getByRole('button', {name: ">"})).toBeEnabled();
         

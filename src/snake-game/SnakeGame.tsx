@@ -4,6 +4,7 @@ import Grid from "./grid/Grid";
 import Position from "./Position";
 import { Snake } from "./snake/Snake";
 import { SnakeContext } from "./SnakeContext";
+import { MovementSpeed } from "./Constants";
 
 export const SnakeGame = ({
     height = 15,
@@ -19,7 +20,7 @@ export const SnakeGame = ({
     React.useEffect(() => {
         const intervalId = setInterval(() => {
           moveSnake();
-        }, 300);
+        }, MovementSpeed);
     
         return () => {
           clearInterval(intervalId);
@@ -67,7 +68,6 @@ export const SnakeGame = ({
     return (
         <>
             <button onClick={turnSnakeLeft} disabled={snake.isDead()}>&lt;</button>
-            <button onClick={moveSnake} disabled={snake.isDead()}>Move</button>
             <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
             { snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => {resetGame()}}>Play again</button></> : null}

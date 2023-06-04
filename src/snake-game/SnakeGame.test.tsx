@@ -4,7 +4,7 @@ import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
 import { Snake } from "./snake/Snake";
 import Position from "./Position";
-import { SnakeToken } from "./Constants";
+import { MovementSpeed, SnakeToken } from "./Constants";
 
 describe("snake game", () => {
   beforeEach(() => {
@@ -43,7 +43,7 @@ describe("snake game", () => {
 
     render(<SnakeGame />);
 
-    clickButton("Move");
+    jest.advanceTimersByTime(MovementSpeed);
 
     expect(moveFunction).toHaveBeenCalled();
   });
@@ -80,7 +80,7 @@ describe("snake game", () => {
 
     render(<SnakeGame />);
 
-    jest.advanceTimersByTime(300);
+    jest.advanceTimersByTime(MovementSpeed);
 
     expect(moveFunction).toHaveBeenCalledTimes(1);
   })
