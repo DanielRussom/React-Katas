@@ -6,8 +6,8 @@ import { Snake } from "./snake/Snake";
 import { SnakeContext } from "./SnakeContext";
 
 export const SnakeGame = ({
-    height = 5,
-    width = 5,
+    height = 15,
+    width = 15,
 }) => {
     function getInitialSnakePosition(): Position {
         const xPosition = Math.round(width / 2) - 1;
@@ -19,7 +19,7 @@ export const SnakeGame = ({
     React.useEffect(() => {
         const intervalId = setInterval(() => {
           moveSnake();
-        }, 1000);
+        }, 300);
     
         return () => {
           clearInterval(intervalId);

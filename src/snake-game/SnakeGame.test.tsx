@@ -1,4 +1,4 @@
-import { render, renderHook, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
@@ -80,7 +80,7 @@ describe("snake game", () => {
 
     render(<SnakeGame />);
 
-    jest.advanceTimersByTime(1000);
+    jest.advanceTimersByTime(300);
 
     expect(moveFunction).toHaveBeenCalledTimes(1);
   })

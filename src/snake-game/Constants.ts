@@ -1,5 +1,5 @@
-export const SnakeToken = "Snake";
+export const SnakeToken = "| S |";
 
-export const FoodToken = "Food";
+export const FoodToken = "| F |";
 
 export const EmptySpace = "| _ |"
