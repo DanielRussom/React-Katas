@@ -19,20 +19,20 @@ export const SnakeGame = ({
 
     React.useEffect(() => {
         const intervalId = setInterval(() => {
-          moveSnake();
+            moveSnake();
         }, MovementSpeed);
-    
+
         return () => {
-          clearInterval(intervalId);
+            clearInterval(intervalId);
         };
-      }, [moveSnake]);
-    
+    }, [moveSnake]);
+
 
     const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
     const [gameIsResetting, setGameIsResetting] = useState(false);
 
     React.useEffect(() => {
-        if(gameIsResetting === true){
+        if (gameIsResetting === true) {
             setGameIsResetting(false);
         }
     }, [gameIsResetting]);
@@ -67,15 +67,14 @@ export const SnakeGame = ({
 
     return (
         <>
+            <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
+                {!gameIsResetting ? <Grid height={height} width={width} /> : null}
+            </SnakeContext.Provider>
+
             <button onClick={turnSnakeLeft} disabled={snake.isDead()}>&lt;</button>
             <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
-            { snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => {resetGame()}}>Play again</button></> : null}
-            
-
-            <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
-                { !gameIsResetting ? <Grid height={height} width={width} /> : null }
-            </SnakeContext.Provider>
+            {snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => { resetGame() }}>Play again</button></> : null}
         </>
     )
 }
