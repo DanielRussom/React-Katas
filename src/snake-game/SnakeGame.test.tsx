@@ -74,16 +74,33 @@ describe("snake game", () => {
     expect(turnLeftFunction).toHaveBeenCalled();
   });
 
-  it("calls the move function every second", () => {
+  it("tells the snake to move after a second", () => {
+    const moveFunction = jest.fn();
+    Snake.prototype.move = moveFunction;
+
+    render(<SnakeGame height={3} width={3} />);
+
+    jest.advanceTimersByTime(MovementSpeed);
+
+    expect(moveFunction).toHaveBeenCalledTimes(1);
+    const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1, 1));
+
+    expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+    
+  });
+  
+
+  it("tells the snake to move twice after two seconds", () => {
     const moveFunction = jest.fn();
     Snake.prototype.move = moveFunction;
 
     render(<SnakeGame />);
 
     jest.advanceTimersByTime(MovementSpeed);
+    jest.advanceTimersByTime(MovementSpeed);
 
-    expect(moveFunction).toHaveBeenCalledTimes(1);
-  })
+    expect(moveFunction).toHaveBeenCalledTimes(2);
+  });
 
   describe("When snake is dead", () => {
     it("disables the movement buttons", () => {
