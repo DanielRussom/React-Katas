@@ -17,19 +17,20 @@ export const SnakeGame = ({
         return new Position(xPosition, yPosition);
     }
 
+    const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
+    const [gameIsResetting, setGameIsResetting] = useState(false);
+
     React.useEffect(() => {
         const intervalId = setInterval(() => {
-            moveSnake();
+            if(!snake.isDead()){
+                moveSnake();
+            }
         }, MovementSpeed);
 
         return () => {
             clearInterval(intervalId);
         };
-    }, [moveSnake]);
-
-
-    const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
-    const [gameIsResetting, setGameIsResetting] = useState(false);
+    }, [moveSnake, snake]);
 
     React.useEffect(() => {
         if (gameIsResetting === true) {

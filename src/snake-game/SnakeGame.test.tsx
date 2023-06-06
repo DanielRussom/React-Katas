@@ -86,7 +86,6 @@ describe("snake game", () => {
     const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1, 1));
 
     expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
-    
   });
   
 
@@ -111,9 +110,24 @@ describe("snake game", () => {
 
       render(<SnakeGame />);
 
-      expect(screen.getByRole('button', { name: "Move" })).toBeDisabled();
       expect(screen.getByRole('button', { name: "<" })).toBeDisabled();
       expect(screen.getByRole('button', { name: ">" })).toBeDisabled();
+    })
+
+    it("stops moving forward", () => {
+      const moveFunction = jest.fn();
+      Snake.prototype.move = moveFunction;
+
+      const isDeadFunction = jest.fn().mockImplementation(() => {
+        return true;
+      });
+      Snake.prototype.isDead = isDeadFunction;
+  
+      render(<SnakeGame height={3} width={3} />);
+  
+      jest.advanceTimersByTime(MovementSpeed);
+  
+      expect(moveFunction).toHaveBeenCalledTimes(0);
     })
 
     it("displays game over message", () => {

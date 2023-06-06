@@ -30,17 +30,25 @@ describe("movement", () => {
     }
   );
 
+  it("turns right", () => {
+    const snake = new Snake([new Position(2, 2)]);
+    snake.turnRight();
+    expect(snake.turningRight).toBe(true);
+    expect(snake.positions[0]).toEqual(new Position(2, 2));
+  })
+
   it.each([
     [1, new Position(3, 2)],
     [2, new Position(3, 3)],
     [3, new Position(2, 3)],
     [4, new Position(2, 2)],
     [5, new Position(3, 2)],
-  ])("turns right %i times", (times, expectedPosition) => {
+  ])("moves right %i times", (times, expectedPosition) => {
     const snake = new Snake([new Position(2, 2)]);
 
     for (let i = 0; i < times; i++) {
       snake.turnRight();
+      snake.move();
     }
 
     expect(snake.positions[0]).toEqual(expectedPosition);
@@ -71,6 +79,7 @@ describe("movement", () => {
 
     for (let i = 0; i < times; i++) {
       snake.turnRight();
+      snake.move();
     }
     snake.move();
 
@@ -82,6 +91,8 @@ describe("movement", () => {
     const snake = new Snake([new Position(2, 2)]);
 
     snake.turnRight();
+    snake.move();
+
     snake.move();
     snake.move();
 
@@ -99,6 +110,7 @@ describe("movement", () => {
 
     for(let i = 0; i < timesTurning; i++){
       snake.turnRight();
+      snake.move();
     }
 
     snake.move();
@@ -152,6 +164,7 @@ describe("movement", () => {
     const snake = new Snake([new Position(1,1), new Position(1,2), new Position(2,2), new Position(2,1), new Position(2,0)]);
 
     snake.turnRight();
+    snake.move();
 
     expect(snake.isDead()).toBe(true);
   })
