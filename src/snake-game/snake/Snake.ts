@@ -8,6 +8,7 @@ export class Snake {
   positions: Array<Position>;
   lastPosition: Position;
   turningRight: boolean;
+  turningLeft: boolean;
   private dead: boolean;
 
   constructor(initialPositions: Position[]) {
@@ -15,13 +16,14 @@ export class Snake {
     this.lastPosition = initialPositions[0];
     this.dead = false;
     this.turningRight = false;
+    this.turningLeft = false;
   }
 
   eatFood() {
     this.positions.push(this.lastPosition)
   }
 
-  isDead(){
+  isDead() {
     return this.dead;
   }
 
@@ -29,29 +31,34 @@ export class Snake {
     this.dead = true;
   }
 
-  getSize() : number{
+  getSize(): number {
     return this.positions.length;
   }
 
-  turnLeft(): Position[] {
-    this.directionIndex = this.directionIndex - 1;
-    if (this.directionIndex < 0) {
-      this.directionIndex = this.numberOfDirections - 1;
-    }
-
-    return this.move();
+  turnLeft() {
+    this.turningLeft = true;
+    this.turningRight = false;
   }
 
   turnRight() {
+    this.turningLeft = false;
     this.turningRight = true;
   }
 
   move(): Position[] {
-    if(this.turningRight){
+    if (this.turningRight) {
       this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
       this.turningRight = false;
     }
     
+    if (this.turningLeft) {
+      this.directionIndex = this.directionIndex - 1;
+      if (this.directionIndex < 0) {
+        this.directionIndex = this.numberOfDirections - 1;
+      }
+      this.turningLeft = false;
+    }
+
     if (this.directionIndex === Directions.Up) {
       this.moveSnakeUp();
     }

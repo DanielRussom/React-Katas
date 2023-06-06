@@ -55,6 +55,9 @@ describe("snake eating food feature", () => {
         act(() => {
             jest.advanceTimersByTime(MovementSpeed);
         });
+        act(() => {
+            jest.advanceTimersByTime(MovementSpeed);
+        });
 
         const firstExpectedSnakeCell = gameBoard.getChildAt(new Position(0, 1));
         const secondExpectedSnakeCell = gameBoard.getChildAt(new Position(1, 1))

@@ -32,7 +32,9 @@ describe("movement", () => {
 
   it("turns right", () => {
     const snake = new Snake([new Position(2, 2)]);
+
     snake.turnRight();
+
     expect(snake.turningRight).toBe(true);
     expect(snake.positions[0]).toEqual(new Position(2, 2));
   })
@@ -54,6 +56,15 @@ describe("movement", () => {
     expect(snake.positions[0]).toEqual(expectedPosition);
   });
 
+  it("turns left", () => {
+    const snake = new Snake([new Position(2, 2)]);
+
+    snake.turnLeft();
+
+    expect(snake.turningLeft).toBe(true);
+    expect(snake.positions[0]).toEqual(new Position(2, 2));
+  })
+
   it.each([
     [1, new Position(1, 2)],
     [2, new Position(1, 3)],
@@ -65,10 +76,21 @@ describe("movement", () => {
 
     for (let i = 0; i < times; i++) {
       snake.turnLeft();
+      snake.move();
     }
 
     expect(snake.positions[0]).toEqual(expectedPosition);
   });
+
+  it("turns right then left", () => {
+    const snake = new Snake([new Position(2, 2)]);
+
+    snake.turnRight();
+    snake.turnLeft();
+
+    expect(snake.turningRight).toBe(false);
+    expect(snake.turningLeft).toBe(true);;
+  })
 
   it.each([
     [1, new Position(4, 2)],
