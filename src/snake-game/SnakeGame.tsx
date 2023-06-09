@@ -40,12 +40,10 @@ export const SnakeGame = ({
 
     function turnSnakeLeft(): void {
         snake.turnLeft();
-        updateSnakeDisplay();
     }
 
     function turnSnakeRight(): void {
         snake.turnRight();
-        updateSnakeDisplay();
     }
 
     function moveSnake(): void {
