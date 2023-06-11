@@ -30,7 +30,24 @@ export const SnakeGame = ({
         return () => {
             clearInterval(intervalId);
         };
+
     }, [moveSnake, snake]);
+    
+    // React.useEffect(() => {
+    //     const handleKeyDown = (event) => {
+    //       if (event.key === 'a') {
+    //         turnSnakeLeft();
+    //       } else if (event.key === 'd') {
+    //         turnSnakeRight();
+    //       }
+    //     };
+    
+    //     window.addEventListener('keydown', handleKeyDown);
+    
+    //     return () => {
+    //       window.removeEventListener('keydown', handleKeyDown);
+    //     };
+    //   }, [turnSnakeLeft, turnSnakeRight]);
 
     React.useEffect(() => {
         if (gameIsResetting === true) {
