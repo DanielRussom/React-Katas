@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import SnakeGame from "./SnakeGame";
 import * as React from "react";
 import { clickButton } from "../../testExtensions/screenTestExtensions";
@@ -34,7 +34,7 @@ describe("snake eating food feature", () => {
 
         Random.prototype.getNumberBelowLimit = randomFunction;
 
-        render(<SnakeGame height={gridHeight} width={gridWidth} />);
+        const { container } = render(<SnakeGame height={gridHeight} width={gridWidth} />);
 
         let gameBoard = screen.getByTitle("GameBoard");
 
@@ -47,7 +47,7 @@ describe("snake eating food feature", () => {
         act(() => {
             jest.advanceTimersByTime(MovementSpeed);
         });
-        clickButton('<');
+        fireEvent.keyDown(container, { key: 'ArrowLeft' });
 
         act(() => {
             jest.advanceTimersByTime(MovementSpeed);
@@ -105,16 +105,9 @@ describe("Snake dying feature", () => {
             jest.advanceTimersByTime(MovementSpeed);
         });
 
-        expect(screen.getByRole('button', { name: "<" })).toBeDisabled();
-        expect(screen.getByRole('button', { name: ">" })).toBeDisabled();
-
         expect(screen.getByText("You died! Score: 2")).toBeInTheDocument();
 
         clickButton('Play again');
-
-
-        expect(screen.getByRole('button', { name: "<" })).toBeEnabled();
-        expect(screen.getByRole('button', { name: ">" })).toBeEnabled();
 
         expectedSnakeLocation = gameBoard.getChildAt(new Position(1, 1));
         expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
