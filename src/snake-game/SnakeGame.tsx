@@ -33,21 +33,22 @@ export const SnakeGame = ({
 
     }, [moveSnake, snake]);
     
-    // React.useEffect(() => {
-    //     const handleKeyDown = (event) => {
-    //       if (event.key === 'a') {
-    //         turnSnakeLeft();
-    //       } else if (event.key === 'd') {
-    //         turnSnakeRight();
-    //       }
-    //     };
+    React.useEffect(() => {
+        const handleKeyDown = (event) => {
+            event.preventDefault();
+          if (event.key === 'ArrowLeft') {
+            turnSnakeLeft();
+          } else if (event.key === 'ArrowRight') {
+            turnSnakeRight();
+          }
+        };
     
-    //     window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keydown', handleKeyDown);
     
-    //     return () => {
-    //       window.removeEventListener('keydown', handleKeyDown);
-    //     };
-    //   }, [turnSnakeLeft, turnSnakeRight]);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+      }, [turnSnakeLeft, turnSnakeRight]);
 
     React.useEffect(() => {
         if (gameIsResetting === true) {
@@ -83,12 +84,10 @@ export const SnakeGame = ({
 
     return (
         <>
+        {/* Message saying how to move? */}
             <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
                 {!gameIsResetting ? <Grid height={height} width={width} /> : null}
             </SnakeContext.Provider>
-
-            <button onClick={turnSnakeLeft} disabled={snake.isDead()}>&lt;</button>
-            <button onClick={turnSnakeRight} disabled={snake.isDead()}>&gt;</button>
 
             {snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => { resetGame() }}>Play again</button></> : null}
         </>

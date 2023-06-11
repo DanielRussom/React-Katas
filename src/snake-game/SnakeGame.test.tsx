@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
-import { clickButton } from "../../testExtensions/screenTestExtensions";
 import SnakeGame from "./SnakeGame";
 import { Snake } from "./snake/Snake";
 import Position from "./Position";
 import { MovementSpeed, SnakeToken } from "./Constants";
+import "../../testExtensions/screenTestExtensions";
 
 describe("snake game", () => {
   beforeEach(() => {
@@ -54,9 +54,9 @@ describe("snake game", () => {
     });
     Snake.prototype.turnRight = turnRightFunction;
 
-    render(<SnakeGame />);
+    const { container } = render(<SnakeGame />);
 
-    clickButton(">");
+    fireEvent.keyDown(container, { key: 'ArrowRight' });
 
     expect(turnRightFunction).toHaveBeenCalled();
   });
@@ -67,9 +67,9 @@ describe("snake game", () => {
     });
     Snake.prototype.turnLeft = turnLeftFunction;
 
-    render(<SnakeGame />);
+    const { container } = render(<SnakeGame />);
 
-    clickButton("<");
+    fireEvent.keyDown(container, { key: 'ArrowLeft' });
 
     expect(turnLeftFunction).toHaveBeenCalled();
   });
@@ -87,7 +87,7 @@ describe("snake game", () => {
 
     expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
   });
-  
+
 
   it("tells the snake to move twice after two seconds", () => {
     const moveFunction = jest.fn();
@@ -102,16 +102,24 @@ describe("snake game", () => {
   });
 
   describe("When snake is dead", () => {
-    it("disables the movement buttons", () => {
+    it("disables turning", () => {
+      const turnRightFunction = jest.fn()
+      Snake.prototype.turnRight = turnRightFunction;
+      const turnLeftFunction = jest.fn();
+      Snake.prototype.turnLeft = turnLeftFunction;
+
       const isDeadFunction = jest.fn().mockImplementation(() => {
         return true;
       });
       Snake.prototype.isDead = isDeadFunction;
 
-      render(<SnakeGame />);
+      const { container } = render(<SnakeGame />);
 
-      expect(screen.getByRole('button', { name: "<" })).toBeDisabled();
-      expect(screen.getByRole('button', { name: ">" })).toBeDisabled();
+
+      fireEvent.keyDown(container, { key: 'ArrowRight' });
+      fireEvent.keyDown(container, { key: 'ArrowLeft' });
+      expect(turnRightFunction).not.toHaveBeenCalled();
+      expect(turnLeftFunction).not.toHaveBeenCalled();
     })
 
     it("stops moving forward", () => {
@@ -122,11 +130,11 @@ describe("snake game", () => {
         return true;
       });
       Snake.prototype.isDead = isDeadFunction;
-  
+
       render(<SnakeGame height={3} width={3} />);
-  
+
       jest.advanceTimersByTime(MovementSpeed);
-  
+
       expect(moveFunction).toHaveBeenCalledTimes(0);
     })
 
@@ -164,7 +172,7 @@ describe("snake game", () => {
       const playerScoreRegex = new RegExp(`.*Score: ${expectedScore}`);
       expect(screen.getByText(playerScoreRegex)).toBeInTheDocument();
     });
-    
+
     it("displays a Play Again button", () => {
       const isDeadFunction = jest.fn().mockImplementation(() => {
         return true;
@@ -173,7 +181,7 @@ describe("snake game", () => {
 
       render(<SnakeGame />);
 
-      expect(screen.getByRole("button", {name: "Play again"})).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Play again" })).toBeInTheDocument();
     });
   });
 });
