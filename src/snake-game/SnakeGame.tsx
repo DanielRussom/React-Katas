@@ -35,6 +35,9 @@ export const SnakeGame = ({
     
     React.useEffect(() => {
         const handleKeyDown = (event) => {
+            if(snake.isDead()){
+                return;
+            }
             event.preventDefault();
           if (event.key === 'ArrowLeft') {
             turnSnakeLeft();
