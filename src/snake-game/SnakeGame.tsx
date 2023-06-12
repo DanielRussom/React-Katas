@@ -6,95 +6,102 @@ import { Snake } from "./snake/Snake";
 import { SnakeContext } from "./SnakeContext";
 import { MovementSpeed } from "./Constants";
 
-export const SnakeGame = ({
-    height = 15,
-    width = 15,
-}) => {
-    function getInitialSnakePosition(): Position {
-        const xPosition = Math.round(width / 2) - 1;
-        const yPosition = Math.round(height / 2) - 1;
+export const SnakeGame = ({ height = 15, width = 15 }) => {
+  function getInitialSnakePosition(): Position {
+    const xPosition = Math.round(width / 2) - 1;
+    const yPosition = Math.round(height / 2) - 1;
 
-        return new Position(xPosition, yPosition);
+    return new Position(xPosition, yPosition);
+  }
+
+  const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]));
+  const [gameIsResetting, setGameIsResetting] = useState(false);
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (!snake.isDead()) {
+        moveSnake();
+      }
+    }, MovementSpeed);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [moveSnake, snake]);
+
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (snake.isDead()) {
+        return;
+      }
+      event.preventDefault();
+      if (event.key === "ArrowLeft" || event.key === "a") {
+        turnSnakeLeft();
+      } else if (event.key === "ArrowRight" || event.key === "d") {
+        turnSnakeRight();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [turnSnakeLeft, turnSnakeRight]);
+
+  React.useEffect(() => {
+    if (gameIsResetting === true) {
+      setGameIsResetting(false);
     }
+  }, [gameIsResetting]);
 
-    const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]))
-    const [gameIsResetting, setGameIsResetting] = useState(false);
+  function turnSnakeLeft(): void {
+    snake.turnLeft();
+  }
 
-    React.useEffect(() => {
-        const intervalId = setInterval(() => {
-            if(!snake.isDead()){
-                moveSnake();
-            }
-        }, MovementSpeed);
+  function turnSnakeRight(): void {
+    snake.turnRight();
+  }
 
-        return () => {
-            clearInterval(intervalId);
-        };
+  function moveSnake(): void {
+    snake.move();
+    updateSnakeDisplay();
+  }
 
-    }, [moveSnake, snake]);
-    
-    React.useEffect(() => {
-        const handleKeyDown = (event) => {
-            if(snake.isDead()){
-                return;
-            }
-            event.preventDefault();
-          if (event.key === 'ArrowLeft') {
-            turnSnakeLeft();
-          } else if (event.key === 'ArrowRight') {
-            turnSnakeRight();
-          }
-        };
-    
-        window.addEventListener('keydown', handleKeyDown);
-    
-        return () => {
-          window.removeEventListener('keydown', handleKeyDown);
-        };
-      }, [turnSnakeLeft, turnSnakeRight]);
+  function updateSnakeDisplay() {
+    setSnake(copy(snake));
+  }
 
-    React.useEffect(() => {
-        if (gameIsResetting === true) {
-            setGameIsResetting(false);
-        }
-    }, [gameIsResetting]);
+  function copy(snake: Snake): Snake {
+    return Object.assign(Object.create(snake));
+  }
 
-    function turnSnakeLeft(): void {
-        snake.turnLeft();
-    }
+  function resetGame() {
+    setGameIsResetting(true);
+    setSnake(new Snake([getInitialSnakePosition()]));
+  }
 
-    function turnSnakeRight(): void {
-        snake.turnRight();
-    }
+  return (
+    <>
+      {/* Message saying how to move? */}
+      <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
+        {!gameIsResetting ? <Grid height={height} width={width} /> : null}
+      </SnakeContext.Provider>
 
-    function moveSnake(): void {
-        snake.move();
-        updateSnakeDisplay();
-    }
-
-    function updateSnakeDisplay() {
-        setSnake(copy(snake));
-    }
-
-    function copy(snake: Snake): Snake {
-        return Object.assign(Object.create(snake));
-    }
-
-    function resetGame() {
-        setGameIsResetting(true);
-        setSnake(new Snake([getInitialSnakePosition()]))
-    }
-
-    return (
+      {snake.isDead() ? (
         <>
-        {/* Message saying how to move? */}
-            <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
-                {!gameIsResetting ? <Grid height={height} width={width} /> : null}
-            </SnakeContext.Provider>
-
-            {snake.isDead() ? <><p>You died! Score: {snake.getSize()}</p> <button onClick={() => { resetGame() }}>Play again</button></> : null}
+          <p>You died! Score: {snake.getSize()}</p>{" "}
+          <button
+            onClick={() => {
+              resetGame();
+            }}
+          >
+            Play again
+          </button>
         </>
-    )
-}
+      ) : null}
+    </>
+  );
+};
 
 export default SnakeGame;

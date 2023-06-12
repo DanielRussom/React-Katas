@@ -18,7 +18,7 @@ describe("snake game", () => {
   afterEach(() => {
     jest.clearAllTimers();
     jest.useFakeTimers();
-  })
+  });
 
   it.each([
     [5, new Position(2, 2)],
@@ -29,11 +29,14 @@ describe("snake game", () => {
     (gridSize, expectedPosition) => {
       render(<SnakeGame height={gridSize} width={gridSize} />);
 
-      const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(expectedPosition);
+      const expectedSnakeLocation = screen
+        .getByTitle("GameBoard")
+        .getChildAt(expectedPosition);
 
       expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
       expect(screen.getAllByText(SnakeToken).length).toEqual(1);
-    });
+    }
+  );
 
   it("tells the snake to move", () => {
     const moveFunction = jest.fn().mockImplementation(() => {
@@ -48,7 +51,7 @@ describe("snake game", () => {
     expect(moveFunction).toHaveBeenCalled();
   });
 
-  it("tells the snake to turn right", () => {
+  it.each(["ArrowRight", "d"])("tells the snake to turn right", (keyName) => {
     const turnRightFunction = jest.fn().mockImplementationOnce(() => {
       return new Position(0, 0);
     });
@@ -56,20 +59,21 @@ describe("snake game", () => {
 
     const { container } = render(<SnakeGame />);
 
-    fireEvent.keyDown(container, { key: 'ArrowRight' });
+    fireEvent.keyDown(container, { key: keyName });
 
     expect(turnRightFunction).toHaveBeenCalled();
   });
 
-  it("tells the snake to turn left", () => {
+  it.each(["ArrowLeft", "a"])("tells the snake to turn left", (keyName) => {
     const turnLeftFunction = jest.fn().mockImplementationOnce(() => {
       return new Position(0, 0);
     });
+
     Snake.prototype.turnLeft = turnLeftFunction;
 
     const { container } = render(<SnakeGame />);
 
-    fireEvent.keyDown(container, { key: 'ArrowLeft' });
+    fireEvent.keyDown(container, { key: keyName });
 
     expect(turnLeftFunction).toHaveBeenCalled();
   });
@@ -83,11 +87,12 @@ describe("snake game", () => {
     jest.advanceTimersByTime(MovementSpeed);
 
     expect(moveFunction).toHaveBeenCalledTimes(1);
-    const expectedSnakeLocation = screen.getByTitle("GameBoard").getChildAt(new Position(1, 1));
+    const expectedSnakeLocation = screen
+      .getByTitle("GameBoard")
+      .getChildAt(new Position(1, 1));
 
     expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
   });
-
 
   it("tells the snake to move twice after two seconds", () => {
     const moveFunction = jest.fn();
@@ -103,7 +108,7 @@ describe("snake game", () => {
 
   describe("When snake is dead", () => {
     it("disables turning", () => {
-      const turnRightFunction = jest.fn()
+      const turnRightFunction = jest.fn();
       Snake.prototype.turnRight = turnRightFunction;
       const turnLeftFunction = jest.fn();
       Snake.prototype.turnLeft = turnLeftFunction;
@@ -115,12 +120,11 @@ describe("snake game", () => {
 
       const { container } = render(<SnakeGame />);
 
-
-      fireEvent.keyDown(container, { key: 'ArrowRight' });
-      fireEvent.keyDown(container, { key: 'ArrowLeft' });
+      fireEvent.keyDown(container, { key: "ArrowRight" });
+      fireEvent.keyDown(container, { key: "ArrowLeft" });
       expect(turnRightFunction).not.toHaveBeenCalled();
       expect(turnLeftFunction).not.toHaveBeenCalled();
-    })
+    });
 
     it("stops moving forward", () => {
       const moveFunction = jest.fn();
@@ -136,7 +140,7 @@ describe("snake game", () => {
       jest.advanceTimersByTime(MovementSpeed);
 
       expect(moveFunction).toHaveBeenCalledTimes(0);
-    })
+    });
 
     it("displays game over message", () => {
       const isDeadFunction = jest.fn().mockImplementation(() => {
@@ -147,14 +151,14 @@ describe("snake game", () => {
       render(<SnakeGame />);
 
       expect(screen.getByText(/You died!.*/gm)).toBeInTheDocument();
-    })
+    });
 
     it("doesn't display game over message", () => {
       render(<SnakeGame />);
 
       expect(screen.queryByText(/You died!.*/gm)).toBeNull();
       expect(screen.queryByText(/Score:*/gm)).toBeNull();
-    })
+    });
 
     it.each([[1], [2], [5]])("displays the player's score", (expectedScore) => {
       const isDeadFunction = jest.fn().mockImplementation(() => {
@@ -181,7 +185,9 @@ describe("snake game", () => {
 
       render(<SnakeGame />);
 
-      expect(screen.getByRole("button", { name: "Play again" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Play again" })
+      ).toBeInTheDocument();
     });
   });
 });
