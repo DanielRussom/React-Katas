@@ -17,6 +17,23 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
   const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]));
   const [gameIsResetting, setGameIsResetting] = useState(false);
 
+  const updateSnakeDisplay = React.useCallback(() => {
+    setSnake(copy(snake));
+  }, [snake]);
+
+  const moveSnake = React.useCallback(() => {
+    snake.move();
+    updateSnakeDisplay();
+  }, [snake, updateSnakeDisplay]);
+
+  const turnSnakeLeft = React.useCallback(() => {
+    snake.turnLeft();
+  }, [snake]);
+
+  const turnSnakeRight = React.useCallback(() => {
+    snake.turnRight();
+  }, [snake]);
+
   React.useEffect(() => {
     const intervalId = setInterval(() => {
       if (!snake.isDead()) {
@@ -47,30 +64,13 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [turnSnakeLeft, turnSnakeRight]);
+  }, [snake, turnSnakeLeft, turnSnakeRight]);
 
   React.useEffect(() => {
     if (gameIsResetting === true) {
       setGameIsResetting(false);
     }
   }, [gameIsResetting]);
-
-  function turnSnakeLeft(): void {
-    snake.turnLeft();
-  }
-
-  function turnSnakeRight(): void {
-    snake.turnRight();
-  }
-
-  function moveSnake(): void {
-    snake.move();
-    updateSnakeDisplay();
-  }
-
-  function updateSnakeDisplay() {
-    setSnake(copy(snake));
-  }
 
   function copy(snake: Snake): Snake {
     return Object.assign(Object.create(snake));
