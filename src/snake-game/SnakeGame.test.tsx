@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
 import SnakeGame from "./SnakeGame";
 import { Snake } from "./snake/Snake";
@@ -46,7 +46,9 @@ describe("snake game", () => {
 
     render(<SnakeGame />);
 
-    jest.advanceTimersByTime(MovementSpeed);
+    act(() => {
+      jest.advanceTimersByTime(MovementSpeed);
+    });
 
     expect(moveFunction).toHaveBeenCalled();
   });
@@ -84,7 +86,9 @@ describe("snake game", () => {
 
     render(<SnakeGame height={3} width={3} />);
 
-    jest.advanceTimersByTime(MovementSpeed);
+    act(() => {
+      jest.advanceTimersByTime(MovementSpeed);
+    });
 
     expect(moveFunction).toHaveBeenCalledTimes(1);
     const expectedSnakeLocation = screen
@@ -100,8 +104,12 @@ describe("snake game", () => {
 
     render(<SnakeGame />);
 
-    jest.advanceTimersByTime(MovementSpeed);
-    jest.advanceTimersByTime(MovementSpeed);
+    act(() => {
+      jest.advanceTimersByTime(MovementSpeed);
+    });
+    act(() => {
+      jest.advanceTimersByTime(MovementSpeed);
+    });
 
     expect(moveFunction).toHaveBeenCalledTimes(2);
   });
