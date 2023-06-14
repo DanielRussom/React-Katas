@@ -102,14 +102,17 @@ export default function Grid({ height = 5, width = 5 }: GridProperties) {
   let rows: JSX.Element[] = [];
   for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
     let columns = grid[rowIndex].map((columnValue, columnIndex) => (
-      <span key={columnIndex}>{columnValue}</span>
+      <span style={{ gridColumn: columnIndex }} key={columnIndex}>
+        {columnValue}
+      </span>
     ));
 
-    rows.push(<div key={rowIndex}>{columns}</div>);
+    rows.concat(columns);
+    // rows.push(<div key={rowIndex}>{columns}</div>);
   }
 
   return (
-    <div title="GameBoard" style={{ display: "grid" }}>
+    <div title="GameBoard" style={{ display: "inline-grid" }}>
       {rows}
     </div>
   );
