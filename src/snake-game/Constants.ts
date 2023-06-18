@@ -1,7 +1,7 @@
-export const SnakeToken = "| S |";
+export const SnakeToken = "S";
 
-export const FoodToken = "| F |";
+export const FoodToken = "F";
 
-export const EmptySpace = "| _ |";
+export const EmptySpace = ".";
 
 export const MovementSpeed = 300;

@@ -104,21 +104,21 @@ export default function Grid({ height = 5, width = 5 }: GridProperties) {
     let columns = grid[rowIndex].map((columnValue, columnIndex) => (
       <span
         key={columnIndex}
-        style={{ width: `25px`, display: "inline-block" }}
+        style={{
+          width: "25px",
+          // height: "20px",
+          display: "inline-block",
+          border: "1px solid black",
+        }}
       >
         {columnValue}
       </span>
-      // <span style={{ gridColumn: columnIndex }} key={columnIndex}>
-      //   {columnValue}
-      // </span>
     ));
 
-    // rows.concat(columns);
     rows.push(<div key={rowIndex}>{columns}</div>);
   }
 
   return (
-    // <div title="GameBoard" style={{ display: "inline-grid" }}>
     <div title="GameBoard" style={{ display: "grid" }}>
       {rows}
     </div>
