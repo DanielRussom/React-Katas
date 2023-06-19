@@ -4,6 +4,7 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
+import { Snake } from "../snake/Snake";
 
 export type GridProperties = {
   height: number;
@@ -20,10 +21,14 @@ export default function Grid({ height = 5, width = 5 }: GridProperties) {
   const [grid, setGrid] = useState<string[][]>(() => buildGrid());
 
   useEffect(() => {
-    if (
-      storedSnakeLocations[0].y !== snake.positions[0].y ||
-      storedSnakeLocations[0].x !== snake.positions[0].x
-    ) {
+    function snakeHasMoved() {
+      return (
+        storedSnakeLocations[0].y !== snake.positions[0].y ||
+        storedSnakeLocations[0].x !== snake.positions[0].x
+      );
+    }
+
+    if (snakeHasMoved()) {
       if (snakeIsOffBoard(snake.positions[0])) {
         snake.die();
         setStoredSnakeLocations([...snake.positions]);
