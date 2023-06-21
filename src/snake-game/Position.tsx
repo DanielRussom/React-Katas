@@ -8,6 +8,6 @@ export default class Position {
   }
 
   equals(positionToCompare: Position): any {
-    return positionToCompare.y === this.y;
+    return positionToCompare.x === this.x && positionToCompare.y === this.y;
   }
 }

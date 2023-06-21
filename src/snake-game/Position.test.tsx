@@ -7,9 +7,12 @@ describe("Position", () => {
     expect(originalPosition.equals(new Position(1, 1))).toBe(true);
   });
 
-  it("is not equal", () => {
+  it.each([
+    [1, 2],
+    [2, 1],
+  ])("is not equal", (x, y) => {
     let originalPosition = new Position(1, 1);
 
-    expect(originalPosition.equals(new Position(1, 2))).toBe(false);
+    expect(originalPosition.equals(new Position(x, y))).toBe(false);
   });
 });
