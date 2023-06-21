@@ -4,14 +4,14 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
-import { Snake } from "../snake/Snake";
 
-export type GridProperties = {
+export default function Grid({
+  height = 5,
+  width = 5,
+}: {
   height: number;
   width: number;
-};
-
-export default function Grid({ height = 5, width = 5 }: GridProperties) {
+}) {
   const { snake, setSnake } = useContext(SnakeContext);
 
   const [foodSpawner] = useState(new FoodSpawner());
