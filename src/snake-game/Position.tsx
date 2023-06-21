@@ -7,7 +7,7 @@ export default class Position {
     this.y = y;
   }
 
-  equals(arg0: Position): any {
-    throw new Error("Method not implemented.");
+  equals(positionToCompare: Position): any {
+    return positionToCompare.x === this.x;
   }
 }
