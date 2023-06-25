@@ -22,10 +22,7 @@ export default function Grid({
 
   useEffect(() => {
     function snakeHasMoved() {
-      return (
-        storedSnakeLocations[0].y !== snake.positions[0].y ||
-        storedSnakeLocations[0].x !== snake.positions[0].x
-      );
+      return !storedSnakeLocations[0].equals(snake.positions[0]);
     }
 
     if (snakeHasMoved()) {
