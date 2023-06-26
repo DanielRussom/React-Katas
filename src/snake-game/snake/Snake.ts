@@ -3,24 +3,21 @@ import Position from "../Position";
 
 export class Snake {
   readonly numberOfDirections = 4;
-  directionIndex = 0;
+  private currentDirection = Directions.Up;
+  private nextDirection = this.currentDirection;
+  private dead: boolean;
 
   positions: Array<Position>;
   lastPosition: Position;
-  turningRight: boolean;
-  turningLeft: boolean;
-  private dead: boolean;
 
   constructor(initialPositions: Position[]) {
     this.positions = initialPositions;
     this.lastPosition = initialPositions[0];
     this.dead = false;
-    this.turningRight = false;
-    this.turningLeft = false;
   }
 
   eatFood() {
-    this.positions.push(this.lastPosition)
+    this.positions.push(this.lastPosition);
   }
 
   isDead() {
@@ -36,42 +33,32 @@ export class Snake {
   }
 
   turnLeft() {
-    this.turningLeft = true;
-    this.turningRight = false;
+    this.nextDirection = this.currentDirection - 1;
+    if (this.nextDirection < 0) {
+      this.nextDirection = this.numberOfDirections - 1;
+    }
   }
 
   turnRight() {
-    this.turningLeft = false;
-    this.turningRight = true;
+    this.nextDirection = (this.currentDirection + 1) % this.numberOfDirections;
   }
 
   move(): Position[] {
-    if (this.turningRight) {
-      this.directionIndex = (this.directionIndex + 1) % this.numberOfDirections;
-      this.turningRight = false;
-    }
-    
-    if (this.turningLeft) {
-      this.directionIndex = this.directionIndex - 1;
-      if (this.directionIndex < 0) {
-        this.directionIndex = this.numberOfDirections - 1;
-      }
-      this.turningLeft = false;
-    }
+    this.currentDirection = this.nextDirection;
 
-    if (this.directionIndex === Directions.Up) {
+    if (this.currentDirection === Directions.Up) {
       this.moveSnakeUp();
     }
 
-    if (this.directionIndex === Directions.Down) {
+    if (this.currentDirection === Directions.Down) {
       this.moveSnakeDown();
     }
 
-    if (this.directionIndex === Directions.Left) {
+    if (this.currentDirection === Directions.Left) {
       this.moveSnakeLeft();
     }
 
-    if (this.directionIndex === Directions.Right) {
+    if (this.currentDirection === Directions.Right) {
       this.moveSnakeRight();
     }
 
@@ -79,30 +66,40 @@ export class Snake {
   }
 
   private moveSnakeUp() {
-    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y - 1));
+    this.updatePositions(
+      new Position(this.positions[0].x, this.positions[0].y - 1)
+    );
   }
 
   private moveSnakeDown() {
-    this.updatePositions(new Position(this.positions[0].x, this.positions[0].y + 1));
+    this.updatePositions(
+      new Position(this.positions[0].x, this.positions[0].y + 1)
+    );
   }
 
   private moveSnakeLeft() {
-    this.updatePositions(new Position(this.positions[0].x - 1, this.positions[0].y));
+    this.updatePositions(
+      new Position(this.positions[0].x - 1, this.positions[0].y)
+    );
   }
 
   private moveSnakeRight() {
-    this.updatePositions(new Position(this.positions[0].x + 1, this.positions[0].y));
+    this.updatePositions(
+      new Position(this.positions[0].x + 1, this.positions[0].y)
+    );
   }
 
   private updatePositions(newPosition: Position) {
     this.lastPosition = this.positions.pop()!;
 
-    if (this.snakeCollision(newPosition)) {
+    if (this.hasCollided(newPosition)) {
       this.die();
     }
 
     this.positions.unshift(newPosition);
   }
 
-  private snakeCollision = (newPosition: Position) => this.positions.find(position => position.x === newPosition.x && position.y === newPosition.y) !== undefined;
+  private hasCollided = (newPosition: Position) =>
+    this.positions.find((position) => position.equals(newPosition)) !==
+    undefined;
 }
