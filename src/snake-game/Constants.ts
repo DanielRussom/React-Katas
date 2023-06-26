@@ -1,6 +1,6 @@
-export const SnakeToken = "S";
+export const SnakeToken = "🐍";
 
-export const FoodToken = "F";
+export const FoodToken = "🍒";
 
 export const EmptySpace = ".";
 
