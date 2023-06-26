@@ -35,12 +35,15 @@ export class Snake {
   turnLeft() {
     this.nextDirection = this.currentDirection - 1;
     if (this.nextDirection < 0) {
-      this.nextDirection = this.numberOfDirections - 1;
+      this.nextDirection = Directions.Left;
     }
   }
 
   turnRight() {
-    this.nextDirection = (this.currentDirection + 1) % this.numberOfDirections;
+    this.nextDirection = this.currentDirection + 1;
+    if (this.nextDirection > 3) {
+      this.nextDirection = Directions.Up;
+    }
   }
 
   move(): Position[] {
