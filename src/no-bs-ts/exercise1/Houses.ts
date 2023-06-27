@@ -8,10 +8,10 @@ interface HouseWithID {
   //TODO
 }
 
-function findHouses(houses: string): HouseWithID[] {
-  // const jsonString = fs.readFileSync("./houses.json", "utf-8");
-  // const jsonData = JSON.parse(jsonString);
-}
+// function findHouses(houses: string): HouseWithID[] {
+//   // const jsonString = fs.readFileSync("./houses.json", "utf-8");
+//   // const jsonData = JSON.parse(jsonString);
+// }
 
 // function findHouses(
 //   houses: string,
