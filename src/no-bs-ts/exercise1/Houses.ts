@@ -1,17 +1,17 @@
 // import * as fs from "fs";
 
-interface House {
+export interface House {
   //TODO
 }
 
-interface HouseWithID {
+export interface HouseWithID {
   //TODO
 }
 
-// function findHouses(houses: string): HouseWithID[] {
-//   // const jsonString = fs.readFileSync("./houses.json", "utf-8");
-//   // const jsonData = JSON.parse(jsonString);
-// }
+export function findHouses(houses: string): HouseWithID[] {
+  // const jsonString = fs.readFileSync("./houses.json", "utf-8");
+  // const jsonData = JSON.parse(jsonString);
+}
 
 // function findHouses(
 //   houses: string,
