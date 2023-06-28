@@ -2,14 +2,14 @@ import houses from "./houseData";
 import * as houseFinder from "./Houses";
 
 describe("Houses", () => {
-  it("finds a house", () => {
-    const firstHouse = houses[0];
-    const expectedHouses = [
-      { Id: 1, Name: firstHouse.name, Planets: firstHouse.planets },
+  it.each([0, 1])("finds a single house", (houseIndex) => {
+    const house = houses[houseIndex];
+    const expectedFoundHouses = [
+      { Id: 1, Name: house.name, Planets: house.planets },
     ];
 
-    const result = houseFinder.findHouses(JSON.stringify(firstHouse));
+    const result = houseFinder.findHouses(JSON.stringify(house));
 
-    expect(result).toEqual(expectedHouses);
+    expect(result).toEqual(expectedFoundHouses);
   });
 });
