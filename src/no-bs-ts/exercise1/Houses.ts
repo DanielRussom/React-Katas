@@ -9,6 +9,7 @@ export interface HouseWithID {
 }
 
 export function findHouses(houses: string): HouseWithID[] {
+  return [{ Id: 1, Name: "Atreides", Planets: "Calladan" }];
   // const jsonString = fs.readFileSync("./houses.json", "utf-8");
   // const jsonData = JSON.parse(jsonString);
 }
