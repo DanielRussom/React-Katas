@@ -47,47 +47,9 @@ export class Snake {
   move(): Position[] {
     this.currentDirection = this.nextDirection;
 
-    if (this.currentDirection instanceof UpDirection) {
-      this.moveSnakeUp();
-    }
-
-    if (this.currentDirection instanceof DownDirection) {
-      this.moveSnakeDown();
-    }
-
-    if (this.currentDirection instanceof LeftDirection) {
-      this.moveSnakeLeft();
-    }
-
-    if (this.currentDirection instanceof RightDirection) {
-      this.moveSnakeRight();
-    }
+    this.updatePositions(this.currentDirection.move(this.positions[0]));
 
     return this.positions;
-  }
-
-  private moveSnakeUp() {
-    this.updatePositions(
-      new Position(this.positions[0].x, this.positions[0].y - 1)
-    );
-  }
-
-  private moveSnakeDown() {
-    this.updatePositions(
-      new Position(this.positions[0].x, this.positions[0].y + 1)
-    );
-  }
-
-  private moveSnakeLeft() {
-    this.updatePositions(
-      new Position(this.positions[0].x - 1, this.positions[0].y)
-    );
-  }
-
-  private moveSnakeRight() {
-    this.updatePositions(
-      new Position(this.positions[0].x + 1, this.positions[0].y)
-    );
   }
 
   private updatePositions(newPosition: Position) {
