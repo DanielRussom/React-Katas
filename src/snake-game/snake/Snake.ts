@@ -1,13 +1,8 @@
-import {
-  DownDirection,
-  LeftDirection,
-  RightDirection,
-  UpDirection,
-} from "./Directions";
 import Position from "../Position";
+import Up from "./directions/Up";
 
 export class Snake {
-  private currentDirection = new UpDirection();
+  private currentDirection = new Up();
   private nextDirection = this.currentDirection;
   private dead: boolean;
 
