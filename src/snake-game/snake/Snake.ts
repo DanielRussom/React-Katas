@@ -1,8 +1,14 @@
-import { Directions } from "./Directions";
+import {
+  Directions,
+  DownDirection,
+  LeftDirection,
+  RightDirection,
+  UpDirection,
+} from "./Directions";
 import Position from "../Position";
 
 export class Snake {
-  private currentDirection = Directions.Up;
+  private currentDirection = new UpDirection();
   private nextDirection = this.currentDirection;
   private dead: boolean;
 
@@ -32,35 +38,29 @@ export class Snake {
   }
 
   turnLeft() {
-    this.nextDirection = this.currentDirection - 1;
-    if (this.nextDirection < 0) {
-      this.nextDirection = Directions.Left;
-    }
+    this.nextDirection = this.currentDirection.turnLeft();
   }
 
   turnRight() {
-    this.nextDirection = this.currentDirection + 1;
-    if (this.nextDirection > 3) {
-      this.nextDirection = Directions.Up;
-    }
+    this.nextDirection = this.currentDirection.turnRight();
   }
 
   move(): Position[] {
     this.currentDirection = this.nextDirection;
 
-    if (this.currentDirection === Directions.Up) {
+    if (this.currentDirection instanceof UpDirection) {
       this.moveSnakeUp();
     }
 
-    if (this.currentDirection === Directions.Down) {
+    if (this.currentDirection instanceof DownDirection) {
       this.moveSnakeDown();
     }
 
-    if (this.currentDirection === Directions.Left) {
+    if (this.currentDirection instanceof LeftDirection) {
       this.moveSnakeLeft();
     }
 
-    if (this.currentDirection === Directions.Right) {
+    if (this.currentDirection instanceof RightDirection) {
       this.moveSnakeRight();
     }
 
