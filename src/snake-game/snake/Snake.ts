@@ -1,5 +1,4 @@
 import {
-  Directions,
   DownDirection,
   LeftDirection,
   RightDirection,

@@ -1,10 +1,3 @@
-export enum Directions {
-  Up = 0,
-  Right = 1,
-  Down = 2,
-  Left = 3,
-}
-
 export abstract class Direction {
   abstract turnRight(): Direction;
   abstract turnLeft(): Direction;
@@ -27,6 +20,7 @@ export class DownDirection implements Direction {
     return new RightDirection();
   }
 }
+
 export class LeftDirection implements Direction {
   turnRight(): Direction {
     return new UpDirection();
@@ -35,6 +29,7 @@ export class LeftDirection implements Direction {
     return new DownDirection();
   }
 }
+
 export class RightDirection implements Direction {
   turnRight(): Direction {
     return new DownDirection();
