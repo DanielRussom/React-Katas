@@ -44,12 +44,10 @@ export class Snake {
     this.nextDirection = this.currentDirection.turnRight();
   }
 
-  move(): Position[] {
+  move() {
     this.currentDirection = this.nextDirection;
 
     this.updatePositions(this.currentDirection.move(this.positions[0]));
-
-    return this.positions;
   }
 
   private updatePositions(newPosition: Position) {
