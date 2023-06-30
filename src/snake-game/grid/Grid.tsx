@@ -28,7 +28,7 @@ export default function Grid({
     }
 
     if (snakeHasMoved()) {
-      if (snakeIsOffBoard(snake.positions[0])) {
+      if (snake.positions[0].isOutOfBounds(height, width)) {
         snake.die();
         setStoredSnakeLocations([...snake.positions]);
         setSnake(Object.assign(Object.create(snake)));
@@ -65,15 +65,6 @@ export default function Grid({
 
       const foodPosition = foodSpawner.pickFoodPosition(newGrid);
       newGrid[foodPosition.y][foodPosition.x] = FoodToken;
-    }
-
-    function snakeIsOffBoard(snakeHeadPosition: Position) {
-      return (
-        snakeHeadPosition.y < 0 ||
-        snakeHeadPosition.y >= height ||
-        snakeHeadPosition.x < 0 ||
-        snakeHeadPosition.x >= width
-      );
     }
   }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations, height, width]);
 
