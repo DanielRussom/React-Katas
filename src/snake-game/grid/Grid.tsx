@@ -4,6 +4,7 @@ import { FoodSpawner } from "../FoodSpawner";
 import Position from "../Position";
 import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { SnakeContext } from "../SnakeContext";
+import { GridState } from "./GridState";
 
 export default function Grid({
   height = 5,
@@ -18,7 +19,8 @@ export default function Grid({
   const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position[]>([
     ...snake.positions,
   ]);
-  const [grid, setGrid] = useState<string[][]>(() => buildGrid());
+  const [gridState] = useState(() => new GridState(height, width, snake, foodSpawner));
+  const [grid, setGrid] = useState<string[][]>(gridState.grid);
 
   useEffect(() => {
     function snakeHasMoved() {
@@ -74,32 +76,6 @@ export default function Grid({
       );
     }
   }, [foodSpawner, grid, snake, setSnake, storedSnakeLocations, height, width]);
-
-  function buildGrid() {
-    let grid: string[][] = [];
-
-    for (let rowId = 0; rowId < height; rowId++) {
-      grid.push(buildRow(width));
-    }
-
-    snake.positions.forEach((position) => {
-      grid[position.y][position.x] = SnakeToken;
-    });
-
-    const foodPosition = foodSpawner.pickFoodPosition(grid);
-    grid[foodPosition.y][foodPosition.x] = FoodToken;
-    return grid;
-  }
-
-  function buildRow(width: number) {
-    let newRow: string[] = [];
-
-    for (let columnId = 0; columnId < width; columnId++) {
-      newRow.push(EmptySpace);
-    }
-
-    return newRow;
-  }
 
   let rows: JSX.Element[] = [];
   for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
