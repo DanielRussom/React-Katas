@@ -15,4 +15,10 @@ describe("Position", () => {
 
     expect(originalPosition.equals(new Position(x, y))).toBe(false);
   });
+
+  it.each([
+    
+  ])("is out of bounds", () => {
+
+  }
 });
