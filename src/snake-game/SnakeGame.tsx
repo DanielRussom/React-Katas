@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Grid from "./grid/Grid";
 import Position from "./Position";
 import { Snake } from "./snake/Snake";
@@ -17,24 +17,24 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
   const [snake, setSnake] = useState(new Snake([getInitialSnakePosition()]));
   const [gameIsResetting, setGameIsResetting] = useState(false);
 
-  const updateSnakeDisplay = React.useCallback(() => {
+  const updateSnakeDisplay = useCallback(() => {
     setSnake(copy(snake));
   }, [snake]);
 
-  const moveSnake = React.useCallback(() => {
+  const moveSnake = useCallback(() => {
     snake.move();
     updateSnakeDisplay();
   }, [snake, updateSnakeDisplay]);
 
-  const turnSnakeLeft = React.useCallback(() => {
+  const turnSnakeLeft = useCallback(() => {
     snake.turnLeft();
   }, [snake]);
 
-  const turnSnakeRight = React.useCallback(() => {
+  const turnSnakeRight = useCallback(() => {
     snake.turnRight();
   }, [snake]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const intervalId = setInterval(() => {
       if (!snake.isDead()) {
         moveSnake();
@@ -46,7 +46,7 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
     };
   }, [moveSnake, snake]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (event) => {
       if (snake.isDead()) {
         return;
@@ -66,7 +66,7 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
     };
   }, [snake, turnSnakeLeft, turnSnakeRight]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (gameIsResetting === true) {
       setGameIsResetting(false);
     }
