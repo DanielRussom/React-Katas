@@ -17,7 +17,7 @@ export default function Grid({
     ...snake.positions,
   ]);
   const [gridState, setGridState] = useState(
-    () => new GridState(height, width, snake)
+    () => new GridState(height, width, snake.positions)
   );
 
   useEffect(() => {
@@ -33,19 +33,15 @@ export default function Grid({
         return;
       }
 
-      console.warn("Updating...");
-      const newGrid = gridState.update(snake, storedSnakeLocations, setSnake);
-
-      setGridState(newGrid);
+      setGridState(gridState.update(snake, storedSnakeLocations, setSnake));
       setStoredSnakeLocations([...snake.positions]);
-
-      console.warn("Finished updating!");
     }
   }, [snake, setSnake, storedSnakeLocations, height, width, gridState]);
 
   let rows: JSX.Element[] = [];
-  for (let rowIndex = 0; rowIndex < gridState.grid.length; rowIndex++) {
-    let columns = gridState.grid[rowIndex].map((columnValue, columnIndex) => (
+  const grid = gridState.getGrid();
+  for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+    let columns = grid[rowIndex].map((columnValue, columnIndex) => (
       <span
         key={columnIndex}
         style={{

@@ -4,10 +4,10 @@ import Position from "../Position";
 import { Snake } from "../snake/Snake";
 
 export class GridState {
-  grid: string[][];
+  private grid: string[][];
   private foodSpawner: FoodSpawner;
 
-  constructor(height, width, snake) {
+  constructor(height: number, width: number, snakePositions: Position[]) {
     this.foodSpawner = new FoodSpawner();
     let newGrid: string[][] = [];
 
@@ -15,13 +15,17 @@ export class GridState {
       newGrid.push(this.buildRow(width));
     }
 
-    snake.positions.forEach((position) => {
+    snakePositions.forEach((position) => {
       newGrid[position.y][position.x] = SnakeToken;
     });
 
     const foodPosition = this.foodSpawner.pickFoodPosition(newGrid);
     newGrid[foodPosition.y][foodPosition.x] = FoodToken;
     this.grid = newGrid;
+  }
+
+  getGrid(): string[][] {
+    return this.grid;
   }
 
   buildRow(width: number) {
