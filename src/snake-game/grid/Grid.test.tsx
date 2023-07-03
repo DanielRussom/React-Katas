@@ -247,6 +247,24 @@ describe("game board", () => {
 
     expect(killSnakeFunction).toHaveBeenCalled();
   });
+
+  it("stops interacting with the snake when it's dead", () => {
+    const killSnakeFunction = jest.fn();
+    Snake.prototype.die = killSnakeFunction;
+    const isDeadSnakeFunction = jest.fn().mockImplementation(() => {
+      return true;
+    });
+    Snake.prototype.isDead = isDeadSnakeFunction;
+
+    const { rerender } = render(
+      buildWithContext(<Grid height={7} width={7} />, [new Position(-1, 3)])
+    );
+    rerender(
+      buildWithContext(<Grid height={7} width={7} />, [new Position(-2, 3)])
+    );
+
+    expect(killSnakeFunction).not.toHaveBeenCalled();
+  });
 });
 
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {

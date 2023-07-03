@@ -13,30 +13,39 @@ export default function Grid({
 }) {
   const { snake, setSnake } = useContext(SnakeContext);
 
-  const [storedSnakeLocations, setStoredSnakeLocations] = useState<Position[]>([
-    ...snake.positions,
-  ]);
+  // const [displayedSnakePositions, setDisplayedSnakePositions] = useState<
+  //   Position[]
+  // >([...snake.positions]);
+
   const [gridState, setGridState] = useState(
     () => new GridState(height, width, snake.positions)
   );
 
   useEffect(() => {
-    function snakeHasMoved() {
-      return !storedSnakeLocations[0].equals(snake.positions[0]);
+    // function snakeHasMoved() {
+    //   return !displayedSnakePositions[0].equals(snake.positions[0]);
+    // }
+
+    if (snake.isDead()) {
+      return;
     }
 
-    if (snakeHasMoved()) {
-      if (snake.positions[0].isOutOfBounds(height, width)) {
-        snake.die();
-        setStoredSnakeLocations([...snake.positions]);
-        setSnake(Object.assign(Object.create(snake)));
-        return;
-      }
-
-      setGridState(gridState.update(snake, storedSnakeLocations, setSnake));
-      setStoredSnakeLocations([...snake.positions]);
+    // if (snakeHasMoved()) {
+    if (snake.positions[0].isOutOfBounds(height, width)) {
+      snake.die();
+      // setDisplayedSnakePositions([...snake.positions]);
+      setSnake(Object.assign(Object.create(snake)));
+      return;
     }
-  }, [snake, setSnake, storedSnakeLocations, height, width, gridState]);
+
+    // const updatedGridState = gridState.update(snake, setSnake);
+
+    // if (gridState !== updatedGridState) {
+    setGridState(gridState.update(snake, setSnake));
+    // }
+    // setDisplayedSnakePositions([...snake.positions]);
+    // }
+  }, [snake, setSnake, gridState, height, width]);
 
   let rows: JSX.Element[] = [];
   const grid = gridState.getGrid();
