@@ -27,7 +27,7 @@ export default function Grid({
       return;
     }
 
-    setGridState(gridState.update(snake, setSnake));
+    setGridState(gridState.update(snake));
   }, [snake, setSnake, gridState, height, width]);
 
   let rows: JSX.Element[] = [];
