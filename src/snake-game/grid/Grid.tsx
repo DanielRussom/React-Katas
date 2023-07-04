@@ -10,7 +10,7 @@ export default function Grid({
   height: number;
   width: number;
 }) {
-  const { snake, setSnake } = useContext(SnakeContext);
+  const { snake, killSnake } = useContext(SnakeContext);
 
   const [gridState, setGridState] = useState(
     () => new GridState(height, width, snake.positions)
@@ -21,14 +21,14 @@ export default function Grid({
       return;
     }
 
-    if (snake.positions[0].isOutOfBounds(height, width)) {
-      snake.die();
-      setSnake(Object.assign(Object.create(snake)));
+    const snakeHead = snake.positions[0]; 
+    if (snakeHead.isOutOfBounds(height, width)) {
+      killSnake();
       return;
     }
 
     setGridState(gridState.update(snake));
-  }, [snake, setSnake, gridState, height, width]);
+  }, [snake, gridState, height, width, killSnake]);
 
   let rows: JSX.Element[] = [];
   const grid = gridState.getGrid();

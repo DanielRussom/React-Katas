@@ -11,6 +11,7 @@ import { SnakeContext } from "../SnakeContext";
 jest.mock("../FoodSpawner");
 
 let feedSnakeFunction: Function;
+let killSnakeFunction: Function;
 
 describe("game board", () => {
   beforeEach(() => {
@@ -20,6 +21,7 @@ describe("game board", () => {
         return new Position(0, 0);
       });
 
+      killSnakeFunction = jest.fn();
     feedSnakeFunction = jest.fn();
   });
 
@@ -237,9 +239,6 @@ describe("game board", () => {
     [new Position(3, 7)],
     [new Position(7, 3)],
   ])("kills snake when moved off of the board", (newPosition) => {
-    const killSnakeFunction = jest.fn();
-    Snake.prototype.die = killSnakeFunction;
-
     const { rerender } = render(
       buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
     );
@@ -270,7 +269,7 @@ describe("game board", () => {
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {
   return (
     <SnakeContext.Provider
-      value={{ snake: new Snake(snakePositions), setSnake: () => {} }}
+      value={{ snake: new Snake(snakePositions), setSnake: () => {}, killSnake: killSnakeFunction  }}
     >
       {grid}
     </SnakeContext.Provider>

@@ -76,6 +76,11 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
     return Object.assign(Object.create(snake));
   }
 
+  function killSnake(){
+    snake.die();
+    updateSnakeDisplay();
+  }
+
   function resetGame() {
     setGameIsResetting(true);
     setSnake(new Snake([getInitialSnakePosition()]));
@@ -84,7 +89,7 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
   return (
     <>
       {/* Message saying how to move? */}
-      <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake }}>
+      <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake, killSnake: killSnake }}>
         {!gameIsResetting ? <Grid height={height} width={width} /> : null}
       </SnakeContext.Provider>
 
