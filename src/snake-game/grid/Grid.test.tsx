@@ -269,7 +269,7 @@ describe("game board", () => {
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {
   return (
     <SnakeContext.Provider
-      value={{ snake: new Snake(snakePositions), setSnake: () => {}, killSnake: killSnakeFunction  }}
+      value={{ snake: new Snake(snakePositions), killSnake: killSnakeFunction  }}
     >
       {grid}
     </SnakeContext.Provider>

@@ -89,7 +89,7 @@ export const SnakeGame = ({ height = 15, width = 15 }) => {
   return (
     <>
       {/* Message saying how to move? */}
-      <SnakeContext.Provider value={{ snake: snake, setSnake: setSnake, killSnake: killSnake }}>
+      <SnakeContext.Provider value={{ snake: snake, killSnake: killSnake }}>
         {!gameIsResetting ? <Grid height={height} width={width} /> : null}
       </SnakeContext.Provider>
 
