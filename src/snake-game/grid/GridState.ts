@@ -45,7 +45,7 @@ export class GridState {
       return this;
     }
 
-    const newGridState = [...this.grid];
+    const newGridState: GridState = Object.assign(Object.create(this));
 
     const hasEatenFood =
       this.grid[snake.positions[0].y][snake.positions[0].x] === FoodToken;
@@ -54,31 +54,29 @@ export class GridState {
       snake.eatFood();
     }
 
-    this.updateSnakeDisplay(newGridState, snake);
+    newGridState.updateSnakeDisplay(snake);
 
     if (hasEatenFood) {
-      this.spawnNewFood(newGridState);
+      this.spawnNewFood();
     }
 
-    const newerGridState: GridState = Object.assign(Object.create(this));
-    newerGridState.grid = newGridState;
-    return newerGridState;
+    return newGridState;
   }
 
-  private updateSnakeDisplay(newGridState: string[][], snake: Snake) {
+  private updateSnakeDisplay(snake: Snake) {
     this.displayedSnakePositions.forEach((position) => {
-      newGridState[position.y][position.x] = EmptySpace;
+      this.grid[position.y][position.x] = EmptySpace;
     });
 
     snake.positions.forEach((position) => {
-      newGridState[position.y][position.x] = SnakeToken;
+      this.grid[position.y][position.x] = SnakeToken;
     });
 
     this.displayedSnakePositions = [...snake.positions];
   }
 
-  private spawnNewFood(newGridState: string[][]) {
-    const foodPosition = this.foodSpawner.pickFoodPosition(newGridState);
-    newGridState[foodPosition.y][foodPosition.x] = FoodToken;
+  private spawnNewFood() {
+    const foodPosition = this.foodSpawner.pickFoodPosition(this.grid);
+    this.grid[foodPosition.y][foodPosition.x] = FoodToken;
   }
 }
