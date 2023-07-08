@@ -26,11 +26,7 @@ export class GridState {
     this.grid = newGrid;
   }
 
-  getGrid(): string[][] {
-    return this.grid;
-  }
-
-  buildRow(width: number) {
+  private buildRow(width: number) {
     const newRow: string[] = [];
 
     for (let columnId = 0; columnId < width; columnId++) {
@@ -40,16 +36,17 @@ export class GridState {
     return newRow;
   }
 
+  getGrid = (): string[][] => this.grid;
+
   update(snake: Snake): GridState {
-    if (snake.positions[0].equals(this.displayedSnakePositions[0])) {
+    const snakeHead = snake.positions[0];
+    if (snakeHead.equals(this.displayedSnakePositions[0])) {
       return this;
     }
 
-    const newGridState: GridState = Object.assign(Object.create(this));
+    const newGridState: GridState = this.cloneGridState();
 
-    const hasEatenFood =
-      this.grid[snake.positions[0].y][snake.positions[0].x] === FoodToken;
-
+    const hasEatenFood = this.grid[snakeHead.y][snakeHead.x] === FoodToken;
     if (hasEatenFood) {
       snake.eatFood();
     }
@@ -62,6 +59,8 @@ export class GridState {
 
     return newGridState;
   }
+
+  private cloneGridState = (): GridState => Object.assign(Object.create(this));
 
   private updateSnakeDisplay(snake: Snake) {
     this.displayedSnakePositions.forEach((position) => {
