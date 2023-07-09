@@ -36,46 +36,90 @@ export class GridState {
     return newRow;
   }
 
-  getGrid = (): string[][] => this.grid;
-
+  getGrid(): string[][] {
+    return this.grid;
+  }
   update(snake: Snake): GridState {
-    const snakeHead = snake.positions[0];
-    if (snakeHead.equals(this.displayedSnakePositions[0])) {
+    if (snake.positions[0].equals(this.displayedSnakePositions[0])) {
       return this;
     }
 
-    const newGridState: GridState = this.cloneGridState();
+    const newGridState = [...this.grid];
 
-    const hasEatenFood = this.grid[snakeHead.y][snakeHead.x] === FoodToken;
+    const hasEatenFood =
+      this.grid[snake.positions[0].y][snake.positions[0].x] === FoodToken;
+
     if (hasEatenFood) {
       snake.eatFood();
     }
 
-    newGridState.updateSnakeDisplay(snake);
+    this.updateSnakeDisplay(newGridState, snake);
 
     if (hasEatenFood) {
-      this.spawnNewFood();
+      this.spawnNewFood(newGridState);
     }
 
-    return newGridState;
+    const newerGridState: GridState = Object.assign(Object.create(this));
+    newerGridState.grid = newGridState;
+    return newerGridState;
   }
 
-  private cloneGridState = (): GridState => Object.assign(Object.create(this));
-
-  private updateSnakeDisplay(snake: Snake) {
+  private updateSnakeDisplay(newGridState: string[][], snake: Snake) {
     this.displayedSnakePositions.forEach((position) => {
-      this.grid[position.y][position.x] = EmptySpace;
+      newGridState[position.y][position.x] = EmptySpace;
     });
 
     snake.positions.forEach((position) => {
-      this.grid[position.y][position.x] = SnakeToken;
+      newGridState[position.y][position.x] = SnakeToken;
     });
 
     this.displayedSnakePositions = [...snake.positions];
   }
 
-  private spawnNewFood() {
-    const foodPosition = this.foodSpawner.pickFoodPosition(this.grid);
-    this.grid[foodPosition.y][foodPosition.x] = FoodToken;
+  private spawnNewFood(newGridState: string[][]) {
+    const foodPosition = this.foodSpawner.pickFoodPosition(newGridState);
+    newGridState[foodPosition.y][foodPosition.x] = FoodToken;
   }
 }
+
+//   update(snake: Snake): GridState {
+//     const snakeHead = snake.positions[0];
+//     if (snakeHead.equals(this.displayedSnakePositions[0])) {
+//       return this;
+//     }
+
+//     const newGridState: GridState = this.cloneGridState();
+
+//     const hasEatenFood = this.grid[snakeHead.y][snakeHead.x] === FoodToken;
+//     if (hasEatenFood) {
+//       snake.eatFood();
+//     }
+
+//     newGridState.updateSnakeDisplay(snake);
+
+//     if (hasEatenFood) {
+//       this.spawnNewFood();
+//     }
+
+//     return newGridState;
+//   }
+
+//   private cloneGridState = (): GridState => Object.assign(Object.create(this));
+
+//   private updateSnakeDisplay(snake: Snake) {
+//     this.displayedSnakePositions.forEach((position) => {
+//       this.grid[position.y][position.x] = EmptySpace;
+//     });
+
+//     snake.positions.forEach((position) => {
+//       this.grid[position.y][position.x] = SnakeToken;
+//     });
+
+//     this.displayedSnakePositions = [...snake.positions];
+//   }
+
+//   private spawnNewFood() {
+//     const foodPosition = this.foodSpawner.pickFoodPosition(this.grid);
+//     this.grid[foodPosition.y][foodPosition.x] = FoodToken;
+//   }
+// }

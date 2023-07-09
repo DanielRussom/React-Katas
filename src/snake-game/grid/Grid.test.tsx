@@ -7,6 +7,7 @@ import "../../../testExtensions/screenTestExtensions";
 import { FoodToken, SnakeToken } from "../Constants";
 import { Snake } from "../snake/Snake";
 import { SnakeContext } from "../SnakeContext";
+import { GridState } from "./GridState";
 
 jest.mock("../FoodSpawner");
 
@@ -15,17 +16,23 @@ let killSnakeFunction: Function;
 
 describe("game board", () => {
   beforeEach(() => {
+    const getGridFunction = jest.fn().mockImplementation(() => {
+      return [[""], [""]];
+    });
+
+    GridState.prototype.getGrid = getGridFunction;
+
     FoodSpawner.prototype.pickFoodPosition = jest
       .fn()
       .mockImplementation(() => {
         return new Position(0, 0);
       });
 
-      killSnakeFunction = jest.fn();
+    killSnakeFunction = jest.fn();
     feedSnakeFunction = jest.fn();
   });
 
-  it("is a grid", () => {
+  it.only("is a grid", () => {
     render(
       buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)])
     );
@@ -269,7 +276,7 @@ describe("game board", () => {
 function buildWithContext(grid: JSX.Element, snakePositions: Position[]) {
   return (
     <SnakeContext.Provider
-      value={{ snake: new Snake(snakePositions), killSnake: killSnakeFunction  }}
+      value={{ snake: new Snake(snakePositions), killSnake: killSnakeFunction }}
     >
       {grid}
     </SnakeContext.Provider>

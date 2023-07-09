@@ -39,6 +39,8 @@ describe("snake eating food feature", () => {
       <SnakeGame height={gridHeight} width={gridWidth} />
     );
 
+    expect(screen.getAllByText(SnakeToken).length).toEqual(1);
+
     let gameBoard = screen.getByTitle("GameBoard");
 
     let expectedFoodLocation = gameBoard.getChildAt(firstFoodLocation);
