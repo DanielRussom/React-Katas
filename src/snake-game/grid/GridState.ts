@@ -40,14 +40,15 @@ export class GridState {
     return this.grid;
   }
   update(snake: Snake): GridState {
-    if (snake.positions[0].equals(this.displayedSnakePositions[0])) {
+    const snakeHead = snake.positions[0];
+    if (snakeHead.equals(this.displayedSnakePositions[0])) {
       return this;
     }
 
     const newGridState = [...this.grid];
 
     const hasEatenFood =
-      this.grid[snake.positions[0].y][snake.positions[0].x] === FoodToken;
+      this.grid[snakeHead.y][snakeHead.x] === FoodToken;
 
     if (hasEatenFood) {
       snake.eatFood();
