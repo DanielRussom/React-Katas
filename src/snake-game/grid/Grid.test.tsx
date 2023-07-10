@@ -32,7 +32,7 @@ describe("game board", () => {
     feedSnakeFunction = jest.fn();
   });
 
-  it.only("is a grid", () => {
+  it("is a grid", () => {
     render(
       buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)])
     );
@@ -42,7 +42,20 @@ describe("game board", () => {
     expect(board).toHaveStyle("display: grid");
   });
 
-  it.each([[1, 3, 5]])("has the expected row count", (expectedRows) => {
+  it.each([1, 3, 5])("has the expected row count", (expectedRows) => {
+    let gridState: string[][] = [];
+
+    for(let i = 0; i < expectedRows; i++){
+      gridState.push([]);
+    }
+
+    const getGridFunction = jest.fn().mockImplementation(() => {
+      return gridState;
+    });
+
+    GridState.prototype.getGrid = getGridFunction;
+
+
     render(
       buildWithContext(<Grid height={expectedRows} width={5} />, [
         new Position(0, 0),
@@ -54,7 +67,19 @@ describe("game board", () => {
     expect(rows.length).toEqual(expectedRows);
   });
 
-  it.each([[1, 2, 3]])("has the expected column count", (expectedColumns) => {
+  it.each([1, 2, 3])("has the expected column count", (expectedColumns) => {  
+    let gridState: string[][] = [[]];
+
+    for(let i = 0; i < expectedColumns; i++){
+      gridState[0].push("");
+    }
+
+    const getGridFunction = jest.fn().mockImplementation(() => {
+      return gridState;
+    });
+    
+    GridState.prototype.getGrid = getGridFunction;
+
     render(
       buildWithContext(<Grid height={5} width={expectedColumns} />, [
         new Position(0, 0),
