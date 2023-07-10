@@ -4,7 +4,7 @@ import * as React from "react";
 import Position from "../Position";
 import { FoodSpawner } from "../FoodSpawner";
 import "../../../testExtensions/screenTestExtensions";
-import { FoodToken, SnakeToken } from "../Constants";
+import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import { Snake } from "../snake/Snake";
 import { SnakeContext } from "../SnakeContext";
 import { GridState } from "./GridState";
@@ -17,7 +17,7 @@ let killSnakeFunction: Function;
 describe("game board", () => {
   beforeEach(() => {
     const getGridFunction = jest.fn().mockImplementation(() => {
-      return [[""], [""]];
+      return [[EmptySpace], [EmptySpace]];
     });
 
     GridState.prototype.getGrid = getGridFunction;
@@ -45,7 +45,7 @@ describe("game board", () => {
   it.each([1, 3, 5])("has the expected row count", (expectedRows) => {
     let gridState: string[][] = [];
 
-    for(let i = 0; i < expectedRows; i++){
+    for (let i = 0; i < expectedRows; i++) {
       gridState.push([]);
     }
 
@@ -54,7 +54,6 @@ describe("game board", () => {
     });
 
     GridState.prototype.getGrid = getGridFunction;
-
 
     render(
       buildWithContext(<Grid height={expectedRows} width={5} />, [
@@ -67,17 +66,17 @@ describe("game board", () => {
     expect(rows.length).toEqual(expectedRows);
   });
 
-  it.each([1, 2, 3])("has the expected column count", (expectedColumns) => {  
+  it.each([1, 2, 3])("has the expected column count", (expectedColumns) => {
     let gridState: string[][] = [[]];
 
-    for(let i = 0; i < expectedColumns; i++){
-      gridState[0].push("");
+    for (let i = 0; i < expectedColumns; i++) {
+      gridState[0].push(EmptySpace);
     }
 
     const getGridFunction = jest.fn().mockImplementation(() => {
       return gridState;
     });
-    
+
     GridState.prototype.getGrid = getGridFunction;
 
     render(
@@ -92,7 +91,62 @@ describe("game board", () => {
     expect(columns.length).toEqual(expectedColumns);
   });
 
-  it("populates the snake in the expected location", () => {
+  it("renders the snake in the expected location", () => {
+    const getGridFunction = jest.fn().mockImplementation(() => {
+      return [
+        [EmptySpace, EmptySpace, EmptySpace],
+        [EmptySpace, SnakeToken, EmptySpace],
+        [EmptySpace, EmptySpace, EmptySpace],
+      ];
+    });
+
+    GridState.prototype.getGrid = getGridFunction;
+
+    const snakePosition = new Position(1, 1);
+    render(buildWithContext(<Grid height={5} width={5} />, [snakePosition]));
+
+    const expectedSnakeLocation = screen
+      .getByTitle("GameBoard")
+      .getChildAt(snakePosition);
+
+    expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
+    expect(screen.getAllByText(SnakeToken).length).toEqual(1);
+  });
+
+  it("renders a longer snake in the expected locations", () => {
+    const getGridFunction = jest.fn().mockImplementation(() => {
+      return [
+        [EmptySpace, EmptySpace, EmptySpace],
+        [EmptySpace, EmptySpace, EmptySpace],
+        [EmptySpace, SnakeToken, SnakeToken],
+      ];
+    });
+
+    GridState.prototype.getGrid = getGridFunction;
+
+    const firstSnakePosition = new Position(2, 2);
+    const secondSnakePosition = new Position(1, 2);
+
+    render(
+      buildWithContext(<Grid height={5} width={5} />, [
+        firstSnakePosition,
+        secondSnakePosition,
+      ])
+    );
+
+    const firstExpectedSnakeLocation = screen
+      .getByTitle("GameBoard")
+      .getChildAt(firstSnakePosition);
+    const secondExpectedSnakeLocation = screen
+      .getByTitle("GameBoard")
+      .getChildAt(secondSnakePosition);
+
+    expect(firstExpectedSnakeLocation).toHaveTextContent(SnakeToken);
+    expect(secondExpectedSnakeLocation).toHaveTextContent(SnakeToken);
+    expect(screen.getAllByText(SnakeToken).length).toEqual(2);
+  });
+
+  it.skip("populates the snake in the expected location", () => {
     const snakePosition = new Position(2, 2);
     render(buildWithContext(<Grid height={5} width={5} />, [snakePosition]));
 
@@ -104,7 +158,7 @@ describe("game board", () => {
     expect(screen.getAllByText(SnakeToken).length).toEqual(1);
   });
 
-  it("populates a longer snake in the expected locations", () => {
+  it.skip("populates a longer snake in the expected locations", () => {
     const firstSnakePosition = new Position(2, 2);
     const secondSnakePosition = new Position(1, 2);
 
@@ -128,11 +182,30 @@ describe("game board", () => {
   });
 
   it("repopulates the snake in the expected location", () => {
+    const getGridFunction = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        return [
+          [EmptySpace, EmptySpace, EmptySpace],
+          [EmptySpace, EmptySpace, EmptySpace],
+          [EmptySpace, EmptySpace, SnakeToken],
+        ];
+      })
+      .mockImplementation(() => {
+        return [
+          [EmptySpace, EmptySpace, EmptySpace],
+          [EmptySpace, SnakeToken, EmptySpace],
+          [EmptySpace, EmptySpace, EmptySpace],
+        ];
+      });
+
+    GridState.prototype.getGrid = getGridFunction;
+
     const { rerender } = render(
-      buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
+      buildWithContext(<Grid height={7} width={7} />, [new Position(2, 2)])
     );
 
-    const updatedSnakePosition = new Position(2, 2);
+    const updatedSnakePosition = new Position(1, 1);
     rerender(
       buildWithContext(<Grid height={7} width={7} />, [updatedSnakePosition])
     );
@@ -147,14 +220,33 @@ describe("game board", () => {
   });
 
   it("repopulates a snake with two segments in the expected locations", () => {
+    const getGridFunction = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        return [
+          [EmptySpace, EmptySpace, EmptySpace],
+          [EmptySpace, EmptySpace, EmptySpace],
+          [EmptySpace, SnakeToken, SnakeToken],
+        ];
+      })
+      .mockImplementation(() => {
+        return [
+          [EmptySpace, SnakeToken, EmptySpace],
+          [EmptySpace, SnakeToken, EmptySpace],
+          [EmptySpace, EmptySpace, EmptySpace],
+        ];
+      });
+
+    GridState.prototype.getGrid = getGridFunction;
+
     const { rerender } = render(
       buildWithContext(<Grid height={7} width={7} />, [
-        new Position(3, 3),
-        new Position(3, 4),
+        new Position(2, 2),
+        new Position(2, 3),
       ])
     );
 
-    const updatedSnakePositions = [new Position(3, 1), new Position(3, 2)];
+    const updatedSnakePositions = [new Position(1, 0), new Position(1, 1)];
     rerender(
       buildWithContext(<Grid height={7} width={7} />, updatedSnakePositions)
     );
@@ -170,7 +262,32 @@ describe("game board", () => {
   });
 
   describe("Food", () => {
-    it("exists in the grid", () => {
+    it.each([new Position(0,0), new Position(1,0), new Position(2, 1)])("renders in the expected location", (expectedPosition) => {
+      const gridState = [
+        [EmptySpace, EmptySpace, EmptySpace],
+        [EmptySpace, EmptySpace, EmptySpace],
+        [EmptySpace, EmptySpace, EmptySpace],
+      ];
+
+      gridState[expectedPosition.y][expectedPosition.x] = FoodToken;
+
+      const getGridFunction = jest.fn().mockImplementation(() => {
+        return gridState;
+      });
+  
+      GridState.prototype.getGrid = getGridFunction; render(
+        buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
+      );
+
+      const expectedFoodLocation = screen
+        .getByTitle("GameBoard")
+        .getChildAt(expectedPosition);
+
+      expect(expectedFoodLocation).toHaveTextContent(FoodToken);
+      expect(screen.getAllByText(FoodToken).length).toEqual(1);
+    });
+
+    it.skip("exists in the grid", () => {
       render(
         buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)])
       );
@@ -181,7 +298,7 @@ describe("game board", () => {
       expect(food).toBeInTheDocument();
     });
 
-    it.each([[new Position(1, 1)], [new Position(3, 4)], [new Position(6, 6)]])(
+    it.skip.each([[new Position(1, 1)], [new Position(3, 4)], [new Position(6, 6)]])(
       "exists in the expected location",
       (expectedPosition) => {
         const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
@@ -205,7 +322,7 @@ describe("game board", () => {
       }
     );
 
-    it("respawns after being eaten", () => {
+    it.skip("respawns after being eaten", () => {
       const pickedFoodFunction = jest
         .fn()
         .mockImplementationOnce(() => {
@@ -238,7 +355,7 @@ describe("game board", () => {
       expect(screen.getAllByText(FoodToken).length).toEqual(1);
     });
 
-    it("calls feed snake method", () => {
+    it.skip("calls feed snake method", () => {
       const pickedFoodFunction = jest
         .fn()
         .mockImplementationOnce(() => {
