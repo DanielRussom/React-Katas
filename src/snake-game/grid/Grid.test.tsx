@@ -146,41 +146,6 @@ describe("game board", () => {
     expect(screen.getAllByText(SnakeToken).length).toEqual(2);
   });
 
-  it.skip("populates the snake in the expected location", () => {
-    const snakePosition = new Position(2, 2);
-    render(buildWithContext(<Grid height={5} width={5} />, [snakePosition]));
-
-    const expectedSnakeLocation = screen
-      .getByTitle("GameBoard")
-      .getChildAt(snakePosition);
-
-    expect(expectedSnakeLocation).toHaveTextContent(SnakeToken);
-    expect(screen.getAllByText(SnakeToken).length).toEqual(1);
-  });
-
-  it.skip("populates a longer snake in the expected locations", () => {
-    const firstSnakePosition = new Position(2, 2);
-    const secondSnakePosition = new Position(1, 2);
-
-    render(
-      buildWithContext(<Grid height={5} width={5} />, [
-        firstSnakePosition,
-        secondSnakePosition,
-      ])
-    );
-
-    const firstExpectedSnakeLocation = screen
-      .getByTitle("GameBoard")
-      .getChildAt(firstSnakePosition);
-    const secondExpectedSnakeLocation = screen
-      .getByTitle("GameBoard")
-      .getChildAt(secondSnakePosition);
-
-    expect(firstExpectedSnakeLocation).toHaveTextContent(SnakeToken);
-    expect(secondExpectedSnakeLocation).toHaveTextContent(SnakeToken);
-    expect(screen.getAllByText(SnakeToken).length).toEqual(2);
-  });
-
   it("repopulates the snake in the expected location", () => {
     const getGridFunction = jest
       .fn()
