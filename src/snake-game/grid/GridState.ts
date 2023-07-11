@@ -41,7 +41,7 @@ export class GridState {
   }
 
   
-    update(snake: Snake): GridState {
+  update(snake: Snake): GridState {
     const snakeHead = snake.positions[0];
     if (snakeHead.equals(this.displayedSnakePositions[0])) {
       return this;
@@ -62,7 +62,7 @@ export class GridState {
 
     return newGridState;
   }
-  
+
   private cloneGridState(): GridState{
     const clonedGridState: GridState = Object.assign(Object.create(this));
     clonedGridState.grid = [...this.grid]
