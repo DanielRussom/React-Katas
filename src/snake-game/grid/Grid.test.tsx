@@ -9,7 +9,6 @@ import { Snake } from "../snake/Snake";
 import { SnakeContext } from "../SnakeContext";
 import { GridState } from "./GridState";
 
-jest.mock("../FoodSpawner");
 
 let feedSnakeFunction: Function;
 let killSnakeFunction: Function;
@@ -251,41 +250,7 @@ describe("game board", () => {
       expect(expectedFoodLocation).toHaveTextContent(FoodToken);
       expect(screen.getAllByText(FoodToken).length).toEqual(1);
     });
-
-    it.skip("exists in the grid", () => {
-      render(
-        buildWithContext(<Grid height={5} width={5} />, [new Position(2, 2)])
-      );
-
-      const gameBoard = screen.getByTitle("GameBoard");
-      const food = within(gameBoard).getByText(FoodToken);
-
-      expect(food).toBeInTheDocument();
-    });
-
-    it.skip.each([[new Position(1, 1)], [new Position(3, 4)], [new Position(6, 6)]])(
-      "exists in the expected location",
-      (expectedPosition) => {
-        const pickedFoodFunction = jest.fn().mockImplementationOnce(() => {
-          return expectedPosition;
-        });
-
-        FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-
-        render(
-          buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
-        );
-
-        const expectedFoodLocation = screen
-          .getByTitle("GameBoard")
-          .getChildAt(expectedPosition);
-
-        expect(expectedFoodLocation).toHaveTextContent(FoodToken);
-        expect(screen.getAllByText(FoodToken).length).toEqual(1);
-
-        expect(pickedFoodFunction).toHaveBeenCalledTimes(1);
-      }
-    );
+  
 
     it.skip("respawns after being eaten", () => {
       const pickedFoodFunction = jest
