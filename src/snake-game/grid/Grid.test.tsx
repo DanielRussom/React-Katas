@@ -251,7 +251,6 @@ describe("game board", () => {
       expect(screen.getAllByText(FoodToken).length).toEqual(1);
     });
   
-
     it.skip("respawns after being eaten", () => {
       const pickedFoodFunction = jest
         .fn()
