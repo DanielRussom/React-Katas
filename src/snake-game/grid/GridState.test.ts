@@ -1,7 +1,8 @@
-import { FoodToken, SnakeToken } from "../Constants";
+import { EmptySpace, FoodToken, SnakeToken } from "../Constants";
 import Position from "../Position";
 import { GridState } from "./GridState";
 import { FoodSpawner } from "../FoodSpawner";
+import { Snake } from "../snake/Snake";
 
 jest.mock("../FoodSpawner");
 
@@ -60,6 +61,33 @@ describe("GridState", () => {
           FoodToken
         );
       }
+    );
+  });
+
+  it("doesn't update if snake hasn't moved", () => {
+    const snakePosition = [new Position(0, 0)];
+    const gridState = new GridState(5, 5, snakePosition);
+
+    const updatedGridState = gridState.update(new Snake(snakePosition));
+
+    expect(updatedGridState).toBe(gridState);
+  });
+
+  it("updates to the new snake location", () => {
+    const startingSnakePosition = new Position(0, 0);
+    const gridState = new GridState(5, 5, [startingSnakePosition]);
+
+    const updatedSnakePosition = new Position(1, 1);
+    const updatedGridState = gridState.update(
+      new Snake([updatedSnakePosition])
+    );
+
+    const updatedGrid = updatedGridState.getGrid();
+    expect(updatedGrid[updatedSnakePosition.y][updatedSnakePosition.x]).toBe(
+      SnakeToken
+    );
+    expect(updatedGrid[startingSnakePosition.y][startingSnakePosition.x]).toBe(
+      EmptySpace
     );
   });
 });
