@@ -90,4 +90,27 @@ describe("GridState", () => {
       EmptySpace
     );
   });
+
+  it("feeds the snake and spawns new food", () => {
+    const startingSnakePosition = new Position(0, 1);
+
+    const pickedFoodFunction = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        return new Position(0, 0);
+      })
+      .mockImplementation(() => {
+        return new Position(1, 1);
+      });
+    FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
+    const gridState = new GridState(2, 2, [startingSnakePosition]);
+
+    const feedFunction = jest.fn();
+    Snake.prototype.eatFood = feedFunction;
+
+    gridState.update(new Snake([new Position(0, 0)]));
+
+    expect(pickedFoodFunction).toHaveBeenCalledTimes(2);
+    expect(feedFunction).toHaveBeenCalledTimes(1);
+  });
 });

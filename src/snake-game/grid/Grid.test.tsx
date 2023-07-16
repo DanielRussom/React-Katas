@@ -250,66 +250,6 @@ describe("game board", () => {
       expect(expectedFoodLocation).toHaveTextContent(FoodToken);
       expect(screen.getAllByText(FoodToken).length).toEqual(1);
     });
-  
-    it.skip("respawns after being eaten", () => {
-      const pickedFoodFunction = jest
-        .fn()
-        .mockImplementationOnce(() => {
-          return new Position(1, 1);
-        })
-        .mockImplementationOnce(() => {
-          return new Position(0, 0);
-        });
-
-      FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-      const { rerender } = render(
-        buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
-      );
-
-      let expectedFoodLocation = screen
-        .getByTitle("GameBoard")
-        .getChildAt(new Position(1, 1));
-
-      expect(expectedFoodLocation).toHaveTextContent(FoodToken);
-      expect(screen.getAllByText(FoodToken).length).toEqual(1);
-
-      rerender(
-        buildWithContext(<Grid height={7} width={7} />, [new Position(1, 1)])
-      );
-      expectedFoodLocation = screen
-        .getByTitle("GameBoard")
-        .getChildAt(new Position(0, 0));
-
-      expect(expectedFoodLocation).toHaveTextContent(FoodToken);
-      expect(screen.getAllByText(FoodToken).length).toEqual(1);
-    });
-
-    it.skip("calls feed snake method", () => {
-      const pickedFoodFunction = jest
-        .fn()
-        .mockImplementationOnce(() => {
-          return new Position(1, 1);
-        })
-        .mockImplementationOnce(() => {
-          return new Position(0, 0);
-        });
-
-      FoodSpawner.prototype.pickFoodPosition = pickedFoodFunction;
-
-      const feedFunction = jest.fn();
-      Snake.prototype.eatFood = feedFunction;
-
-      const { rerender } = render(
-        buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
-      );
-
-      rerender(
-        buildWithContext(<Grid height={7} width={7} />, [new Position(1, 1)])
-      );
-
-      expect(feedFunction).toHaveBeenCalled();
-    });
-  });
 
   it.each([
     [new Position(3, -1)],
