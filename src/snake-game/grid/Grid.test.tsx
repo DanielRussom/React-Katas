@@ -9,7 +9,6 @@ import { Snake } from "../snake/Snake";
 import { SnakeContext } from "../SnakeContext";
 import { GridState } from "./GridState";
 
-
 let feedSnakeFunction: Function;
 let killSnakeFunction: Function;
 
@@ -225,8 +224,9 @@ describe("game board", () => {
     ).toHaveTextContent(SnakeToken);
   });
 
-  describe("Food", () => {
-    it.each([new Position(0,0), new Position(1,0), new Position(2, 1)])("renders in the expected location", (expectedPosition) => {
+  it.each([new Position(0, 0), new Position(1, 0), new Position(2, 1)])(
+    "food renders in the expected location",
+    (expectedPosition) => {
       const gridState = [
         [EmptySpace, EmptySpace, EmptySpace],
         [EmptySpace, EmptySpace, EmptySpace],
@@ -238,8 +238,9 @@ describe("game board", () => {
       const getGridFunction = jest.fn().mockImplementation(() => {
         return gridState;
       });
-  
-      GridState.prototype.getGrid = getGridFunction; render(
+
+      GridState.prototype.getGrid = getGridFunction;
+      render(
         buildWithContext(<Grid height={7} width={7} />, [new Position(3, 3)])
       );
 
@@ -249,7 +250,8 @@ describe("game board", () => {
 
       expect(expectedFoodLocation).toHaveTextContent(FoodToken);
       expect(screen.getAllByText(FoodToken).length).toEqual(1);
-    });
+    }
+  );
 
   it.each([
     [new Position(3, -1)],
